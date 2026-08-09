@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { PageHero } from '@/components/PageHero';
 import { Reveal } from '@/components/Reveal';
+import { WalkRoute } from '@/components/WalkRoute';
 import { location } from '@/content/location';
 import { contact } from '@/content/site';
 
@@ -31,8 +32,6 @@ export const metadata: Metadata = {
 };
 
 export default function LocationPage() {
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(location.mapQuery)}&z=14&output=embed`;
-
   return (
     <div className="font-body text-base font-light leading-[1.7] text-muted">
       <PageHero eyebrow={location.eyebrow} heading={location.heading} lead={location.lead} />
@@ -41,8 +40,8 @@ export default function LocationPage() {
         <div className="flex flex-wrap items-stretch gap-8">
           <div className="min-h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-2xl border border-line">
             <iframe
-              title="Map showing Bharthal Village, Sector 26 Dwarka, New Delhi"
-              src={mapSrc}
+              title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
+              src={contact.mapEmbedSrc}
               loading="lazy"
               className="block h-full min-h-[420px] w-full border-0"
             />
@@ -79,6 +78,10 @@ export default function LocationPage() {
             </div>
           </div>
         </div>
+      </Reveal>
+
+      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[72px]">
+        <WalkRoute />
       </Reveal>
 
       <Reveal className="mx-auto max-w-[1240px] px-6 pb-[104px] pt-[72px]">

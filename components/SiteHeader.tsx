@@ -32,21 +32,31 @@ export function SiteHeader() {
             </a>
           </div>
           <div className="flex items-center gap-2.5">
-            <span className="text-[13px] text-muted">{social.label}</span>
-            <a
-              href={social.instagram}
-              aria-label="Instagram"
-              className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-full border border-line hover:border-accent"
-            >
-              <Instagram className="h-4 w-4 text-accent" />
-            </a>
-            <a
-              href={social.facebook}
-              aria-label="Facebook"
-              className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-full border border-line hover:border-accent"
-            >
-              <Facebook className="h-4 w-4 text-accent" />
-            </a>
+            {(!social.instagram || !social.facebook) && (
+              <span className="text-[13px] text-muted">{social.placeholderLabel}</span>
+            )}
+            {social.instagram && (
+              <a
+                href={social.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-full border border-line hover:border-accent"
+              >
+                <Instagram className="h-4 w-4 text-accent" />
+              </a>
+            )}
+            {social.facebook && (
+              <a
+                href={social.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="inline-flex h-[30px] w-[30px] items-center justify-center rounded-full border border-line hover:border-accent"
+              >
+                <Facebook className="h-4 w-4 text-accent" />
+              </a>
+            )}
           </div>
         </div>
       </div>

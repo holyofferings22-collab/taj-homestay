@@ -115,3 +115,67 @@ export const guides = {
     },
   ],
 } as const;
+
+/**
+ * Home page FAQs.
+ *
+ * Answers are drawn from claims the site already makes elsewhere, so nothing
+ * here introduces a new promise. Where a real policy is unknown the answer
+ * carries a PLACEHOLDER rather than a guess — an invented check-in time is
+ * the kind of detail a guest turns up and holds you to.
+ */
+export const faqs = {
+  heading: 'Questions guests ask',
+  lead: 'If the answer you need is not here, call the desk — someone is always on.',
+  items: [
+    {
+      q: 'How far is Yashobhoomi?',
+      a:
+        'Gate 1 of the convention centre is about 350 m from the door, a few minutes on foot. ' +
+        'From Gate 3 of the Yashobhoomi metro station it is roughly 550 m, about seven minutes. ' +
+        'Nobody in your group needs a cab to reach the hall.',
+    },
+    {
+      q: 'What time can I check in and check out?',
+      a: '[ADD CHECK-IN AND CHECK-OUT TIMES.] For groups, check-outs can be staggered when flights are spread across the day.',
+    },
+    {
+      q: 'Is anyone at the desk late at night?',
+      a:
+        'Yes. The front desk is staffed 24×7, so a delegation landing at 2am checks in without ' +
+        'waiting. The desk will also arrange a car at four in the morning if that is when you ' +
+        'need one, which matters for departures before the metro starts running.',
+    },
+    {
+      q: 'How do I get here from the airport?',
+      a:
+        'Take the Airport Express from Terminal 3 towards Dwarka Sector 21 and change for Dwarka ' +
+        'Sector 25 / Yashobhoomi. Or tell the desk your flight number and we will send a car.',
+    },
+    {
+      q: 'Do all rooms have an external window?',
+      a:
+        'No. Categories without an external window are stated plainly on the room card, so you ' +
+        'know which one you are booking before you book it.',
+    },
+    {
+      q: 'Do you serve breakfast?',
+      a:
+        'Breakfast comes out of our own kitchen, vegetarian and non-vegetarian, and simple meals ' +
+        'are available through the day on request. [CONFIRM whether breakfast is included in the rate.]',
+    },
+    {
+      q: 'Can you hold a block of rooms for a group?',
+      a:
+        'Yes. We hold blocks for exhibitor teams, delegations and families travelling together. ' +
+        'A group booking means one point of contact, one consolidated bill, and a rate that holds ' +
+        'across the whole block. Send us your dates and room count.',
+    },
+    {
+      q: 'Is there a pool or a spa?',
+      a:
+        'No pool, no spa, no lobby music. What we offer is a sorted place to sleep a short walk ' +
+        'from where you need to be, at a price that makes sense for a two-night trip.',
+    },
+  ],
+} as const;

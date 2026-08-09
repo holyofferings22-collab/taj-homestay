@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(contactPage.mapQuery)}&z=14&output=embed`;
-
   return (
     <div className="font-body text-base font-light leading-[1.7] text-muted">
       <PageHero
@@ -86,8 +84,8 @@ export default function ContactPage() {
 
             <div className="mt-6 h-[260px] overflow-hidden rounded-2xl border border-line">
               <iframe
-                title="Map showing Bharthal Village, Sector 26 Dwarka, New Delhi"
-                src={mapSrc}
+                title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
+                src={contact.mapEmbedSrc}
                 loading="lazy"
                 className="block h-full w-full border-0"
               />

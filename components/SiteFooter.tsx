@@ -58,20 +58,28 @@ export function SiteFooter() {
               Social Share
             </h3>
             <div className="flex gap-2.5">
-              <a
-                href={social.instagram}
-                aria-label="Instagram"
-                className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-line hover:border-accent"
-              >
-                <Instagram className="h-[18px] w-[18px] text-accent" />
-              </a>
-              <a
-                href={social.facebook}
-                aria-label="Facebook"
-                className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-line hover:border-accent"
-              >
-                <Facebook className="h-[18px] w-[18px] text-accent" />
-              </a>
+              {social.instagram && (
+                <a
+                  href={social.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-line hover:border-accent"
+                >
+                  <Instagram className="h-[18px] w-[18px] text-accent" />
+                </a>
+              )}
+              {social.facebook && (
+                <a
+                  href={social.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="inline-flex h-[38px] w-[38px] items-center justify-center rounded-full border border-line hover:border-accent"
+                >
+                  <Facebook className="h-[18px] w-[18px] text-accent" />
+                </a>
+              )}
             </div>
           </div>
         </div>

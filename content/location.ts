@@ -1,8 +1,9 @@
+import { contact } from './site';
+
 export const location = {
   eyebrow: 'Taj Home Stay, Dwarka',
   heading: 'Getting here',
   lead: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka, New Delhi 110077.',
-  mapQuery: 'Bharthal Village Sector 26 Dwarka New Delhi 110077',
   distances: [
     { icon: 'MapPin', place: 'Yashobhoomi (IICC) Gate 1', value: '~350 m, walkable' },
     {
@@ -41,4 +42,43 @@ export const location = {
       },
     ],
   },
+} as const;
+
+/**
+ * The locked walking route shown on the Location page.
+ *
+ * The two ends are addressed differently, on purpose. Gate 3 has no Google
+ * listing of its own, so only a coordinate can point at it. The property is
+ * the opposite case: its coordinate reverse-geocodes to a car-service garage
+ * sharing plot KH No. 483, so it has to be named instead.
+ *
+ * `facts` are what Google reports for this exact pair. Re-check them if either
+ * endpoint moves.
+ */
+export const walkRoute = {
+  heading: 'Walking from the metro',
+  lead:
+    'The same walk every guest makes, fixed on the map below — from Gate 3 of the ' +
+    'Yashobhoomi metro station to our door.',
+  /** Fixed coordinates — there is no Google listing for an individual gate. */
+  origin: {
+    label: 'Yashobhoomi Dwarka Sector 25 metro — Gate 3',
+    lat: 28.549579,
+    lng: 77.0469135,
+  },
+  /**
+   * Searched by name rather than by coordinate, deliberately — see the note on
+   * `contact.mapQuery`. Appending `(Label)` to a coordinate does NOT override
+   * the pin name; this embed ignores it.
+   */
+  destination: {
+    label: 'Taj Home Stay, Dwarka',
+    query: contact.mapQuery,
+  },
+  facts: [
+    { label: 'On foot', value: '550 m, about 7 min' },
+    { label: 'Straight-line distance', value: '~380 m' },
+    { label: 'From Gate 3', value: 'Head south' },
+  ],
+  cta: 'Open walking directions',
 } as const;

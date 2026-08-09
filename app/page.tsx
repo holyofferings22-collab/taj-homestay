@@ -4,6 +4,7 @@ import { HeroSlider } from '@/components/HeroSlider';
 import { BookingForm } from '@/components/BookingForm';
 import { Reveal } from '@/components/Reveal';
 import { PhotoSlot } from '@/components/PhotoSlot';
+import { Faq } from '@/components/Faq';
 import { amenities, bookingNote, guides, hero, intro, stats } from '@/content/home';
 
 const icons = { ConciergeBell, Wifi, CarFront, Utensils, Zap, Banknote };
@@ -160,6 +161,12 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
+        </div>
+      </Reveal>
+
+      <Reveal className="bg-sand py-[104px]">
+        <div className="mx-auto max-w-[1240px] px-6">
+          <Faq />
         </div>
       </Reveal>
     </div>

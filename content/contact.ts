@@ -12,5 +12,4 @@ export const contactPage = {
   callCta: 'Call the desk',
   /** PLACEHOLDER — the OTA profile links. */
   bookingSites: 'Booking sites: [ADD MAKEMYTRIP / GOIBIBO / BOOKING.COM LINKS]',
-  mapQuery: 'Bharthal Village Sector 26 Dwarka New Delhi 110077',
 } as const;
