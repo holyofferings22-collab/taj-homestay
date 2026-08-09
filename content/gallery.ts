@@ -1,0 +1,62 @@
+export const gallery = {
+  eyebrow: 'Taj Home Stay, Dwarka',
+  heading: 'Gallery',
+  lead:
+    'Every room, bathroom and balcony photographed as it is — no staging, no stock. ' +
+    'Tap any photo to view it full size.',
+  sections: [
+    {
+      id: 'deluxe',
+      heading: 'Deluxe rooms',
+      count: '15 photos',
+      photos: [
+        { src: '/photos/IMG_9991.jpg', alt: 'Deluxe room with balcony and open city view' },
+        { src: '/photos/IMG_9977.jpg', alt: 'King bed with runner, framed art and wall-mounted TV' },
+        { src: '/photos/IMG_9976.jpg', alt: 'Deluxe room, marble floor and recessed ceiling lighting' },
+        { src: '/photos/IMG_9993.jpg', alt: 'Deluxe room with daylight from the balcony door' },
+        { src: '/photos/IMG_9992.jpg', alt: 'Balcony seating and city view from a deluxe room' },
+        { src: '/photos/IMG_0017.jpg', alt: 'Deluxe room seen from the entrance' },
+        { src: '/photos/IMG_9995.jpg', alt: 'Deluxe room with writing desk and armchair' },
+        { src: '/photos/IMG_0001.jpg', alt: 'Deluxe room with sofa, coffee table and wardrobe' },
+        { src: '/photos/IMG_9978.jpg', alt: 'Bed made up with fresh linen and folded towels' },
+        { src: '/photos/IMG_9994.jpg', alt: 'Armchair, side table and wardrobe in a deluxe room' },
+        { src: '/photos/IMG_0016.jpg', alt: 'Deluxe room at dusk with curtains drawn back' },
+        { src: '/photos/IMG_0018.jpg', alt: 'Full length view of a deluxe room' },
+        { src: '/photos/IMG_9996.jpg', alt: 'Deluxe room with maroon bed runner and framed art' },
+        { src: '/photos/IMG_9983.jpg', alt: 'Deluxe room with mirror and luggage space' },
+        { src: '/photos/IMG_0020.jpg', alt: 'Deluxe room with seating by the window' },
+      ],
+    },
+    {
+      id: 'standard',
+      heading: 'Standard rooms',
+      count: '13 photos',
+      photos: [
+        { src: '/photos/IMG_9984.jpg', alt: 'Standard room with mustard feature wall and king bed' },
+        { src: '/photos/IMG_0004.jpg', alt: 'Standard room with air conditioning and armchair' },
+        { src: '/photos/IMG_0013.jpg', alt: 'Standard room with wardrobe and dressing mirror' },
+        { src: '/photos/IMG_9988.jpg', alt: 'Standard room with window and tufted headboard' },
+        { src: '/photos/IMG_0012.jpg', alt: 'Standard room with bedside table and landscape art' },
+        { src: '/photos/IMG_0005.jpg', alt: 'Standard room with teal cushions and marble floor' },
+        { src: '/photos/IMG_9986.jpg', alt: 'Standard room with daylight from the window' },
+        { src: '/photos/IMG_0009.jpg', alt: 'Standard room with wardrobe, TV and mirror' },
+        { src: '/photos/IMG_0014.jpg', alt: 'Standard room with armchair and framed painting' },
+        { src: '/photos/IMG_0006.jpg', alt: 'Standard room with folded towels on the bed' },
+        { src: '/photos/IMG_9987.jpg', alt: 'Standard room, wide view from the doorway' },
+        { src: '/photos/IMG_0015.jpg', alt: 'Standard room with wooden headboard and side chair' },
+        { src: '/photos/IMG_0007.jpg', alt: 'Standard room with attached bathroom door open' },
+      ],
+    },
+    {
+      id: 'bathrooms',
+      heading: 'Bathrooms',
+      count: '4 photos',
+      photos: [
+        { src: '/photos/IMG_9997.jpg', alt: 'Bathroom with glass shower partition and marble tiling' },
+        { src: '/photos/IMG_9979.jpg', alt: 'Bathroom with western WC, wall mirror and hand shower' },
+        { src: '/photos/IMG_9998.jpg', alt: 'Bathroom basin with mirror and towel rail' },
+        { src: '/photos/IMG_9989.jpg', alt: 'Bathroom with instant geyser for hot water' },
+      ],
+    },
+  ],
+} as const;
