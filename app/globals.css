@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+/* Design tokens extracted from the original .dc.html inline styles.
+   Tailwind v4 generates utilities from these automatically:
+   --color-clay -> bg-clay / text-clay / border-clay */
+@theme {
+  --color-ink: #1c1a18;
+  --color-muted: #6e6862;
+  --color-accent: #e4924e;
+  --color-clay: #a2591f;
+  --color-cream: #fdfbf8;
+  --color-sand: #fbf2e9;
+  --color-line: #efe6dc;
+  --color-stone: #f3ede6;
+  --color-blush: #f6e5d6;
+  --color-line-soft: #f6f0e8;
+
+  --font-display: var(--font-prata), serif;
+  --font-body: var(--font-jost), sans-serif;
+
+  /* The original layout switches at these exact widths: the header nav
+     collapses below 1120px, the mobile call bar appears below 1000px. */
+  --breakpoint-nav: 70rem;
+  --breakpoint-bar: 62.5rem;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-cream);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--color-muted);
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--color-clay);
+}
+
+input,
+select,
+button,
+textarea {
+  font-family: inherit;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-muted);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-clay);
+  outline-offset: 3px;
+}
+
+@keyframes omRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-reveal][data-revealed="1"] {
+  animation: omRise 0.85s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal][data-revealed="1"] {
+    animation: none;
+  }
+}
+
+/* Hero washes. The original recomputed these gradients in JS on every resize;
+   expressed in CSS they track the viewport for free. The stops are anchored to
+   where the text column ends, so the copy always sits on solid wash. */
+.hero-wash-wide {
+  --hero-end: calc(clamp(24px, 4vw, 76px) + 470px);
+  background: linear-gradient(
+    90deg,
+    rgba(253, 251, 248, 0.97) 0px,
+    rgba(253, 251, 248, 0.95) calc(var(--hero-end) + 30px),
+    rgba(253, 251, 248, 0.66) calc(var(--hero-end) + 130px),
+    rgba(253, 251, 248, 0.18) calc(var(--hero-end) + 260px),
+    rgba(253, 251, 248, 0) calc(var(--hero-end) + 380px)
+  );
+}
+
+/* Wider gutters and text column on very large screens, mirroring the JS tiers */
+@media (min-width: 2100px) {
+  .hero-wash-wide {
+    --hero-end: calc(108px + 620px);
+  }
+}
+
+@media (min-width: 2600px) {
+  .hero-wash-wide {
+    --hero-end: calc(152px + 720px);
+  }
+}
+
+.hero-wash-stacked {
+  background: linear-gradient(
+    180deg,
+    rgba(253, 251, 248, 0) 0px,
+    rgba(253, 251, 248, 0) 230px,
+    #fdfbf8 300px,
+    #fdfbf8 100%
+  );
+}
