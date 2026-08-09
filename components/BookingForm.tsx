@@ -36,7 +36,7 @@ export function BookingForm() {
 
     setMessage(
       `${data.get('rooms')}, ${data.get('guests')} — ${checkIn} to ${checkOut}. ` +
-        `Call ${contact.phone.display} to confirm, or add ${booking.url}.`,
+        `Call ${contact.phone.display} to confirm; the desk answers at any hour.`,
     );
   }
 

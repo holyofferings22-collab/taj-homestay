@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PageHero } from '@/components/PageHero';
 import { CtaBand } from '@/components/CtaBand';
-import { PhotoSlot } from '@/components/PhotoSlot';
 import { Reveal } from '@/components/Reveal';
 import { rooms } from '@/content/rooms';
 
@@ -23,8 +23,14 @@ export default function RoomsPage() {
               key={i}
               className="overflow-hidden rounded-2xl border border-line bg-white transition-transform duration-[250ms] hover:-translate-y-[3px]"
             >
-              <div className="h-[230px]">
-                <PhotoSlot />
+              <div className="relative h-[230px] bg-stone">
+                <Image
+                  src={room.image.src}
+                  alt={room.image.alt}
+                  fill
+                  sizes="(max-width: 680px) 100vw, (max-width: 1000px) 50vw, 400px"
+                  className="object-cover"
+                />
               </div>
               <div className="px-6 pb-7 pt-[26px]">
                 <h2 className="m-0 mb-3.5 font-display text-[23px] font-normal text-ink">
@@ -51,6 +57,7 @@ export default function RoomsPage() {
             </article>
           ))}
         </div>
+        <p className="m-0 mt-7 text-[13px]">{rooms.rateNote}</p>
       </Reveal>
 
       <Reveal className="mx-auto max-w-[1240px] px-6 pb-[104px] pt-[72px]">

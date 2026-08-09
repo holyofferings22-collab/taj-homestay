@@ -1,11 +1,12 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Banknote, CarFront, Clock, ConciergeBell, Utensils, Wifi, Zap } from 'lucide-react';
 import { HeroSlider } from '@/components/HeroSlider';
 import { BookingForm } from '@/components/BookingForm';
 import { Reveal } from '@/components/Reveal';
-import { PhotoSlot } from '@/components/PhotoSlot';
 import { Faq } from '@/components/Faq';
-import { amenities, bookingNote, guides, hero, intro, stats } from '@/content/home';
+import { amenities, guides, hero, intro, stats } from '@/content/home';
+import { guides as guideArticles } from '@/content/guides';
 
 const icons = { ConciergeBell, Wifi, CarFront, Utensils, Zap, Banknote };
 
@@ -68,7 +69,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        <p className="mt-[18px] px-[clamp(24px,4vw,76px)] text-[13px]">{bookingNote}</p>
       </section>
 
       <Reveal className="mx-auto max-w-[1240px] px-6 py-24">
@@ -96,8 +96,14 @@ export default function HomePage() {
               {intro.cta} <span aria-hidden="true" className="text-clay">&rarr;</span>
             </Link>
           </div>
-          <div className="h-[340px] min-w-0 flex-[1_1_380px] overflow-hidden rounded-2xl">
-            <PhotoSlot />
+          <div className="relative h-[340px] min-w-0 flex-[1_1_380px] overflow-hidden rounded-2xl bg-stone">
+            <Image
+              src={intro.image.src}
+              alt={intro.image.alt}
+              fill
+              sizes="(max-width: 1000px) 100vw, 560px"
+              className="object-cover"
+            />
           </div>
         </div>
       </Reveal>
@@ -136,13 +142,19 @@ export default function HomePage() {
           {guides.heading}
         </h2>
         <div className={cols3}>
-          {guides.items.map((guide) => (
+          {guideArticles.map((guide) => (
             <Link
-              key={guide.title}
-              href={guide.href}
-              className="relative block h-[340px] overflow-hidden rounded-2xl"
+              key={guide.slug}
+              href={`/guides/${guide.slug}`}
+              className="relative block h-[340px] overflow-hidden rounded-2xl bg-stone"
             >
-              <PhotoSlot />
+              <Image
+                src={guide.image.src}
+                alt={guide.image.alt}
+                fill
+                sizes="(max-width: 680px) 100vw, (max-width: 1000px) 50vw, 400px"
+                className="object-cover"
+              />
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 bg-[linear-gradient(0deg,rgba(28,26,24,0.72)_0%,rgba(28,26,24,0)_55%)]"
@@ -156,12 +168,20 @@ export default function HomePage() {
                 </h3>
                 <p className="m-0 flex items-center gap-[7px] text-xs text-white/90">
                   <Clock aria-hidden="true" strokeWidth={1.5} className="h-[13px] w-[13px] flex-none" />
-                  {guide.date}
+                  <time dateTime={guide.dateISO}>{guide.date}</time>
                 </p>
               </div>
             </Link>
           ))}
         </div>
+        <p className="mt-9 text-center">
+          <Link
+            href="/guides"
+            className="inline-flex items-center gap-[9px] border-b border-line pb-1.5 text-[15px]"
+          >
+            {guides.cta} <span aria-hidden="true" className="text-clay">&rarr;</span>
+          </Link>
+        </p>
       </Reveal>
 
       <Reveal className="bg-sand py-[104px]">

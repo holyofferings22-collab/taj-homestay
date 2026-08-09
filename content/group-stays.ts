@@ -67,12 +67,16 @@ export const groupStays = {
     ],
   },
 
-  /** The last value is a PLACEHOLDER in the original. */
+  /**
+   * The fourth tile used to ask for a minimum room count, which is not a rule
+   * this guest house actually has. It now states the single point of contact
+   * instead — the promise the page above it already makes.
+   */
   stats: [
-    { value: '20', label: 'Keys available to block (confirm)' },
+    { value: '20', label: 'Keys available to block' },
     { value: '350 m', label: 'To Yashobhoomi Gate 1' },
     { value: '24×7', label: 'Front desk for late arrivals' },
-    { value: '[ADD]', label: 'Minimum rooms per group' },
+    { value: '1', label: 'Point of contact for the block' },
   ],
 
   closing: {

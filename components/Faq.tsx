@@ -14,10 +14,10 @@ import { faqs } from '@/content/home';
  */
 export function Faq() {
   /**
-   * Unfinished answers still render on the page, where they act as a visible
-   * reminder to fill them in — but they must not reach Google. Shipping
-   * "[ADD CHECK-IN AND CHECK-OUT TIMES.]" as structured data would put that
-   * string in a search result.
+   * A guard, not an active filter: every answer is finished today, so all of
+   * them publish. If an unfinished one is ever added, a bracketed note would
+   * still render on the page but must never reach Google — a placeholder in a
+   * rich result is worse than no rich result.
    */
   const publishable = faqs.items.filter((item) => !item.a.includes('['));
 

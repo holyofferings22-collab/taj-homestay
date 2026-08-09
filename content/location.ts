@@ -11,8 +11,12 @@ export const location = {
       place: 'Dwarka Sector 25 / Yashobhoomi metro, Airport Express',
       value: 'Walking distance',
     },
-    /** PLACEHOLDER — measure the actual drive time to T3. */
-    { icon: 'Plane', place: 'IGI Airport Terminal 3', value: '[ADD DRIVE TIME]' },
+    /**
+     * TODO: no measured drive time to T3 yet. "Short drive" is the claim the
+     * About and Group Stays pages already make, so it is used here rather than
+     * a guessed figure — replace it with a real number once someone times it.
+     */
+    { icon: 'Plane', place: 'IGI Airport Terminal 3', value: 'Short drive' },
     { icon: 'TrainTrack', place: 'New Delhi Bijwasan railway station', value: 'Under 1 km' },
     { icon: 'Building2', place: 'DLF Cyber City, via Dwarka Expressway', value: 'By road' },
   ],

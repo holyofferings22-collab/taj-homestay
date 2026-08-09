@@ -79,7 +79,7 @@ export default function ContactPage() {
                 {contactPage.callCta} <span aria-hidden="true">&rarr;</span>
               </a>
 
-              <p className="mt-[18px] text-[13px]">{contactPage.bookingSites}</p>
+              <p className="mt-[18px] text-[13px]">{contactPage.directNote}</p>
             </div>
 
             <div className="mt-6 h-[260px] overflow-hidden rounded-2xl border border-line">

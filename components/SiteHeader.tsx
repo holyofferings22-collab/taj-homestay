@@ -32,9 +32,6 @@ export function SiteHeader() {
             </a>
           </div>
           <div className="flex items-center gap-2.5">
-            {(!social.instagram || !social.facebook) && (
-              <span className="text-[13px] text-muted">{social.placeholderLabel}</span>
-            )}
             {social.instagram && (
               <a
                 href={social.instagram}

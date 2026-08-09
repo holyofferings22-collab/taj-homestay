@@ -20,17 +20,24 @@ export const booking = {
   defaultCheckOut: '2026-08-16',
   roomOptions: ['1 Room', '2 Rooms', '3 Rooms', '4+ Rooms'],
   guestOptions: ['1 Adult', '2 Adults', '2 Adults, 1 Child', '4 Adults'],
-  /** PLACEHOLDER — the live booking-engine URL. */
-  url: '[ADD BOOKING URL]',
+  /**
+   * TODO: there is no online booking engine yet. Until one exists the form
+   * confirms the dates in-page and asks the guest to call, which is honest —
+   * the desk really is the booking channel. Point this at the real URL and
+   * wire the submit to it when there is one.
+   */
+  url: null as string | null,
 } as const;
 
-export const bookingNote =
-  'Booking links pending — the form confirms in-page for now. Add [ADD BOOKING URL] and I will wire the submit to it.';
-
+/**
+ * Rating and review count read off the TAJ HOME STAY DWARKA Google Business
+ * Profile on 9 August 2026. Both drift as reviews come in — re-check them
+ * whenever you next edit this file, and keep about.ts in step.
+ */
 export const stats = [
-  { value: '20', label: 'Keys (confirm)' },
-  { value: '4.3', label: 'Google rating (confirm)' },
-  { value: '88', label: 'Reviews (confirm)' },
+  { value: '20', label: 'Keys' },
+  { value: '4.5', label: 'Google rating' },
+  { value: '116', label: 'Reviews' },
   { value: '350 m', label: 'To Yashobhoomi Gate 1' },
 ] as const;
 
@@ -41,6 +48,18 @@ export const intro = {
     'out of T3, or a night between trains at Bijwasan. Rooms are clean, the front desk is ' +
     'staffed around the clock, and breakfast comes out of our own kitchen.',
   cta: 'Read More',
+  /**
+   * The only photo in the set where Yashobhoomi is actually identifiable — the
+   * flyover and its signage are visible through the balcony door. That is why
+   * it sits beside a heading that claims we are beside it.
+   *
+   * Nine files in public/photos are stored rotated 90° with no EXIF tag and
+   * render sideways in every browser; check before swapping this out.
+   */
+  image: {
+    src: '/photos/IMG_9991.jpg',
+    alt: 'The view from a balcony at Taj Home Stay, looking out toward Yashobhoomi and the Dwarka Expressway',
+  },
 } as const;
 
 export const amenities = [
@@ -88,41 +107,31 @@ export const amenities = [
   },
 ] as const;
 
+/**
+ * Chrome for the home page's Guides section. The cards themselves are built
+ * from `content/guides.ts`, which is the single source of truth for titles,
+ * tags, dates and images — the home page used to carry its own copies, and
+ * they drifted from the articles they linked to.
+ */
 export const guides = {
   heading: 'Guides & Updates',
-  /** `date` is a PLACEHOLDER on every card in the original design. */
-  items: [
-    {
-      tag: 'Guide',
-      title: 'Walking to Yashobhoomi Gate 1 from the guest house',
-      date: '[ADD DATE]',
-      href: '/location',
-      slot: 'ths-guide-1',
-    },
-    {
-      tag: 'Transport',
-      title: 'Airport Express: Sector 25 to Terminal 3, step by step',
-      date: '[ADD DATE]',
-      href: '/location',
-      slot: 'ths-guide-2',
-    },
-    {
-      tag: 'Nearby',
-      title: 'What stays open near Bharthal late at night',
-      date: '[ADD DATE]',
-      href: '/location',
-      slot: 'ths-guide-3',
-    },
-  ],
+  cta: 'All guides',
 } as const;
 
 /**
  * Home page FAQs.
  *
  * Answers are drawn from claims the site already makes elsewhere, so nothing
- * here introduces a new promise. Where a real policy is unknown the answer
- * carries a PLACEHOLDER rather than a guess — an invented check-in time is
- * the kind of detail a guest turns up and holds you to.
+ * here introduces a new promise, and no answer states a fact nobody has
+ * confirmed — an invented check-in time is exactly the kind of detail a guest
+ * turns up and holds you to.
+ *
+ * TODO: add a plain "check-in from X, check-out by Y" entry once those times
+ * are settled. The entry below covers late arrival, which is what guests
+ * flying in actually ask about, but it does not replace the standard times.
+ *
+ * Faq.tsx withholds any answer containing "[" from the FAQPage structured
+ * data. Nothing is filtered today; the guard stays for future edits.
  */
 export const faqs = {
   heading: 'Questions guests ask',
@@ -136,8 +145,11 @@ export const faqs = {
         'Nobody in your group needs a cab to reach the hall.',
     },
     {
-      q: 'What time can I check in and check out?',
-      a: '[ADD CHECK-IN AND CHECK-OUT TIMES.] For groups, check-outs can be staggered when flights are spread across the day.',
+      q: 'Can I check in late, or check out late?',
+      a:
+        'Yes. The front desk is staffed 24×7, so there is no cut-off for arriving — a delegation ' +
+        'landing at 2am checks in without waiting. For groups, check-outs can be staggered when ' +
+        'flights are spread across the day. Call the desk and we will fix the times for your stay.',
     },
     {
       q: 'Is anyone at the desk late at night?',
@@ -162,7 +174,7 @@ export const faqs = {
       q: 'Do you serve breakfast?',
       a:
         'Breakfast comes out of our own kitchen, vegetarian and non-vegetarian, and simple meals ' +
-        'are available through the day on request. [CONFIRM whether breakfast is included in the rate.]',
+        'are available through the day on request. Call the desk to confirm what your rate includes.',
     },
     {
       q: 'Can you hold a block of rooms for a group?',

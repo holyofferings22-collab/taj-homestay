@@ -1,9 +1,10 @@
 /**
  * Single source of truth for site-wide content.
  *
- * Values marked PLACEHOLDER are carried over verbatim from the original
- * design and are intended to be filled in. They render exactly as they did
- * before, so the site is unchanged until you edit them here.
+ * Nothing here is a placeholder — every value renders as finished copy. Where
+ * a real-world detail is still unknown (a second social profile, an online
+ * booking URL), the site omits it rather than showing a gap, and the note is
+ * kept in a comment beside the field so it is not forgotten.
  */
 
 export const brand = {
@@ -65,8 +66,7 @@ export const contact = {
  * goes nowhere. Add the URL here and the icon appears on both.
  */
 export const social = {
-  /** Shown only while a profile is still missing — a prompt, not a caption. */
-  placeholderLabel: '[ADD SOCIAL LINKS]',
+  /** TODO: no Instagram profile yet. Its icon is hidden until a URL lands here. */
   instagram: null as string | null,
   facebook: 'https://www.facebook.com/profile.php?id=61592809888082' as string | null,
 } as const;

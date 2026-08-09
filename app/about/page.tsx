@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { PageHero, StatBand } from '@/components/PageHero';
-import { PhotoSlot } from '@/components/PhotoSlot';
 import { Reveal } from '@/components/Reveal';
 import { about } from '@/content/about';
 
@@ -41,16 +41,31 @@ export default function AboutPage() {
           </div>
 
           <div className="grid min-w-0 flex-[1_1_380px] gap-[22px]">
-            <div className="h-[340px] overflow-hidden rounded-2xl">
-              <PhotoSlot />
+            <div className="relative h-[340px] overflow-hidden rounded-2xl bg-stone">
+              <Image
+                src={about.images.lead.src}
+                alt={about.images.lead.alt}
+                fill
+                priority
+                sizes="(max-width: 1000px) 100vw, 560px"
+                className="object-cover"
+              />
             </div>
             <div className="flex flex-wrap gap-[22px]">
-              <div className="h-[200px] flex-[1_1_200px] overflow-hidden rounded-2xl">
-                <PhotoSlot />
-              </div>
-              <div className="h-[200px] flex-[1_1_200px] overflow-hidden rounded-2xl">
-                <PhotoSlot />
-              </div>
+              {about.images.supporting.map((photo) => (
+                <div
+                  key={photo.src}
+                  className="relative h-[200px] flex-[1_1_200px] overflow-hidden rounded-2xl bg-stone"
+                >
+                  <Image
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 1000px) 50vw, 270px"
+                    className="object-cover"
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>
