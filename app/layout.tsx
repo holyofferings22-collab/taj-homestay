@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Prata, Jost } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
@@ -76,6 +77,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main aria-label={brand.name}>{children}</main>
         <SiteFooter />
+        {/* Vercel Analytics. Injects its script at the end of the body and
+            renders nothing, so it stays out of the layout above it. It is
+            inert off Vercel — no endpoint to report to — which is why there
+            is no dev-only guard around it. */}
+        <Analytics />
       </body>
     </html>
   );
