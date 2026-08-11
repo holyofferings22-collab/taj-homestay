@@ -11,8 +11,17 @@ export type GallerySection = {
   photos: readonly Photo[];
 };
 
+/**
+ * Lightbox controls.
+ *
+ * They sit over the photo, and a hairline border on a transparent fill
+ * disappears entirely against a pale one — which most of these are. On a
+ * desktop there is dark surround to either side of the image and the problem
+ * never shows; on a phone the photo fills the frame and the arrows landed on
+ * it. The dark fill is what makes them findable, so it is not decoration.
+ */
 const overlayButton =
-  'absolute flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-transparent font-body text-xl leading-none text-cream hover:bg-white/10';
+  'absolute flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-[rgba(20,17,14,0.55)] font-body text-xl leading-none text-cream backdrop-blur-[2px] hover:bg-[rgba(20,17,14,0.85)]';
 
 /**
  * Masonry photo grid with lightbox.
@@ -60,28 +69,33 @@ export function GalleryGrid({ sections }: { sections: readonly GallerySection[] 
           <section
             key={section.id}
             id={section.id}
-            className="mx-auto max-w-[1240px] scroll-mt-24 px-6 pt-[72px]"
+            className="mx-auto max-w-[1240px] scroll-mt-24 px-6 pt-[var(--rhythm-gap)]"
           >
             <div className="mb-7 flex flex-wrap items-baseline justify-between gap-4">
-              <h2 className="m-0 font-display text-[clamp(24px,2.8vw,32px)] font-normal text-ink">
+              <h2 className="m-0 font-display text-[clamp(19px,2.8vw,32px)] font-normal text-ink">
                 {section.heading}
               </h2>
               <p className="m-0 text-sm">{section.count}</p>
             </div>
 
-            <div className="columns-1 gap-5 min-[700px]:columns-2 min-[1080px]:columns-3">
+            {/* Two columns on a phone. At one column each photo was 375px
+                wide and a portrait one ran to 500px, so a 12-photo section
+                was six screens of scrolling. Paired, the masonry reads as a
+                contact sheet, which is what someone skimming a gallery
+                wants — and the lightbox is still one tap away. */}
+            <div className="columns-2 gap-2 min-[700px]:gap-5 min-[1080px]:columns-3">
               {section.photos.map((photo, i) => (
                 <figure
                   key={photo.src}
                   onClick={() => setIndex(base + i)}
-                  className="mb-5 block cursor-zoom-in overflow-hidden rounded-[14px] bg-[#F1E8DD] [break-inside:avoid]"
+                  className="mb-2 block cursor-zoom-in overflow-hidden rounded-lg bg-stone [break-inside:avoid] min-[700px]:mb-5 min-[700px]:rounded-[14px]"
                 >
                   <Image
                     src={photo.src}
                     alt={photo.alt}
                     width={1200}
                     height={900}
-                    sizes="(max-width: 700px) 100vw, (max-width: 1080px) 50vw, 33vw"
+                    sizes="(max-width: 700px) 50vw, (max-width: 1080px) 50vw, 33vw"
                     className="block h-auto w-full"
                   />
                 </figure>
@@ -97,7 +111,7 @@ export function GalleryGrid({ sections }: { sections: readonly GallerySection[] 
           role="dialog"
           aria-modal="true"
           aria-label={all[index].alt}
-          className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(20,17,14,0.94)] px-5 py-10"
+          className="fixed inset-0 z-[90] flex items-center justify-center bg-[rgba(20,17,14,0.94)] px-3 py-16 sm:px-5 sm:py-10"
         >
           <Image
             src={all[index].src}

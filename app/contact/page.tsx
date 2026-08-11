@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Clock, Mail, MapPin, Phone } from 'lucide-react';
+import { Clock, Mail, MapPin } from 'lucide-react';
+import { WhatsApp } from '@/components/BrandIcons';
 import { PageHero } from '@/components/PageHero';
 import { ContactForm } from '@/components/ContactForm';
 import { Reveal } from '@/components/Reveal';
@@ -13,29 +14,29 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <div className="font-body text-base font-light leading-[1.7] text-muted">
+    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
       <PageHero
         eyebrow={contactPage.eyebrow}
         heading={contactPage.heading}
         lead={contactPage.lead}
       />
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[104px] pt-[88px]">
+      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)] pt-[var(--rhythm-block)]">
         <div className="flex flex-wrap items-start gap-10">
           <div className="min-w-0 flex-[1_1_340px]">
-            <h2 className="m-0 mb-[22px] font-display text-[26px] font-normal text-ink">
+            <h2 className="m-0 mb-[22px] font-display text-[clamp(20px,3vw,26px)] font-normal text-ink">
               {contactPage.formHeading}
             </h2>
             <ContactForm />
           </div>
 
           <div className="min-w-0 max-w-[420px] flex-[1_1_300px]">
-            <div className="rounded-2xl border border-line bg-white px-7 py-8">
-              <h2 className="m-0 mb-5 font-display text-2xl font-normal text-ink">
+            <div className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8">
+              <h2 className="m-0 mb-5 font-display text-[clamp(18px,2.8vw,24px)] font-normal text-ink">
                 {contactPage.reachHeading}
               </h2>
 
-              <div className="grid gap-4 text-[15px]">
+              <div className="grid gap-4 text-[length:var(--step-body)]">
                 <p className="m-0 flex gap-3">
                   <MapPin
                     aria-hidden="true"
@@ -49,10 +50,12 @@ export default function ContactPage() {
                   </span>
                 </p>
                 <a
-                  href={`tel:${contact.phone.dial}`}
+                  href={contact.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex min-h-[34px] items-center gap-3 text-ink"
                 >
-                  <Phone aria-hidden="true" strokeWidth={1.5} className="h-4 w-4 flex-none text-accent" />
+                  <WhatsApp className="h-4 w-4 flex-none text-whatsapp" />
                   {contact.phone.display}
                 </a>
                 <a
@@ -73,10 +76,13 @@ export default function ContactPage() {
               </div>
 
               <a
-                href={`tel:${contact.phone.dial}`}
-                className="mt-[26px] inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-clay px-[26px] py-4 text-[15px] text-white hover:text-white"
+                href={contact.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-[26px] inline-flex min-h-12 w-full items-center justify-center gap-2.5 rounded-full bg-clay px-[26px] py-4 text-[length:var(--step-body)] text-white hover:text-white"
               >
-                {contactPage.callCta} <span aria-hidden="true">&rarr;</span>
+                <WhatsApp className="h-[17px] w-[17px]" />
+                {contactPage.whatsappCta}
               </a>
 
               <p className="mt-[18px] text-[13px]">{contactPage.directNote}</p>

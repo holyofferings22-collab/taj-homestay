@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react';
+import { JsonLd } from '@/components/JsonLd';
 import { faqs } from '@/content/home';
 
 /**
@@ -33,21 +34,18 @@ export function Faq() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
+      <JsonLd data={faqJsonLd} />
 
-      <h2 className="mb-3 text-center font-display text-[clamp(28px,3.4vw,42px)] font-normal text-ink">
+      <h2 className="mb-3 text-center font-display text-[length:var(--step-section)] font-normal text-ink">
         {faqs.heading}
       </h2>
-      <p className="mx-auto mb-12 max-w-[520px] text-center">{faqs.lead}</p>
+      <p className="mx-auto mb-9 max-w-[520px] text-center sm:mb-12">{faqs.lead}</p>
 
       <div className="mx-auto max-w-[820px] border-b border-line">
         {faqs.items.map((item) => (
           <details key={item.q} className="group border-t border-line">
             <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 [&::-webkit-details-marker]:hidden">
-              <h3 className="m-0 font-display text-[19px] font-normal leading-[1.4] text-ink">
+              <h3 className="m-0 font-display text-[clamp(15px,2.4vw,19px)] font-normal leading-[1.4] text-ink">
                 {item.q}
               </h3>
               <Plus
@@ -56,7 +54,7 @@ export function Faq() {
                 className="h-5 w-5 flex-none text-clay transition-transform duration-[250ms] group-open:rotate-45"
               />
             </summary>
-            <p className="m-0 max-w-[680px] pb-7 text-[15px]">{item.a}</p>
+            <p className="m-0 max-w-[680px] pb-7 text-[length:var(--step-body)]">{item.a}</p>
           </details>
         ))}
       </div>

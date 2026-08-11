@@ -68,7 +68,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     <article>
       {guide.sections.map((section) => (
         <section key={section.heading} className="mb-11 max-w-[720px] last:mb-0">
-          <h2 className="m-0 mb-4 font-display text-[clamp(22px,2.4vw,28px)] font-normal text-ink">
+          <h2 className="m-0 mb-4 font-display text-[clamp(18px,2.4vw,28px)] font-normal text-ink">
             {section.heading}
           </h2>
 
@@ -135,8 +135,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   );
 
   return (
-    <div className="font-body text-base font-light leading-[1.7] text-muted">
-      <section className="bg-sand pb-[62px] pt-[66px]">
+    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
+      <section className="bg-sand py-[var(--rhythm-hero)]">
         <div className="mx-auto max-w-[1240px] px-6">
           <Link
             href="/guides"
@@ -144,7 +144,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           >
             <span aria-hidden="true">&larr;</span> Guides &amp; Updates
           </Link>
-          <h1 className="m-0 mt-3.5 max-w-[760px] font-display text-[clamp(30px,3.8vw,46px)] font-normal leading-[1.2] text-ink [text-wrap:pretty]">
+          <h1 className="m-0 mt-3.5 max-w-[760px] font-display text-[clamp(25px,3.8vw,46px)] font-normal leading-[1.2] text-ink [text-wrap:pretty]">
             {guide.title}
           </h1>
           <p className="mt-5 max-w-[560px]">{guide.lead}</p>
@@ -161,7 +161,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       {isSquare ? (
         /* Square hero: article left, image right, image sticky so it stays
            beside the copy on a long read. Stacks image-first on narrow screens. */
-        <Reveal className="mx-auto max-w-[1240px] px-6 pt-[64px]">
+        <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">
           <div className="flex flex-wrap items-start gap-10">
             <div className="order-1 min-w-0 flex-[1_1_320px] min-[900px]:order-2">
               <div className="relative aspect-square overflow-hidden rounded-2xl bg-stone min-[900px]:sticky min-[900px]:top-[100px]">
@@ -173,18 +173,18 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         </Reveal>
       ) : (
         <>
-          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[72px]">
+          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">
             <div className="relative h-[clamp(220px,34vw,420px)] overflow-hidden rounded-2xl bg-stone">
               {heroImage}
             </div>
           </Reveal>
 
-          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[64px]">{body}</Reveal>
+          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">{body}</Reveal>
         </>
       )}
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[80px]">
-        <h2 className="m-0 mb-7 font-display text-[clamp(22px,2.4vw,28px)] font-normal text-ink">
+      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-block)]">
+        <h2 className="m-0 mb-7 font-display text-[clamp(18px,2.4vw,28px)] font-normal text-ink">
           More guides
         </h2>
         <div className="grid grid-cols-1 gap-5 min-[680px]:grid-cols-2">
@@ -192,12 +192,12 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             <Link
               key={other.slug}
               href={`/guides/${other.slug}`}
-              className="rounded-2xl border border-line bg-white px-7 py-8 transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-accent"
+              className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8 transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-accent"
             >
               <span className="inline-block rounded bg-sand px-2.5 py-[5px] text-[11px] uppercase tracking-[0.08em] text-ink">
                 {other.tag}
               </span>
-              <h3 className="mb-0 mt-3.5 font-display text-[19px] font-normal leading-[1.4] text-ink">
+              <h3 className="mb-0 mt-3.5 font-display text-[clamp(15px,2.4vw,19px)] font-normal leading-[1.4] text-ink">
                 {other.title}
               </h3>
             </Link>
@@ -205,7 +205,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         </div>
       </Reveal>
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[104px] pt-[72px]">
+      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)] pt-[var(--rhythm-gap)]">
         <CtaBand
           heading="Planning a stay around an event?"
           body="Send us your dates and we will tell you what is actually free. For anything urgent, the desk answers the phone at any hour."

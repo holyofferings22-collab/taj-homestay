@@ -1,9 +1,9 @@
 export const about = {
   eyebrow: 'Taj Home Stay, Dwarka',
   heading: 'About the guest house',
-  lead: 'Twenty keys in Bharthal Village, run by the family that lives here.',
+  lead: 'Twenty rooms in Bharthal Village, run by the family that lives here.',
   paragraphs: [
-    'Taj Home Stay, Dwarka is a 20-key guest house in Bharthal Village, Sector 26. Most of our ' +
+    'Taj Home Stay, Dwarka is a 20-room guest house in Bharthal Village, Sector 26. Most of our ' +
       'guests are here for a reason: a convention at Yashobhoomi, an early flight out of T3, or a ' +
       'night between trains at Bijwasan.',
     'Rooms are clean and serviced daily, the front desk is staffed around the clock, and breakfast ' +
@@ -50,7 +50,7 @@ export const about = {
    * makes, and one that matters more to a guest landing at 2am.
    */
   stats: [
-    { value: '20', label: 'Keys' },
+    { value: '20', label: 'Rooms' },
     { value: '4.5', label: 'Google rating' },
     { value: '116', label: 'Reviews' },
     { value: '24×7', label: 'Front desk' },

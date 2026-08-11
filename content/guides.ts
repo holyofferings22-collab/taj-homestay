@@ -2,7 +2,7 @@
  * Guides & Updates — the three articles linked from the home page.
  *
  * Everything factual here is drawn from claims the site already makes, or from
- * figures measured against the real route: Gate 1 at ~350 m, and 550 m / about
+ * figures measured against the real route: Gate 1 at ~500 m, and 550 m / about
  * 7 minutes on foot from Gate 3 of the Yashobhoomi metro station.
  *
  * Details nobody could verify — train times, fares, which local shops are open

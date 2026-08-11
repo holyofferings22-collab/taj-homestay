@@ -2,7 +2,7 @@ export const groupStays = {
   eyebrow: 'Taj Home Stay, Dwarka',
   heading: 'Group stays for teams and delegations',
   lead:
-    'Room blocks for exhibitors, corporate travel and families — about 350 m from Yashobhoomi ' +
+    'Room blocks for exhibitors, corporate travel and families — about 500 m from Yashobhoomi ' +
     '(IICC) Gate 1.',
 
   intro: {
@@ -14,7 +14,7 @@ export const groupStays = {
       'A group booking here means one point of contact, one consolidated bill, and a rate that ' +
         'holds across the whole block. Tell us how many rooms and which nights, and we will ' +
         'confirm what we can protect for you.',
-      'We are a 20-key guest house rather than a convention hotel, which cuts both ways: no ' +
+      'We are a 20-room guest house rather than a convention hotel, which cuts both ways: no ' +
         'banquet hall, but for a large enough group the whole property is effectively yours.',
     ],
     image: { src: '/photos/IMG_9993.jpg', alt: 'A deluxe room at Taj Home Stay, Dwarka' },
@@ -27,7 +27,7 @@ export const groupStays = {
         icon: 'MapPin',
         title: 'Prime Location',
         body:
-          'Yashobhoomi (IICC) Gate 1 is about 350 m on foot, and Dwarka Sector 25 on the Airport ' +
+          'Yashobhoomi (IICC) Gate 1 is about 500 m on foot, and Dwarka Sector 25 on the Airport ' +
           'Express line is walking distance. IGI Terminal 3 is a short drive, and Bijwasan ' +
           'station is close for anyone arriving by train. Nobody in your group needs a cab to ' +
           'reach the hall.',
@@ -73,8 +73,8 @@ export const groupStays = {
    * instead — the promise the page above it already makes.
    */
   stats: [
-    { value: '20', label: 'Keys available to block' },
-    { value: '350 m', label: 'To Yashobhoomi Gate 1' },
+    { value: '20', label: 'Rooms available to block' },
+    { value: '500 m', label: 'To Yashobhoomi Gate 1' },
     { value: '24×7', label: 'Front desk for late arrivals' },
     { value: '1', label: 'Point of contact for the block' },
   ],

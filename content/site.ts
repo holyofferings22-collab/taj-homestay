@@ -10,17 +10,56 @@
 export const brand = {
   name: 'Taj Home Stay',
   locality: 'Dwarka',
-  monogram: 'T',
+  /**
+   * The property's own logo. Intrinsic pixel size is recorded here so
+   * next/image can reserve the right box and never shift the header on load.
+   * The artwork already reads "TAJ HOME STAY", so the lockup that renders it
+   * (`Wordmark`) sets it as the accessible name and does not repeat the name
+   * in text beside it.
+   */
+  logo: {
+    src: '/photos/LOGO-hires.png',
+    width: 600,
+    height: 334,
+  },
   blurb:
-    'A 20-key guest house in Sector 26 Dwarka, a short walk from Yashobhoomi and the Airport Express line.',
+    'A 20-room guest house in Sector 26 Dwarka, a short walk from Yashobhoomi and the Airport Express line.',
 } as const;
+
+const phone = {
+  display: '+91 98105 63059',
+  dial: '+919810563059',
+} as const;
+
+/**
+ * wa.me wants bare digits in full international form — no '+', spaces or
+ * dashes — so the number is stripped out of `phone.dial` rather than typed a
+ * second time. One number, one place: change `phone.dial` above and every
+ * WhatsApp link on the site follows.
+ */
+const whatsappNumber = phone.dial.replace(/\D/g, '');
+
+/**
+ * Builds a click-to-chat URL for the property's number, with `message`
+ * pre-filled into the guest's composer. Guests can edit or delete it before
+ * sending — it is a starting line, not a locked message.
+ *
+ * The origin and the number are fixed here and only the message varies, so a
+ * caller can never redirect this somewhere else: `encodeURIComponent` percent-
+ * encodes `&`, `#` and `?`, which keeps caller text inside the `text` parameter
+ * instead of letting it append parameters or a fragment of its own. Callers
+ * pass plain text and nothing else — never a URL, and never anything they want
+ * treated as markup.
+ */
+export function whatsappLink(message: string): string {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
 
 export const contact = {
   email: 'tajhomestaydelhi@gmail.com',
-  phone: {
-    display: '+91 98105 63059',
-    dial: '+919810563059',
-  },
+  phone,
+  /** The generic click-to-chat link, used by every plain phone-number link. */
+  whatsapp: whatsappLink('Hello Taj Home Stay — I would like to check availability for my dates.'),
   address: {
     lines: ['KH No. 483, VPO Bharthal Village,', 'Sector 26 Dwarka, New Delhi 110077'],
     streetAddress: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka',
@@ -64,8 +103,13 @@ export const contact = {
  * A profile with no URL yet is `null`, not '#'. The header and footer skip
  * null entries entirely rather than rendering an icon that looks clickable and
  * goes nowhere. Add the URL here and the icon appears on both.
+ *
+ * WhatsApp is listed first because it is the desk's fastest channel, and it is
+ * never null — it is the property's own phone number, so it exists as long as
+ * the number does.
  */
 export const social = {
+  whatsapp: contact.whatsapp as string | null,
   /** TODO: no Instagram profile yet. Its icon is hidden until a URL lands here. */
   instagram: null as string | null,
   facebook: 'https://www.facebook.com/profile.php?id=61592809888082' as string | null,

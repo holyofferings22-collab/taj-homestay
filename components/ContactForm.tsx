@@ -5,9 +5,10 @@ import { contactPage } from '@/content/contact';
 import { contact } from '@/content/site';
 
 const labelClass =
-  'grid gap-[7px] text-[11px] uppercase tracking-[0.12em] text-muted';
+  'grid gap-1.5 text-[11px] uppercase tracking-[0.12em] text-muted';
+/** 16px on phones so iOS does not zoom on focus — see BookingForm. */
 const fieldClass =
-  'min-h-[46px] rounded-lg border border-line bg-white px-3 py-[13px] text-[15px] text-ink outline-none';
+  'min-h-[46px] rounded-lg border border-line bg-white px-3 py-[13px] text-base text-ink outline-none sm:text-[length:var(--step-body)]';
 
 function formatDate(value: string) {
   if (!value) return '';
@@ -83,7 +84,7 @@ export function ContactForm() {
 
       <button
         type="submit"
-        className="flex min-h-12 cursor-pointer items-center justify-center gap-2.5 rounded-full border-0 bg-blush p-4 text-[15px] text-ink transition-colors duration-[250ms] hover:bg-clay hover:text-white"
+        className="flex min-h-12 cursor-pointer items-center justify-center gap-2.5 rounded-full border-0 bg-clay p-4 text-[length:var(--step-body)] text-white transition-colors duration-[250ms] hover:bg-accent hover:text-ink"
       >
         Send enquiry <span aria-hidden="true">&rarr;</span>
       </button>

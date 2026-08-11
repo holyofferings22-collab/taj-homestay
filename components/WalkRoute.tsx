@@ -26,24 +26,24 @@ export function WalkRoute() {
 
   return (
     <>
-      <h2 className="m-0 mb-3 font-display text-[clamp(26px,3vw,34px)] font-normal text-ink">
+      <h2 className="m-0 mb-3 font-display text-[clamp(20px,3vw,34px)] font-normal text-ink">
         {walkRoute.heading}
       </h2>
       <p className="m-0 mb-8 max-w-[560px]">{walkRoute.lead}</p>
 
       <div className="flex flex-wrap items-stretch gap-8">
-        <div className="min-h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-2xl border border-line">
+        <div className="min-h-[300px] sm:min-h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-2xl border border-line">
           <iframe
             title={`Walking route from ${walkRoute.origin.label} to ${walkRoute.destination.label}`}
             src={embedSrc}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="block h-full min-h-[420px] w-full border-0"
+            className="block h-full min-h-[300px] sm:min-h-[420px] w-full border-0"
           />
         </div>
 
         <div className="min-w-0 flex-[1_1_340px]">
-          <div className="rounded-2xl border border-line bg-white px-7 py-8">
+          <div className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8">
             <Footprints
               aria-hidden="true"
               strokeWidth={1.5}
@@ -72,7 +72,7 @@ export function WalkRoute() {
               href={directionsHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-[26px] inline-flex min-h-12 items-center gap-2.5 rounded-full bg-blush px-[26px] py-[15px] text-[15px] text-ink transition-colors duration-[250ms] hover:bg-clay hover:text-white"
+              className="mt-[26px] inline-flex min-h-12 items-center gap-2.5 rounded-full bg-clay px-[26px] py-[15px] text-[length:var(--step-body)] text-white transition-colors duration-[250ms] hover:bg-accent hover:text-ink"
             >
               {walkRoute.cta} <span aria-hidden="true">&rarr;</span>
             </a>

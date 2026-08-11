@@ -1,8 +1,8 @@
 export const hero = {
   eyebrow: 'Guest house · Sector 26 Dwarka, New Delhi',
-  heading: 'Steps from Yashobhoomi. Minutes from the airport.',
+  heading: 'Steps from Yashobhoomi. Minutes from the Airport.',
   body:
-    'Yashobhoomi (IICC) Gate 1 is about 350 m on foot, and Dwarka Sector 25 metro on the ' +
+    'Yashobhoomi (IICC) Gate 1 is about 500 m on foot, and Dwarka Sector 25 metro on the ' +
     'Airport Express line is walking distance. A clean, well-run stay with a 24×7 front desk.',
   slides: [
     { src: '/photos/IMG_9991.jpg' },
@@ -22,9 +22,13 @@ export const booking = {
   guestOptions: ['1 Adult', '2 Adults', '2 Adults, 1 Child', '4 Adults'],
   /**
    * TODO: there is no online booking engine yet. Until one exists the form
-   * confirms the dates in-page and asks the guest to call, which is honest —
-   * the desk really is the booking channel. Point this at the real URL and
-   * wire the submit to it when there is one.
+   * hands the dates straight to WhatsApp, which is honest — the desk really is
+   * the booking channel. Point this at the real URL and switch the submit in
+   * `BookingForm` to it when there is one.
+   *
+   * The two defaults above are fixed dates and will drift into the past. They
+   * are what a guest sends the desk if they submit without touching the
+   * pickers, so they need revisiting — or replacing with today/tomorrow.
    */
   url: null as string | null,
 } as const;
@@ -35,10 +39,10 @@ export const booking = {
  * whenever you next edit this file, and keep about.ts in step.
  */
 export const stats = [
-  { value: '20', label: 'Keys' },
+  { value: '20', label: 'Rooms' },
   { value: '4.5', label: 'Google rating' },
   { value: '116', label: 'Reviews' },
-  { value: '350 m', label: 'To Yashobhoomi Gate 1' },
+  { value: '500 m', label: 'To Yashobhoomi Gate 1' },
 ] as const;
 
 export const intro = {
@@ -140,7 +144,7 @@ export const faqs = {
     {
       q: 'How far is Yashobhoomi?',
       a:
-        'Gate 1 of the convention centre is about 350 m from the door, a few minutes on foot. ' +
+        'Gate 1 of the convention centre is about 500 m from the door, a few minutes on foot. ' +
         'From Gate 3 of the Yashobhoomi metro station it is roughly 550 m, about seven minutes. ' +
         'Nobody in your group needs a cab to reach the hall.',
     },
@@ -183,11 +187,6 @@ export const faqs = {
         'A group booking means one point of contact, one consolidated bill, and a rate that holds ' +
         'across the whole block. Send us your dates and room count.',
     },
-    {
-      q: 'Is there a pool or a spa?',
-      a:
-        'No pool, no spa, no lobby music. What we offer is a sorted place to sleep a short walk ' +
-        'from where you need to be, at a price that makes sense for a two-night trip.',
-    },
+
   ],
 } as const;

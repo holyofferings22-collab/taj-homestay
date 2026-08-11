@@ -4,16 +4,37 @@
    Tailwind v4 generates utilities from these automatically:
    --color-clay -> bg-clay / text-clay / border-clay */
 @theme {
-  --color-ink: #1c1a18;
-  --color-muted: #6e6862;
-  --color-accent: #e4924e;
-  --color-clay: #a2591f;
-  --color-cream: #fdfbf8;
-  --color-sand: #fbf2e9;
-  --color-line: #efe6dc;
-  --color-stone: #f3ede6;
-  --color-blush: #f6e5d6;
-  --color-line-soft: #f6f0e8;
+  /* White ground, near-black actions, antique gold accent.
+     Replaces the warm cream and terracotta the port arrived with.
+
+     There is deliberately no third colour. On a white page the contrast
+     between near-black and gold is the whole design, which is why this
+     combination reads expensive without any hue doing the work — and it means
+     the only saturated thing on any page is the logo.
+
+     The blacks are warm rather than neutral (a trace of brown in them), so
+     they sit under an orange logo without the cold cast a true #000 gives.
+     Gold is for icons and small marks and never for body text: at 3.1:1 on
+     white it is legible as a glyph beside a label and not as a sentence. */
+  --color-ink: #12100c; /* near-black, warm — headings */
+  --color-muted: #6e6862; /* body text — 5.1:1 on white */
+  --color-accent: #b08d57; /* antique gold — icons and small marks only */
+  --color-clay: #221d16; /* every actionable thing; darkens to ink on hover */
+  --color-cream: #ffffff; /* the page */
+  --color-sand: #f7f6f3; /* alternating bands, a hair off white */
+  --color-line: #eae7e1; /* hairline */
+  --color-stone: #f2f0ec; /* the box a photo loads into */
+  --color-blush: #f5f0e5; /* pale gold — the numbered step badges */
+  --color-line-soft: #f5f3ef;
+
+  /* Each network's own mark colour, for the social and contact glyphs. These
+     sit outside the palette above on purpose — they are not ours to tune, and
+     nothing else on the site should reach for them. Icons drawn inside a
+     filled button keep inheriting that button's text colour instead: WhatsApp
+     green on the clay call bar would be unreadable. */
+  --color-whatsapp: #25d366;
+  --color-facebook: #1877f2;
+  --color-instagram: #e4405f;
 
   --font-display: var(--font-prata), serif;
   --font-body: var(--font-jost), sans-serif;
@@ -22,52 +43,109 @@
      collapses below 1120px, the mobile call bar appears below 1000px. */
   --breakpoint-nav: 70rem;
   --breakpoint-bar: 62.5rem;
+
+  /* Vertical rhythm.
+
+     The port inherited the original's fixed desktop pixel values, and Tailwind
+     applies an unprefixed utility at every width — so `py-[104px]` between
+     sections was also the value on a 375px phone, where 208px of stacked
+     padding is a quarter of the screen spent on nothing. Each step below keeps
+     its desktop figure at the top and collapses to what a phone can afford.
+
+     Used as `py-[var(--rhythm-section)]`. Reach for one of these rather than a
+     new fixed number, so the page keeps one rhythm as it narrows. */
+  --rhythm-section: clamp(44px, 9vw, 104px); /* was 104px — between sections */
+  --rhythm-block: clamp(38px, 8vw, 88px); /* was 88px  — first block on a page */
+  --rhythm-gap: clamp(32px, 6.5vw, 72px); /* was 72px  — between related blocks */
+  --rhythm-hero: clamp(30px, 6vw, 66px); /* was 66px  — inner-page banner */
+
+  /* Type scale.
+
+     Same problem as the rhythm above: these were single desktop sizes applied
+     at every width, so a phone got 44px stat numbers and 21px card titles.
+     Each step below keeps its old value as the clamp's max and adds a floor
+     for narrow screens.
+
+     Desktop is untouched by construction. Every step reaches its max through
+     the `vw` term before 1000px, so from the desktop breakpoint up these
+     resolve to exactly the numbers they replaced. */
+  --step-hero: clamp(26px, 4.4vw, 56px); /* home h1,  was 32px floor */
+  --step-page: clamp(26px, 4vw, 50px); /* inner h1, was 32px floor */
+  --step-section: clamp(21px, 3.4vw, 42px); /* section h2, was flat 28px */
+  --step-card: clamp(16px, 2.6vw, 21px); /* card h3,    was flat 21px */
+  --step-stat: clamp(26px, 4.6vw, 44px); /* stat value, was flat 44px */
+
+  /* Secondary copy — card bodies, chips, button labels. Page prose is set on
+     the page wrapper instead and stays a step above this, so a card's text
+     reads as subordinate to the section it sits in rather than competing with
+     it. The floor is 14px: below that this stops being comfortable to read on
+     a phone, and small is not the goal — dense is. */
+  --step-body: clamp(14px, 2.2vw, 15px); /* was flat 15px */
 }
 
-html,
-body {
-  margin: 0;
-  padding: 0;
-  background: var(--color-cream);
+/* These element defaults belong in `base` — not because it reads tidier, but
+   because an unlayered rule outranks every cascade layer no matter how
+   specific the layered selector is. Left unlayered, `a:hover { color: clay }`
+   beat `hover:text-white`, so a brown-on-hover button turned clay text on a
+   clay background and its label disappeared; `text-white` on the clay call bar
+   lost the same way, and so did every `text-muted`/`text-clay` on a link.
+   Inside `@layer base` these still set the defaults, and any utility class
+   overrides them, which is what each of those classes was written to do. */
+@layer base {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--color-cream);
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--color-muted);
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+
+  input,
+  select,
+  button,
+  textarea {
+    font-family: inherit;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-muted);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-clay);
+    outline-offset: 3px;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
+/* The default link hover, and the one rule here deliberately left unlayered.
+   In `base` it would lose to any `text-*` utility, so a footer link set to
+   `text-muted` would never darken on hover — the whole affordance would go
+   quiet everywhere it is styled.
 
-body {
-  font-family: var(--font-body);
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 1.7;
-  color: var(--color-muted);
-  overflow-x: hidden;
-}
-
-a {
-  color: var(--color-ink);
-  text-decoration: none;
-}
-
-a:hover {
+   Unlayered, it outranks the utilities instead, which is right for plain links
+   and wrong for buttons: a `hover:text-white` pill on brown would be repainted
+   clay on clay and its label would vanish. So any link that states its own
+   hover colour opts out and keeps it. */
+a:not([class*="hover:text-"]):hover {
   color: var(--color-clay);
-}
-
-input,
-select,
-button,
-textarea {
-  font-family: inherit;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: var(--color-muted);
-}
-
-:focus-visible {
-  outline: 2px solid var(--color-clay);
-  outline-offset: 3px;
 }
 
 @keyframes omRise {
@@ -98,11 +176,11 @@ textarea::placeholder {
   --hero-end: calc(clamp(24px, 4vw, 76px) + 470px);
   background: linear-gradient(
     90deg,
-    rgba(253, 251, 248, 0.97) 0px,
-    rgba(253, 251, 248, 0.95) calc(var(--hero-end) + 30px),
-    rgba(253, 251, 248, 0.66) calc(var(--hero-end) + 130px),
-    rgba(253, 251, 248, 0.18) calc(var(--hero-end) + 260px),
-    rgba(253, 251, 248, 0) calc(var(--hero-end) + 380px)
+    rgba(255, 255, 255, 0.97) 0px,
+    rgba(255, 255, 255, 0.95) calc(var(--hero-end) + 30px),
+    rgba(255, 255, 255, 0.66) calc(var(--hero-end) + 130px),
+    rgba(255, 255, 255, 0.18) calc(var(--hero-end) + 260px),
+    rgba(255, 255, 255, 0) calc(var(--hero-end) + 380px)
   );
 }
 
@@ -119,12 +197,29 @@ textarea::placeholder {
   }
 }
 
+/* The stacked wash, used once the hero drops the copy below the photo instead
+   of beside it. The stops have to agree with the spacer above the copy in
+   `app/page.tsx`: the eyebrow must land on solid wash, or it sets orange type
+   on open photo and stops being readable. Phones get a shorter spacer, so the
+   wash goes solid sooner to match. Move one and move the other. */
 .hero-wash-stacked {
   background: linear-gradient(
     180deg,
-    rgba(253, 251, 248, 0) 0px,
-    rgba(253, 251, 248, 0) 230px,
-    #fdfbf8 300px,
-    #fdfbf8 100%
+    rgba(255, 255, 255, 0) 0px,
+    rgba(255, 255, 255, 0) 180px,
+    #ffffff 216px,
+    #ffffff 100%
   );
+}
+
+@media (min-width: 40rem) {
+  .hero-wash-stacked {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0) 0px,
+      rgba(255, 255, 255, 0) 230px,
+      #ffffff 300px,
+      #ffffff 100%
+    );
+  }
 }

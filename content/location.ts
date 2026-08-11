@@ -5,7 +5,7 @@ export const location = {
   heading: 'Getting here',
   lead: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka, New Delhi 110077.',
   distances: [
-    { icon: 'MapPin', place: 'Yashobhoomi (IICC) Gate 1', value: '~350 m, walkable' },
+    { icon: 'MapPin', place: 'Yashobhoomi (IICC) Gate 1', value: '~500 m, walkable' },
     {
       icon: 'TrainFront',
       place: 'Dwarka Sector 25 / Yashobhoomi metro, Airport Express',
@@ -34,7 +34,7 @@ export const location = {
         icon: 'Footprints',
         title: 'To Yashobhoomi',
         body:
-          'Gate 1 is roughly 350 m from the door, so delegates walk across in a few minutes ' +
+          'Gate 1 is roughly 500 m from the door, so delegates walk across in a few minutes ' +
           'rather than queueing for a cab during hall changeovers.',
       },
       {
