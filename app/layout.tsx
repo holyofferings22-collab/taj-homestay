@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { Prata, Jost } from 'next/font/google';
+import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { WhatsAppConversions } from '@/components/WhatsAppConversions';
+import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
 import { brand, contact } from '@/content/site';
 import './globals.css';
 
@@ -82,6 +85,36 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             inert off Vercel — no endpoint to report to — which is why there
             is no dev-only guard around it. */}
         <Analytics />
+
+        {/* Google Ads conversion tracking. Unlike Analytics above, this one
+            does need the guard: it reports into a live ad account, so a
+            developer clicking through the site would otherwise spend the
+            property's optimisation signal on themselves.
+
+            `afterInteractive` is the next/script default and the right one
+            here — conversion tracking must never sit in front of first paint.
+            No onLoad/onReady/onError handler is used, which is what would
+            force this layout to become a client component. The inline tag
+            carries an id because next/script needs one to track it.
+
+            The inline script defines `gtag` synchronously and queues into
+            dataLayer, so a conversion fired before gtag.js has finished
+            downloading is held and sent rather than dropped. */}
+        {googleAdsEnabled && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GOOGLE_ADS_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-ads-tag" strategy="afterInteractive">
+              {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GOOGLE_ADS_ID}');`}
+            </Script>
+            <WhatsAppConversions />
+          </>
+        )}
       </body>
     </html>
   );

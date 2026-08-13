@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { WhatsApp } from '@/components/BrandIcons';
 import { booking } from '@/content/home';
 import { whatsappLink } from '@/content/site';
+import { reportConversion } from '@/lib/conversion';
 
 const labelText =
   'text-[10px] uppercase tracking-[0.1em] text-muted sm:text-[11px] sm:tracking-[0.12em]';
@@ -90,6 +91,13 @@ export function BookingForm() {
     const url = whatsappLink(message);
     setError('');
     setChatUrl(url);
+
+    /* The strongest signal on the site — dates, rooms and guests already
+       chosen. Reported here rather than on the link below because the submit
+       is not a link: the site-wide listener only sees `wa.me` anchors. A guest
+       whose popup was blocked and who then clicks the fallback reports twice,
+       which the session transaction ID collapses back into one. */
+    reportConversion();
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
