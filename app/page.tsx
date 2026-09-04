@@ -41,27 +41,58 @@ export default function HomePage() {
         <HeroStage frames={hero.frames} name={brand.name} locality={brand.locality} />
       </Screen>
 
-      {/* 2. What the place is, and the dates. */}
+      {/* 2. What the place is. The hero says nothing, so this screen carries
+          the introduction: the claim on the left against the room the claim
+          is about on the right, with the three facts the rest of the site
+          stands behind along the foot. */}
       <Screen
         id="stay"
         tone="light"
         labelledBy="stay-heading"
-        className="content-center gap-9 bg-white px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+        className="bg-white max-lg:grid-rows-[1fr_29vh] lg:grid-cols-[1.05fr_1fr]"
       >
-        <div className="grid max-w-[860px] gap-5">
-          <p className="eyebrow" data-rv="">
-            {statement.eyebrow}
-          </p>
-          <SplitHeading
-            as="h2"
-            id="stay-heading"
-            text={statement.heading}
-            emphasis={statement.headingEmphasis}
-            className="text-[length:var(--step-hero)] leading-[1.02]"
-          />
-          <RiseIn delay={0.25}>
-            <p className="lede">{statement.body}</p>
+        <div className="grid content-center gap-[clamp(18px,3vh,28px)] px-[var(--gutter)] pb-[clamp(18px,3vh,44px)] pt-[var(--header-clear)]">
+          <div className="grid max-w-[620px] gap-5">
+            <p className="eyebrow" data-rv="">
+              {statement.eyebrow}
+            </p>
+            <SplitHeading
+              as="h2"
+              id="stay-heading"
+              text={statement.heading}
+              emphasis={statement.headingEmphasis}
+              className="text-[length:var(--step-section)] leading-[1.06]"
+            />
+            <RiseIn delay={0.25}>
+              <p className="lede">{statement.body}</p>
+            </RiseIn>
+          </div>
+
+          <RiseIn delay={0.35}>
+            <dl className="m-0 grid max-w-[620px] grid-cols-3 gap-x-4 gap-y-4 border-t border-hairline pt-5 sm:gap-x-8">
+              {statement.facts.map((fact) => (
+                <div key={fact.label} className="grid gap-1">
+                  <dt className="font-display text-[clamp(19px,2vw,28px)] leading-none text-ink">
+                    {fact.value}
+                  </dt>
+                  <dd className="m-0 text-[12px] leading-[1.45] text-slate sm:text-[13px]">{fact.label}</dd>
+                </div>
+              ))}
+            </dl>
           </RiseIn>
+        </div>
+
+        <div className="photo photo-hover group relative h-full overflow-hidden">
+          <Parallax strength={12} className="absolute inset-[-7%_0]">
+            <Image
+              src={statement.image.src}
+              alt={statement.image.alt}
+              fill
+              quality={72}
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </Parallax>
         </div>
       </Screen>
 

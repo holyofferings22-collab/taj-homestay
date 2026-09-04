@@ -21,14 +21,32 @@ export const hero = {
   ],
 } as const;
 
-/** The screen under the hero: the argument the whole page rests on. */
+/**
+ * The screen under the hero. The hero carries no words, so this is where the
+ * site first says what the place is.
+ *
+ * The eyebrow no longer repeats the headline: it was "Sector 26 Dwarka,
+ * beside Yashobhoomi" directly above a headline ending "beside Yashobhoomi".
+ * The three facts are the ones the rest of the site already stands behind,
+ * and they are about the house rather than the distances, which are the
+ * location screen's job further down.
+ */
 export const statement = {
-  eyebrow: 'Sector 26 Dwarka, beside Yashobhoomi',
+  eyebrow: 'Sector 26 Dwarka',
   heading: 'A quiet address',
   headingEmphasis: 'beside Yashobhoomi.',
   body:
-    'Five hundred metres from the convention hall. Twenty rooms, a desk that answers at any ' +
-    'hour, and the Airport Express a short walk away.',
+    'Five hundred metres from the convention hall. A twenty-room guest house run by the ' +
+    'family who live here, with a desk that answers at any hour.',
+  facts: [
+    { value: 'Twenty', label: 'rooms, serviced daily' },
+    { value: '24×7', label: 'front desk, no cut-off' },
+    { value: 'Our own', label: 'kitchen, breakfast cooked here' },
+  ],
+  image: {
+    src: '/photos/2026/lounge.jpg',
+    alt: 'The ground-floor lounge at Taj Home Stay, with sofas and armchairs',
+  },
 } as const;
 
 /** Options for the hero booking bar. Dates default to today and tomorrow. */
