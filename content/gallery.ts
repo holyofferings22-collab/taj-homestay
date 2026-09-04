@@ -1,3 +1,13 @@
+/**
+ * The gallery.
+ *
+ * Photographed in September 2026 and colour-corrected; nothing is staged and
+ * nothing is stock. Sections are titled by what is visible in the frame, not
+ * by the sold category: the shoot was not organised category by category, and
+ * a balcony filed under "Deluxe" (a room sold as having no window) would
+ * promise the wrong room. The house comes first because the lounge, the desk
+ * and the dining room are the parts a guest cannot see anywhere else.
+ */
 export const gallery = {
   eyebrow: 'Gallery',
   heading: 'Every room,',
@@ -6,66 +16,79 @@ export const gallery = {
     'Every room, bathroom and balcony photographed as it is. No staging, no stock. ' +
     'Tap any photo to view it full size.',
   heroImage: {
-    src: '/photos/IMG_9976.jpg',
-    alt: 'A room at Taj Home Stay with a marble floor and recessed ceiling lighting',
+    src: '/photos/2026/lounge.jpg',
+    alt: 'The ground-floor lounge at Taj Home Stay, with sofas and armchairs',
   },
-  /**
-   * Sections are titled by what is visible in the frame, not by the sold
-   * category: the photographs were not shot per category, and a balcony shown
-   * under "Deluxe" (a room sold as having no window) would promise the wrong
-   * room. Rooms with a balcony or window come first because they sell best.
-   */
   sections: [
     {
-      id: 'rooms-with-a-view',
-      heading: 'Rooms with a balcony or window',
-      count: '8 photos',
+      id: 'house',
+      heading: 'The house',
+      count: '13 photos',
       photos: [
-        { src: '/photos/IMG_9991.jpg', alt: 'A room with balcony and open city view' },
-        { src: '/photos/IMG_9993.jpg', alt: 'A room with daylight from the balcony door' },
-        { src: '/photos/IMG_0016.jpg', alt: 'A room at dusk with curtains drawn back' },
-        { src: '/photos/IMG_0018.jpg', alt: 'Full length view of a deluxe room' },
-        { src: '/photos/IMG_0020.jpg', alt: 'A room with seating by the window' },
-        { src: '/photos/IMG_9988.jpg', alt: 'A room with window and tufted headboard' },
-        { src: '/photos/IMG_9986.jpg', alt: 'A room with daylight from the window' },
-        { src: '/photos/IMG_9987.jpg', alt: 'A room, wide view from the doorway' },
+        { src: '/photos/2026/lounge.jpg', alt: 'The ground-floor lounge with sofas and armchairs' },
+        { src: '/photos/2026/lounge-seating.jpg', alt: 'Armchairs and a low table in the lounge' },
+        { src: '/photos/2026/lounge-entrance.jpg', alt: 'Lounge seating beside the entrance' },
+        { src: '/photos/2026/front-desk.jpg', alt: 'The front desk at Taj Home Stay, with the lift beyond' },
+        { src: '/photos/2026/front-desk-wide.jpg', alt: 'The reception desk and lounge entrance' },
+        { src: '/photos/2026/dining.jpg', alt: 'A laid dining table at Taj Home Stay' },
+        { src: '/photos/2026/dining-table.jpg', alt: 'A dining table set for two' },
+        { src: '/photos/2026/games-room.jpg', alt: 'The pool table in the games room' },
+        { src: '/photos/2026/games-table.jpg', alt: 'The games room pool table' },
+        { src: '/photos/2026/corridor.jpg', alt: 'A corridor of guest-room doors' },
+        { src: '/photos/2026/corridor-long.jpg', alt: 'A guest-room corridor running the length of the floor' },
+        { src: '/photos/2026/stairwell.jpg', alt: 'The staircase beside the guest-room corridor' },
+        { src: '/photos/2026/lift.jpg', alt: 'The lift on a guest-room floor' },
+      ],
+    },
+    {
+      id: 'rooms-with-a-view',
+      heading: 'Rooms with a window or balcony',
+      count: '10 photos',
+      photos: [
+        { src: '/photos/2026/room-dusk-city.jpg', alt: 'A room at dusk, the lights of Dwarka through the window' },
+        { src: '/photos/2026/room-window-view.jpg', alt: 'A room with tall windows looking over Dwarka' },
+        { src: '/photos/2026/room-window-pair.jpg', alt: 'A twin-windowed room with a writing table' },
+        { src: '/photos/2026/room-daylight.jpg', alt: 'A made-up room in daylight' },
+        { src: '/photos/2026/room-green-outlook.jpg', alt: 'A room whose window looks onto trees' },
+        { src: '/photos/2026/room-window-trees.jpg', alt: 'A room with a window onto greenery' },
+        { src: '/photos/2026/room-window-wide.jpg', alt: 'A wide view of a room with an external window' },
+        { src: '/photos/2026/room-curtains.jpg', alt: 'A room with the curtains drawn back' },
+        { src: '/photos/2026/room-balcony-door.jpg', alt: 'A room with the balcony door behind the bed' },
+        { src: '/photos/2026/room-balcony-night.jpg', alt: 'A room at night with the balcony door beyond' },
       ],
     },
     {
       id: 'rooms',
       heading: 'Rooms',
-      count: '18 photos',
+      count: '14 photos',
       photos: [
-        { src: '/photos/IMG_9977.jpg', alt: 'King bed with runner, framed art and wall-mounted TV' },
-        { src: '/photos/IMG_9976.jpg', alt: 'A room, marble floor and recessed ceiling lighting' },
-        { src: '/photos/IMG_0017.jpg', alt: 'A room seen from the entrance' },
-        { src: '/photos/IMG_9995.jpg', alt: 'A room with writing desk and armchair' },
-        { src: '/photos/IMG_0001.jpg', alt: 'A room with sofa, coffee table and wardrobe' },
-        { src: '/photos/IMG_9978.jpg', alt: 'Bed made up with fresh linen and folded towels' },
-        { src: '/photos/IMG_9994.jpg', alt: 'Armchair, side table and wardrobe in a room' },
-        { src: '/photos/IMG_9996.jpg', alt: 'A room with maroon bed runner and framed art' },
-        { src: '/photos/IMG_9983.jpg', alt: 'A room with mirror and luggage space' },
-        { src: '/photos/IMG_9984.jpg', alt: 'A room with mustard feature wall and king bed' },
-        { src: '/photos/IMG_0004.jpg', alt: 'A room with air conditioning and armchair' },
-        { src: '/photos/IMG_0013.jpg', alt: 'A room with wardrobe and dressing mirror' },
-        { src: '/photos/IMG_0012.jpg', alt: 'A room with bedside table and landscape art' },
-        { src: '/photos/IMG_0005.jpg', alt: 'A room with teal cushions and marble floor' },
-        { src: '/photos/IMG_0009.jpg', alt: 'A room with wardrobe, TV and mirror' },
-        { src: '/photos/IMG_0014.jpg', alt: 'A room with armchair and framed painting' },
-        { src: '/photos/IMG_0006.jpg', alt: 'A room with folded towels on the bed' },
-        { src: '/photos/IMG_0015.jpg', alt: 'A room with wooden headboard and side chair' },
+        { src: '/photos/2026/room-armchair.jpg', alt: 'A room with a yellow armchair and a side table' },
+        { src: '/photos/2026/room-armchair-wide.jpg', alt: 'A room with an armchair, mirror and wall-mounted TV' },
+        { src: '/photos/2026/room-interior.jpg', alt: 'An interior room with no external window' },
+        { src: '/photos/2026/room-interior-wide.jpg', alt: 'A wide view of an interior room' },
+        { src: '/photos/2026/room-interior-wardrobe.jpg', alt: 'An interior room with a wardrobe and TV' },
+        { src: '/photos/2026/room-interior-twin.jpg', alt: 'An interior room made up with two pillows' },
+        { src: '/photos/2026/room-twin-beds.jpg', alt: 'A room laid out with two beds' },
+        { src: '/photos/2026/room-twin-wide.jpg', alt: 'A wide view of a twin room' },
+        { src: '/photos/2026/room-mirror.jpg', alt: 'A room with a full-height mirror beside the bed' },
+        { src: '/photos/2026/room-chair-table.jpg', alt: 'A room with a chair and a round table' },
+        { src: '/photos/2026/room-olive.jpg', alt: 'A room made up with olive cushions' },
+        { src: '/photos/2026/room-olive-wide.jpg', alt: 'A wide view of a room with olive cushions' },
+        { src: '/photos/2026/room-runner.jpg', alt: 'A room with a woven runner across the bed' },
+        { src: '/photos/2026/room-runner-wide.jpg', alt: 'A room with a runner, seen from the door' },
       ],
     },
     {
       id: 'bathrooms',
       heading: 'Bathrooms',
-      count: '5 photos',
+      count: '6 photos',
       photos: [
-        { src: '/photos/IMG_0007.jpg', alt: 'A room with attached bathroom door open' },
-        { src: '/photos/IMG_9997.jpg', alt: 'Bathroom with glass shower partition and marble tiling' },
-        { src: '/photos/IMG_9979.jpg', alt: 'Bathroom with western WC, wall mirror and hand shower' },
-        { src: '/photos/IMG_9998.jpg', alt: 'Bathroom basin with mirror and towel rail' },
-        { src: '/photos/IMG_9989.jpg', alt: 'Bathroom with instant geyser for hot water' },
+        { src: '/photos/2026/bathroom.jpg', alt: 'An attached bathroom with a basin and mirror' },
+        { src: '/photos/2026/bathroom-lit-mirror.jpg', alt: 'A bathroom with a lit mirror' },
+        { src: '/photos/2026/bathroom-shower.jpg', alt: 'A bathroom with a shower area' },
+        { src: '/photos/2026/bathroom-marble.jpg', alt: 'A marble-tiled attached bathroom' },
+        { src: '/photos/2026/bathroom-heater.jpg', alt: 'A bathroom with a wall-mounted water heater' },
+        { src: '/photos/2026/bathroom-dark-tile.jpg', alt: 'A bathroom finished in dark tile' },
       ],
     },
   ],

@@ -6,8 +6,8 @@ export const contactPage = {
     'The desk answers all day and all night. WhatsApp is quickest, especially during Yashobhoomi ' +
     'event weeks.',
   heroImage: {
-    src: '/photos/IMG_0016.jpg',
-    alt: 'A room at Taj Home Stay at dusk, curtains drawn back',
+    src: '/photos/2026/front-desk-wide.jpg',
+    alt: 'The reception desk and lounge entrance at Taj Home Stay',
   },
   formHeading: 'Send an enquiry',
   formLead: 'Tell us your dates and party and the desk replies on WhatsApp with what it can hold.',

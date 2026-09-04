@@ -23,8 +23,8 @@ export const rooms = {
     'window say so plainly, so you know which one you are booking.',
   /** A made bed, straight on, daylight: the archetypal room for the index. */
   heroImage: {
-    src: '/photos/IMG_9977.jpg',
-    alt: 'A made-up king bed with a runner, framed art and a wall-mounted TV at Taj Home Stay',
+    src: '/photos/2026/room-dusk-city.jpg',
+    alt: 'A room at Taj Home Stay at dusk, the lights of Dwarka through the window',
   },
   categories: [
     {
@@ -36,8 +36,8 @@ export const rooms = {
         'other categories: air conditioning, a TV, an attached bathroom and daily servicing.',
       rate: '4,000',
       image: {
-        src: '/photos/IMG_0013.jpg',
-        alt: 'A Deluxe room: king bed, air conditioning and a dressing mirror, with no external window',
+        src: '/photos/2026/room-interior.jpg',
+        alt: 'A Deluxe room: bed, wardrobe and wall-mounted TV, with no external window',
       },
     },
     {
@@ -49,8 +49,8 @@ export const rooms = {
         'most single travellers book.',
       rate: '5,000',
       image: {
-        src: '/photos/IMG_9984.jpg',
-        alt: 'A Super Deluxe room with a curtained external window, wardrobe and wall-mounted TV',
+        src: '/photos/2026/room-window-trees.jpg',
+        alt: 'A Super Deluxe room with an external window looking onto trees',
       },
     },
     {
@@ -62,8 +62,8 @@ export const rooms = {
         'Yashobhoomi and the Dwarka Expressway.',
       rate: '5,500',
       image: {
-        src: '/photos/IMG_9991.jpg',
-        alt: 'An Executive room with a private balcony looking toward Yashobhoomi and the Dwarka Expressway',
+        src: '/photos/2026/room-balcony-door.jpg',
+        alt: 'An Executive room with its own balcony behind sliding doors',
       },
     },
   ],

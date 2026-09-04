@@ -132,8 +132,8 @@ export const posts: readonly Post[] = [
     dateISO: '2026-09-04',
     lead: 'What actually happens when your flight lands at an hour nobody plans for.',
     image: {
-      src: '/photos/IMG_0019.jpg',
-      alt: 'A room at Taj Home Stay at night, balcony door open to the lights of Dwarka',
+      src: '/photos/2026/room-dusk-city.jpg',
+      alt: 'A room at Taj Home Stay at dusk, the lights of Dwarka through the window',
     },
     sections: [
       {
@@ -176,8 +176,8 @@ export const posts: readonly Post[] = [
     dateISO: '2026-09-04',
     lead: 'Three categories, separated by one thing: what the window opens onto.',
     image: {
-      src: '/photos/IMG_9991.jpg',
-      alt: 'A balcony at Taj Home Stay looking toward Yashobhoomi and the Dwarka Expressway',
+      src: '/photos/2026/room-balcony-door.jpg',
+      alt: 'An Executive room with its own balcony behind sliding doors',
     },
     sections: [
       {
@@ -223,8 +223,8 @@ export const posts: readonly Post[] = [
     dateISO: '2026-09-04',
     lead: 'No buffet, no lobby music, no pool. A kitchen, and a family who cook in it.',
     image: {
-      src: '/photos/IMG_0012.jpg',
-      alt: 'A serviced room at Taj Home Stay, made up with fresh linen',
+      src: '/photos/2026/dining.jpg',
+      alt: 'A laid dining table at Taj Home Stay',
     },
     sections: [
       {
@@ -268,8 +268,8 @@ export const posts: readonly Post[] = [
     dateISO: '2026-09-04',
     lead: 'For exhibitor teams, delegations and families travelling together, in a house with twenty rooms.',
     image: {
-      src: '/photos/IMG_9993.jpg',
-      alt: 'A room at Taj Home Stay with daylight from the balcony door',
+      src: '/photos/2026/corridor-long.jpg',
+      alt: 'A guest-room corridor running the length of the floor',
     },
     sections: [
       {
@@ -313,8 +313,8 @@ export const journalIndex = {
     'What it is like to stay here during a convention week, how the house works, and what we ' +
     'can and cannot do. For step by step directions, read the guides instead.',
   heroImage: {
-    src: '/photos/IMG_0016.jpg',
-    alt: 'A room at Taj Home Stay at dusk, curtains drawn back',
+    src: '/photos/2026/lounge.jpg',
+    alt: 'The ground-floor lounge at Taj Home Stay',
   },
 } as const;
 

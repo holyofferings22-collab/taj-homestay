@@ -1,21 +1,23 @@
 /**
  * The opening screen carries no words: it is the property, photographed, and
- * nothing else. The frames were picked for light and for what they prove,
- * with the balcony over Yashobhoomi leading. None of the nine files that are
- * stored rotated are in here.
+ * nothing else. Four frames from the September 2026 shoot, picked for light
+ * and for what each one proves: the outlook at dusk, the tall windows, a
+ * writing table, and a room with its own balcony. The lounge is a fine
+ * photograph but a busy one, and it earns its place on the About page rather
+ * than under the property's name.
  */
 export const hero = {
   frames: [
     {
-      src: '/photos/IMG_0019.jpg',
-      alt: 'A room at Taj Home Stay at night, balcony door open to the lights of Dwarka',
+      src: '/photos/2026/room-dusk-city.jpg',
+      alt: 'A room at Taj Home Stay at dusk, the lights of Dwarka through the window',
     },
     {
-      src: '/photos/IMG_9991.jpg',
-      alt: 'A balcony at Taj Home Stay looking toward Yashobhoomi and the Dwarka Expressway',
+      src: '/photos/2026/room-window-view.jpg',
+      alt: 'A room at Taj Home Stay with tall windows looking over Dwarka',
     },
-    { src: '/photos/IMG_9977.jpg', alt: 'A made-up king bed with a runner and framed art' },
-    { src: '/photos/IMG_0016.jpg', alt: 'A room at dusk with the curtains drawn back' },
+    { src: '/photos/2026/room-window-pair.jpg', alt: 'A twin-windowed room with a writing table' },
+    { src: '/photos/2026/room-balcony-door.jpg', alt: 'A room with its balcony door behind the bed' },
   ],
 } as const;
 
@@ -129,7 +131,7 @@ export const screens = {
       'Cars to Terminal 3 at any hour',
     ],
     cta: 'Send us your dates',
-    image: { src: '/photos/IMG_9993.jpg', alt: 'A room at Taj Home Stay with daylight from the balcony door' },
+    image: { src: '/photos/2026/corridor-long.jpg', alt: 'A guest-room corridor running the length of the floor' },
   },
 } as const;
 

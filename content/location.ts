@@ -6,8 +6,8 @@ export const location = {
   headingEmphasis: 'from the hall.',
   lead: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka, New Delhi 110077.',
   heroImage: {
-    src: '/photos/IMG_9991.jpg',
-    alt: 'The view from a balcony at Taj Home Stay toward Yashobhoomi and the Dwarka Expressway',
+    src: '/photos/2026/room-window-view.jpg',
+    alt: 'The outlook over Dwarka from a room at Taj Home Stay',
   },
   distancesHeading: { heading: 'Everything you need,', headingEmphasis: 'within a walk.' },
   distances: [

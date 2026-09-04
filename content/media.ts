@@ -17,19 +17,42 @@ export const media = {
    */
   heroVideo: null as Footage | null,
   heroStill: {
-    src: '/photos/IMG_0019.jpg',
-    alt: 'A room at night at Taj Home Stay, balcony door open to the lights of Dwarka',
+    src: '/photos/2026/room-dusk-city.jpg',
+    alt: 'A room at Taj Home Stay at dusk, the lights of Dwarka through the window',
   } as Still,
 
-  /** The building from across the lane, in its street. About page hero. */
+  /**
+   * The building from across the lane.
+   *
+   * Still null on purpose. The September 2026 shoot does contain two night
+   * exteriors, but they went through an AI retouch that rewrote the signage:
+   * the rooftop sign reads "TAI HOME STAY" and the canopy sign below it
+   * "BAHRTHAD". Neither is the property's name. Point this at an unretouched
+   * frame when one exists; do not use the retouched pair.
+   */
   exterior: null as Still | null,
-  /** The front desk, lamp-lit, phone on the counter. Contact screen. */
-  frontDesk: null as Still | null,
-  /** A corridor of numbered doors, receding. Group stays. */
-  corridor: null as Still | null,
-  /** Breakfast from the kitchen. About page amenities. */
-  breakfast: null as Still | null,
-  /** The walk toward Yashobhoomi Gate 1. Location page. */
+  /** The front desk, with the lift beyond. */
+  frontDesk: {
+    src: '/photos/2026/front-desk.jpg',
+    alt: 'The front desk at Taj Home Stay, with the lift beyond',
+  } as Still | null,
+  /** A corridor of guest-room doors, receding. */
+  corridor: {
+    src: '/photos/2026/corridor-long.jpg',
+    alt: 'A guest-room corridor running the length of the floor',
+  } as Still | null,
+  /** The dining tables. Breakfast itself is still unphotographed. */
+  breakfast: {
+    src: '/photos/2026/dining.jpg',
+    alt: 'A laid dining table at Taj Home Stay',
+  } as Still | null,
+  /** The walk toward Yashobhoomi Gate 1. The shoot was all indoors. */
   walk: null as Still | null,
+
+  /** The ground-floor lounge. */
+  lounge: {
+    src: '/photos/2026/lounge.jpg',
+    alt: 'The ground-floor lounge at Taj Home Stay, with sofas and armchairs',
+  } as Still | null,
 
 } as const;

@@ -19,8 +19,8 @@ export const groupStays = {
       'We are a 20-room guest house rather than a convention hotel, which cuts both ways: no ' +
         'banquet hall, but for a large enough group the whole property is effectively yours.',
     ],
-    image: { src: '/photos/IMG_0012.jpg', alt: 'A serviced room at Taj Home Stay, made up with fresh linen' },
-    heroImage: { src: '/photos/IMG_9993.jpg', alt: 'A room at Taj Home Stay with daylight from the balcony door' },
+    image: { src: '/photos/2026/room-twin-beds.jpg', alt: 'A room at Taj Home Stay laid out with two beds' },
+    heroImage: { src: '/photos/2026/corridor-long.jpg', alt: 'A guest-room corridor running the length of the floor' },
   },
 
   usps: {
@@ -59,7 +59,7 @@ export const groupStays = {
   includes: {
     heading: 'What a group booking',
     headingEmphasis: 'includes.',
-    image: { src: '/photos/IMG_0013.jpg', alt: 'A standard room at Taj Home Stay, Dwarka' },
+    image: { src: '/photos/2026/dining.jpg', alt: 'A laid dining table at Taj Home Stay' },
     items: [
       'Rooms held on confirmed dates',
       'One contact, one consolidated bill',

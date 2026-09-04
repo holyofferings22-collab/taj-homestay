@@ -5,8 +5,8 @@ export const about = {
   lead: 'Twenty rooms in Sector 26 Dwarka, run by the family that lives here.',
   /** Until the exterior is shot: a room the story screen does not repeat. */
   heroImage: {
-    src: '/photos/IMG_0018.jpg',
-    alt: 'A full-length view of a room at Taj Home Stay',
+    src: '/photos/2026/lounge.jpg',
+    alt: 'The ground-floor lounge at Taj Home Stay, with sofas and armchairs',
   },
   story: { heading: 'Most guests are here', headingEmphasis: 'for a reason.' },
   amenitiesHeading: { heading: 'What comes', headingEmphasis: 'with the room.' },
@@ -28,23 +28,23 @@ export const about = {
    * the only photo in the set that proves it — the Yashobhoomi flyover and its
    * signage are visible from the balcony.
    *
-   * All three were checked for orientation. Nine files in public/photos are
-   * stored rotated 90° with no EXIF tag, so browsers render them sideways —
-   * look before swapping any of these.
+   * All three come from the September 2026 shoot and show the parts of the
+   * house the story talks about: a room, the desk that answers at any hour,
+   * and the table breakfast comes out to.
    */
   images: {
     lead: {
-      src: '/photos/IMG_9991.jpg',
-      alt: 'The view from a balcony at Taj Home Stay, looking out toward Yashobhoomi and the Dwarka Expressway',
+      src: '/photos/2026/room-window-view.jpg',
+      alt: 'A room at Taj Home Stay with tall windows looking over Dwarka',
     },
     supporting: [
       {
-        src: '/photos/IMG_0019.jpg',
-        alt: 'A room at night, balcony door open to the lights of Dwarka',
+        src: '/photos/2026/front-desk.jpg',
+        alt: 'The front desk at Taj Home Stay, with the lift beyond',
       },
       {
-        src: '/photos/IMG_0012.jpg',
-        alt: 'A serviced room with air conditioning, made up with fresh linen',
+        src: '/photos/2026/dining.jpg',
+        alt: 'A laid dining table at Taj Home Stay',
       },
     ],
   },
