@@ -44,13 +44,21 @@ export function HeroStage({
   const step = (dir: number) => setActive((i) => (i + dir + frames.length) % frames.length);
 
   /* Autoplay, restarted whenever the frame changes so a click gives the new
-     frame its full turn rather than the remainder of the old one. */
+     frame its full turn rather than the remainder of the old one. It skips
+     to the next frame that has actually decoded, so a slow connection shows
+     the same photograph for longer instead of fading to a grey box. */
   useEffect(() => {
     if (paused || frames.length < 2 || prefersReducedMotion()) return;
-    const timer = window.setTimeout(
-      () => setActive((i) => (i + 1) % frames.length),
-      Math.max(2500, seconds * 1000),
-    );
+    const timer = window.setTimeout(() => {
+      setActive((i) => {
+        const imgs = scope.current?.querySelectorAll<HTMLImageElement>('[data-frame] img');
+        for (let step = 1; step <= frames.length; step += 1) {
+          const next = (i + step) % frames.length;
+          if (!imgs || imgs[next]?.complete) return next;
+        }
+        return i;
+      });
+    }, Math.max(2500, seconds * 1000));
     return () => window.clearTimeout(timer);
   }, [active, paused, frames.length, seconds]);
 
@@ -94,17 +102,25 @@ export function HeroStage({
         {frames.map((frame, i) => (
           <div
             key={frame.src}
+            data-frame=""
             className="absolute inset-0 transition-opacity duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)]"
             style={{ opacity: i === active ? 1 : 0 }}
             aria-hidden={i !== active}
           >
+            {/* Every frame loads eagerly. Lazy loading looks like the right
+                answer for four full-bleed photographs, but the timer
+                cross-fades to the next one after six seconds and a lazy
+                frame is not there yet, so the screen goes grey. The first
+                frame is preloaded and high priority because it is the LCP;
+                the rest are eager at low priority, so they arrive during the
+                idle time after first paint without competing with it. */}
             <Image
               src={frame.src}
               alt={i === 0 ? frame.alt : ''}
               fill
               preload={i === 0}
-              fetchPriority={i === 0 ? 'high' : 'auto'}
-              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchPriority={i === 0 ? 'high' : 'low'}
+              loading="eager"
               quality={72}
               sizes="100vw"
               className={`object-cover ${i === active ? 'kenburns' : ''}`}
@@ -173,8 +189,10 @@ export function HeroStage({
         </div>
       </div>
 
-      {/* Availability, across the foot of the photograph. */}
-      <div className="relative z-[3] row-start-2">
+      {/* Availability, along the foot of the photograph. Inset to the page
+          gutter rather than bled to the edges, so the four fields read as one
+          control instead of spreading across the window. */}
+      <div className="relative z-[3] row-start-2 md:px-[var(--gutter)]">
         <BookingBar variant="hero" />
       </div>
     </div>

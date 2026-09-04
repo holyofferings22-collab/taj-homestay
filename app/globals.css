@@ -669,6 +669,16 @@
   html[data-screen="welcome"] .support-panel {
     bottom: calc(150px + env(safe-area-inset-bottom));
   }
+  /* Below md the bar stacks into two rows plus its action, so the corner
+     controls have further to climb to clear it. */
+  @media (max-width: 767px) {
+    html[data-screen="welcome"] .support-launcher {
+      bottom: calc(186px + env(safe-area-inset-bottom));
+    }
+    html[data-screen="welcome"] .support-panel {
+      bottom: calc(244px + env(safe-area-inset-bottom));
+    }
+  }
   html[data-screen="welcome"] .pill.snap-fab {
     display: none;
   }

@@ -28,9 +28,10 @@ function longDate(value: string) {
 const cellBase = 'grid content-center gap-[3px] border-hairline py-2.5';
 const label = 'text-[9.5px] uppercase tracking-[0.18em] text-slate';
 /* 16px on phones: below that iOS Safari zooms the page when the field takes
-   focus and does not zoom back. */
+   focus and does not zoom back. 15px from md up, where that does not apply
+   and the smaller figure sits better in a 61px bar. */
 const field =
-  'w-full min-w-0 border-0 bg-transparent p-0 text-[15px] font-medium leading-tight text-ink outline-none [color-scheme:light]';
+  'w-full min-w-0 border-0 bg-transparent p-0 text-[16px] font-medium leading-tight text-ink outline-none [color-scheme:light] md:text-[15px]';
 
 /**
  * The availability bar.
@@ -45,10 +46,8 @@ const field =
  */
 export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' } = {}) {
   const hero = variant === 'hero';
-  const cell = `${cellBase} ${hero ? 'px-4 md:px-5' : 'px-4 md:px-5'}`;
-  /* The first cell lines up with the page gutter so the date does not start
-     hard against the viewport edge. */
-  const firstCell = hero ? 'md:pl-[var(--gutter)]' : '';
+  const cell = `${cellBase} px-4 md:px-6`;
+
 
   const checkInRef = useRef<HTMLInputElement>(null);
   const checkOutRef = useRef<HTMLInputElement>(null);
@@ -106,13 +105,13 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
     <form
       onSubmit={onSubmit}
       aria-label="Check availability"
-      className={`relative z-[3] grid text-ink max-md:grid-cols-2 md:grid-cols-[1.15fr_1.15fr_1fr_1.15fr_auto] ${
+      className={`relative z-[3] mx-auto grid w-full text-ink max-md:grid-cols-2 md:grid-cols-[1.1fr_1.1fr_1fr_1.1fr_auto] ${
         hero
-          ? 'bg-white/96 backdrop-blur-[10px]'
-          : 'mx-auto w-full max-w-[1000px] overflow-hidden rounded-[10px] bg-white shadow-[0_14px_34px_rgba(31,29,27,0.12)] ring-1 ring-hairline'
+          ? 'max-w-[min(1080px,100%)] bg-white/96 backdrop-blur-[10px] md:rounded-t-[6px]'
+          : 'max-w-[min(1000px,100%)] overflow-hidden rounded-[10px] bg-white shadow-[0_14px_34px_rgba(31,29,27,0.12)] ring-1 ring-hairline'
       }`}
     >
-      <label className={`${cell} ${firstCell} border-r max-md:border-b`}>
+      <label className={`${cell} border-r max-md:border-b`}>
         <span className={label}>Check in</span>
         <input ref={checkInRef} type="date" name="checkIn" className={field} />
       </label>
@@ -142,7 +141,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
           type="submit"
           className={
             hero
-              ? 'flex h-full w-full cursor-pointer items-center justify-center border-0 bg-gold px-9 py-4 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white md:pr-[var(--gutter)]'
+              ? 'flex h-full w-full cursor-pointer items-center justify-center border-0 bg-gold px-9 py-4 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
               : 'flex w-full cursor-pointer items-center justify-center rounded-[6px] border-0 bg-gold px-8 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
           }
         >
