@@ -13,7 +13,7 @@ export type GallerySection = {
 };
 
 const overlayButton =
-  'absolute flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-[rgba(20,23,29,0.55)] font-body text-xl leading-none text-porcelain backdrop-blur-[2px] transition-colors hover:bg-[rgba(20,23,29,0.85)]';
+  'absolute flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-[rgba(20,23,29,0.55)] font-body text-xl leading-none text-white backdrop-blur-[2px] transition-colors hover:bg-[rgba(20,23,29,0.85)]';
 
 /**
  * One screen per gallery section, each a long snap area (a section of a
@@ -89,14 +89,14 @@ export function GalleryScreens({ sections }: { sections: readonly GallerySection
           long
           labelledBy={`${section.id}-heading`}
           className={`content-start gap-7 px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] ${
-            s % 2 === 0 ? 'bg-porcelain' : 'bg-linen'
+            s % 2 === 0 ? 'bg-white' : 'bg-mist'
           }`}
         >
           <div className="flex flex-wrap items-baseline justify-between gap-4">
             <h2 id={`${section.id}-heading`} data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
               {section.heading}
             </h2>
-            <p data-rv="" className="m-0 text-[11px] uppercase tracking-[0.22em] text-stone">
+            <p data-rv="" className="m-0 text-[11px] uppercase tracking-[0.22em] text-slate">
               {section.count}
             </p>
           </div>
@@ -165,7 +165,7 @@ export function GalleryScreens({ sections }: { sections: readonly GallerySection
           >
             ›
           </button>
-          <p className="absolute inset-x-0 bottom-5 m-0 text-center font-body text-[11px] uppercase tracking-[0.22em] text-porcelain/60">
+          <p className="absolute inset-x-0 bottom-5 m-0 text-center font-body text-[11px] uppercase tracking-[0.22em] text-white/60">
             {index + 1} of {all.length}
           </p>
         </div>

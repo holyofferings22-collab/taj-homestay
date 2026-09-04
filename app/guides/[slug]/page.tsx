@@ -65,13 +65,13 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         tone="light"
         long
         labelledBy="article-heading"
-        className="content-start bg-porcelain px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
+        className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
       >
         <article className="mx-auto w-full max-w-[720px]">
           <h2 id="article-heading" className="sr-only">
             {guide.title}
           </h2>
-          <p data-rv="" className="m-0 mb-10 text-[11px] uppercase tracking-[0.22em] text-stone">
+          <p data-rv="" className="m-0 mb-10 text-[11px] uppercase tracking-[0.22em] text-slate">
             <time dateTime={guide.dateISO}>{guide.date}</time>
           </p>
 
@@ -92,7 +92,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                     className="h-auto w-full rounded-[6px] border border-hairline"
                   />
                   {section.figure.caption && (
-                    <figcaption className="m-0 mt-3 text-[13px] text-stone">{section.figure.caption}</figcaption>
+                    <figcaption className="m-0 mt-3 text-[13px] text-slate">{section.figure.caption}</figcaption>
                   )}
                 </figure>
               )}
@@ -102,16 +102,16 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                   <AutoplayVideo
                     src={section.video.src}
                     ariaLabel={section.video.caption}
-                    className="block h-auto w-full rounded-[6px] border border-hairline bg-linen"
+                    className="block h-auto w-full rounded-[6px] border border-hairline bg-mist"
                   />
                   {section.video.caption && (
-                    <figcaption className="m-0 mt-3 text-[13px] text-stone">{section.video.caption}</figcaption>
+                    <figcaption className="m-0 mt-3 text-[13px] text-slate">{section.video.caption}</figcaption>
                   )}
                 </figure>
               )}
 
               {section.paragraphs?.map((text, i) => (
-                <p key={i} className={`m-0 text-[16px] leading-[1.75] text-stone ${i > 0 ? 'mt-4' : ''}`}>
+                <p key={i} className={`m-0 text-[16px] leading-[1.75] text-slate ${i > 0 ? 'mt-4' : ''}`}>
                   {text}
                 </p>
               ))}
@@ -119,8 +119,8 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
               {section.steps && (
                 <ol className="m-0 mt-5 grid list-none gap-3.5 p-0">
                   {section.steps.map((step, i) => (
-                    <li key={i} className="flex gap-4 text-[16px] leading-[1.7] text-stone">
-                      <span className="mt-[3px] flex h-7 w-7 flex-none items-center justify-center rounded-full border border-gold font-display text-[15px] text-espresso">
+                    <li key={i} className="flex gap-4 text-[16px] leading-[1.7] text-slate">
+                      <span className="mt-[3px] flex h-7 w-7 flex-none items-center justify-center rounded-full border border-gold font-display text-[15px] text-ink">
                         {i + 1}
                       </span>
                       <span className="flex-auto">{step}</span>
@@ -138,7 +138,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
         id="more-guides"
         tone="light"
         labelledBy="more-heading"
-        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="more-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
           More <span className="display-italic">from the desk.</span>
@@ -153,7 +153,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
                 </span>
                 <span className="grid gap-1.5">
                   <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{other.tag}</span>
-                  <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-espresso">{other.title}</span>
+                  <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-ink">{other.title}</span>
                 </span>
               </Link>
             </li>

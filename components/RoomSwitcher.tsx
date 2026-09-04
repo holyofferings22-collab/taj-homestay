@@ -68,7 +68,7 @@ export function RoomSwitcher({ rooms, cta }: { rooms: readonly SwitchableRoom[];
             aria-hidden={i !== active}
           />
         ))}
-        <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(28,34,30,0.55),transparent)] px-5 pb-4 pt-12 font-display text-[22px] text-porcelain">
+        <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-[linear-gradient(0deg,rgba(28,34,30,0.55),transparent)] px-5 pb-4 pt-12 font-display text-[22px] text-white">
           {room.name}
         </span>
       </div>
@@ -88,14 +88,14 @@ export function RoomSwitcher({ rooms, cta }: { rooms: readonly SwitchableRoom[];
               >
                 <span
                   className={`font-display text-[length:var(--step-card)] leading-tight transition-colors ${
-                    i === active ? 'text-espresso' : 'text-stone group-hover:text-espresso'
+                    i === active ? 'text-ink' : 'text-slate group-hover:text-ink'
                   }`}
                 >
                   {r.name}
                 </span>
                 <span
                   className={`font-display text-[19px] transition-colors ${
-                    i === active ? 'text-gold-deep' : 'text-stone'
+                    i === active ? 'text-gold-deep' : 'text-slate'
                   }`}
                 >
                   ₹{r.rate}
@@ -111,7 +111,7 @@ export function RoomSwitcher({ rooms, cta }: { rooms: readonly SwitchableRoom[];
             {room.chips.map((chip) => (
               <li
                 key={chip}
-                className="rounded-full border border-hairline px-3.5 py-1.5 text-[11px] uppercase tracking-[0.14em] text-espresso"
+                className="rounded-full border border-hairline px-3.5 py-1.5 text-[11px] uppercase tracking-[0.14em] text-ink"
               >
                 {chip}
               </li>

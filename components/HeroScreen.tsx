@@ -29,8 +29,8 @@ export function HeroScreen({
 }) {
   const headingId = `${id}-heading`;
   return (
-    <Screen id={id} tone="photo" revealed labelledBy={headingId} className="on-photo items-end overflow-hidden text-porcelain">
-      <div className="absolute inset-0 overflow-hidden bg-forest" aria-hidden="true">
+    <Screen id={id} tone="photo" revealed labelledBy={headingId} className="on-photo items-end overflow-hidden text-white">
+      <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
         <Image
           src={image.src}
           alt=""

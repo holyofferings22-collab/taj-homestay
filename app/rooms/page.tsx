@@ -39,7 +39,7 @@ export default function RoomsPage() {
             id={`room-${room.name.toLowerCase().replace(/\s+/g, '-')}`}
             tone="light"
             labelledBy={headingId}
-            className="bg-porcelain max-lg:grid-rows-[42vh_auto] lg:grid-cols-2"
+            className="bg-white max-lg:grid-rows-[42vh_auto] lg:grid-cols-2"
           >
             <Link href="/gallery" className={`photo photo-hover block h-full ${photoRight ? 'lg:order-2' : ''}`}>
               <Image
@@ -56,9 +56,9 @@ export default function RoomsPage() {
               <h2 id={headingId} data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
                 {room.name}
               </h2>
-              <p data-rv="" className="m-0 font-display text-[clamp(24px,2.4vw,32px)] leading-none text-espresso">
+              <p data-rv="" className="m-0 font-display text-[clamp(24px,2.4vw,32px)] leading-none text-ink">
                 ₹{room.rate}
-                <span className="ml-2 font-body text-[11px] uppercase tracking-[0.18em] text-stone">
+                <span className="ml-2 font-body text-[11px] uppercase tracking-[0.18em] text-slate">
                   a night
                 </span>
               </p>
@@ -66,7 +66,7 @@ export default function RoomsPage() {
                 {room.chips.map((chip) => (
                   <li
                     key={chip}
-                    className="rounded-full border border-hairline px-3.5 py-1.5 text-[11px] uppercase tracking-[0.14em] text-espresso"
+                    className="rounded-full border border-hairline px-3.5 py-1.5 text-[11px] uppercase tracking-[0.14em] text-ink"
                   >
                     {chip}
                   </li>
@@ -88,7 +88,7 @@ export default function RoomsPage() {
                   Check availability
                 </a>
               </div>
-              <p data-rv="" className="m-0 max-w-[52ch] text-[13px] leading-[1.6] text-stone">
+              <p data-rv="" className="m-0 max-w-[52ch] text-[13px] leading-[1.6] text-slate">
                 {rooms.rateNote}
               </p>
             </div>

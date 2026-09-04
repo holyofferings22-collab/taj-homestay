@@ -32,14 +32,4 @@ export const media = {
   /** The walk toward Yashobhoomi Gate 1. Location page. */
   walk: null as Still | null,
 
-  /**
-   * Real guest reviews, copied word for word from the Google Business
-   * Profile with the reviewer's first name and month. Nothing renders in the
-   * guests screen's quote slot until at least one is here: an invented quote
-   * on a page that promises honesty would cost more than an empty slot.
-   */
-  reviews: [] as { quote: string; name: string; when: string }[],
-
-  /** The Google listing, where the rating and the 116 reviews live. */
-  googleListing: 'https://maps.google.com/?cid=8648571925722001411',
 } as const;

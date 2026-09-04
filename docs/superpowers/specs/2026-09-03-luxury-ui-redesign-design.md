@@ -320,3 +320,87 @@ Decisions taken while building that refine the sections above:
 ## Out of scope
 
 A booking engine, OTA links, review syndication, a CMS, dark-mode toggle.
+
+## Second revision, 4 September 2026
+
+The owner asked for five further things and then, after seeing the result,
+for three corrections. Both sets are built and this section records what the
+sections above no longer describe.
+
+### Palette: white, with grey in a few sections
+
+The forest-green and near-black grounds are gone. The site is white
+throughout, with two greys used sparingly so consecutive screens can differ.
+Measured, not estimated:
+
+| Token | Hex | Role | On white |
+| --- | --- | --- | --- |
+| `white` | `#ffffff` | the page | |
+| `mist` | `#f6f6f6` | second band | |
+| `ash` | `#ededed` | the grey band | |
+| `stone` | `#e3e3e3` | hairline fills, photo placeholder | |
+| `ink` | `#1f1d1b` | headings, strong text | 16.80 |
+| `slate` | `#5c5955` | body text | 6.96 |
+| `gold` | `#c9a961` | button fills, marks | ink on gold 7.47 |
+| `gold-deep` | `#6f5518` | gold as text | 7.03 |
+
+Every pair passes WCAG AA for body text. No screen is dark, so the header has
+one painted state (white at 94 percent) plus transparent over a photograph.
+Band rhythm never places two greys together: on the home page it runs photo,
+white, mist, white, ash, photo, white, ash.
+
+### The hero
+
+Built to the Taj Hotels property page the owner sent. Full-bleed photography
+with no editorial copy on it, circular prev and next arrows at mid-height,
+the property name in display caps along the foot behind a gold rule, a
+gallery button with a thumbnail, and the availability bar flush across the
+bottom edge. Frames cross-fade on a six second timer and the stage drifts
+against the scroll.
+
+### The availability bar
+
+Rebuilt to the reference's proportions: 61px tall, one line per cell, a 9.5px
+tracked label over a 15px Manrope value, hairline dividers, and a square gold
+action at the right that runs the full height of the bar. It was previously
+78px with display-face values, which took a slice out of the photograph.
+
+### GSAP
+
+3.15, free under the standard licence, with ScrollTrigger and Flip. Two rules
+that are not obvious and must not be undone:
+
+- The scroller is passed as an **element**, never as the selector `#snap`.
+  `useGSAP`'s `scope` resolves selector text against descendants of the scoped
+  element, and the scroll container is an ancestor, so as a string it resolved
+  to undefined and ScrollTrigger threw on it.
+- **Nothing pins.** A pin spacer makes its section taller than the viewport,
+  which under the CSS scroll-snap oversized-area rule turns that screen into a
+  free-scrolling region and moves every later snap point.
+
+Entry animations use `gsap.from`, so a failed GSAP leaves copy readable rather
+than stuck at opacity zero.
+
+### The journal
+
+Six notes at `/blog`, filterable by subject with Flip, cross-linked with the
+guides and surfaced on the home page. Same honesty rule as the guides.
+
+### Live support
+
+A front door onto the desk's WhatsApp, which is staffed around the clock. It
+does not simulate an agent typing. Quick questions are real `wa.me` anchors so
+the conversion listener sees them; a typed message reports its own conversion.
+
+### Google reviews
+
+The rating and count are read from Google's own listing: 4.6 from 164 reviews
+on 4 September 2026. The same listing also gave check-in 12:00 pm and
+check-out 11:00 am, which closes a standing TODO in the FAQ.
+
+`content/reviews.ts` holds a `quotes` array that drives a continuous
+slideshow of review cards on the guests screen. **It is empty and must be
+filled by hand.** Google's signed-out listing does not expose review text to a
+script, and an invented review on a site whose gallery promises no staging and
+no stock would be the one lie on it. The marquee renders nothing while the
+array is empty; the screen still shows the rating, the count and the link.

@@ -6,10 +6,10 @@ import { contactPage } from '@/content/contact';
 import { whatsappLink } from '@/content/site';
 import { reportConversion } from '@/lib/conversion';
 
-const labelClass = 'grid gap-2 text-[11px] uppercase tracking-[0.22em] text-stone';
+const labelClass = 'grid gap-2 text-[11px] uppercase tracking-[0.22em] text-slate';
 /* 16px on phones so iOS does not zoom on focus; see BookingBar. */
 const fieldClass =
-  'min-h-[48px] w-full rounded-[6px] border border-hairline bg-porcelain px-3.5 py-3 font-body text-base text-espresso outline-none transition-colors focus:border-gold';
+  'min-h-[48px] w-full rounded-[6px] border border-hairline bg-white px-3.5 py-3 font-body text-base text-ink outline-none transition-colors focus:border-gold';
 
 function isoDate(date: Date) {
   const y = date.getFullYear();
@@ -113,13 +113,13 @@ export function ContactForm() {
           Check availability
         </button>
         {chatUrl && (
-          <p role="status" className="m-0 text-[13px] leading-[1.6] text-stone">
+          <p role="status" className="m-0 text-[13px] leading-[1.6] text-slate">
             Opening WhatsApp with your enquiry. Nothing happened?{' '}
             <a
               href={chatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-espresso underline decoration-gold underline-offset-4"
+              className="text-ink underline decoration-gold underline-offset-4"
             >
               Open the chat
             </a>

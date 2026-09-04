@@ -4,13 +4,14 @@ import { Screen } from '@/components/Screen';
 import { HeroStage } from '@/components/HeroStage';
 import { RoomSwitcher } from '@/components/RoomSwitcher';
 import { ContactScreen } from '@/components/ContactScreen';
+import { ReviewMarquee } from '@/components/ReviewMarquee';
 import { Parallax } from '@/components/motion/Parallax';
 import { CountUp } from '@/components/motion/CountUp';
 import { SplitHeading, RiseIn } from '@/components/motion/SplitHeading';
 import { hero, statement, screens } from '@/content/home';
 import { rooms } from '@/content/rooms';
 import { location } from '@/content/location';
-import { media } from '@/content/media';
+import { reviews } from '@/content/reviews';
 import { posts } from '@/content/blog';
 import { guides } from '@/content/guides';
 import { brand } from '@/content/site';
@@ -45,7 +46,7 @@ export default function HomePage() {
         id="stay"
         tone="light"
         labelledBy="stay-heading"
-        className="content-center gap-9 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+        className="content-center gap-9 bg-white px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
       >
         <div className="grid max-w-[860px] gap-5">
           <p className="eyebrow" data-rv="">
@@ -69,7 +70,7 @@ export default function HomePage() {
         id="rooms"
         tone="light"
         labelledBy="rooms-heading"
-        className="content-center gap-[clamp(14px,2.4vh,26px)] bg-linen px-[var(--gutter)] pb-[clamp(24px,3.5vh,44px)] pt-[var(--header-clear)]"
+        className="content-center gap-[clamp(14px,2.4vh,26px)] bg-mist px-[var(--gutter)] pb-[clamp(24px,3.5vh,44px)] pt-[var(--header-clear)]"
       >
         <div className="grid max-w-[760px] gap-2.5">
           <SplitHeading
@@ -89,26 +90,26 @@ export default function HomePage() {
       {/* 4. Where it is. */}
       <Screen
         id="location"
-        tone="dark"
+        tone="light"
         labelledBy="location-heading"
-        className="on-dark bg-forest text-porcelain max-lg:grid-rows-[auto_40vh] lg:grid-cols-2"
+        className="bg-white max-lg:grid-rows-[auto_40vh] lg:grid-cols-2"
       >
         <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
           <h2
             id="location-heading"
             data-rv=""
-            className="font-display text-[length:var(--step-stat)] leading-[0.9] text-gold-light"
+            className="font-display text-[length:var(--step-stat)] leading-[0.9] text-gold"
           >
             <CountUp value={500} suffix=" m" />
-            <span className="mt-5 block font-body text-[12px] uppercase tracking-[0.26em] text-sage-ink">
+            <span className="mt-5 block font-body text-[12px] uppercase tracking-[0.26em] text-slate">
               {screens.location.bigLabel}
             </span>
           </h2>
           <dl className="rows m-0 max-w-[520px] text-[length:var(--step-body)]" data-rv="">
             {location.distances.slice(1).map((row) => (
               <div key={row.place}>
-                <dt className="text-sage-ink">{row.place}</dt>
-                <dd className="m-0 whitespace-nowrap font-medium text-gold-light">{row.value}</dd>
+                <dt className="text-slate">{row.place}</dt>
+                <dd className="m-0 whitespace-nowrap font-medium text-gold-deep">{row.value}</dd>
               </div>
             ))}
           </dl>
@@ -133,62 +134,61 @@ export default function HomePage() {
         </Link>
       </Screen>
 
-      {/* 5. What guests say. */}
+      {/* 5. What guests say, straight off Google. */}
       <Screen
         id="guests"
         tone="light"
         labelledBy="guests-heading"
-        className="content-center justify-items-center gap-7 bg-sage px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)] text-center"
+        className="content-center justify-items-center gap-8 bg-ash pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)] text-center"
       >
-        <h2 id="guests-heading" data-rv="" className="grid justify-items-center gap-2">
-          <span className="font-display text-[length:var(--step-stat)] leading-none text-espresso">
-            <CountUp value={Number(screens.guests.rating)} decimals={1} />
-          </span>
-          <span
-            role="img"
-            aria-label={`Rated ${screens.guests.rating} out of 5`}
-            className="relative inline-block text-[20px] tracking-[0.3em]"
-          >
-            <span aria-hidden="true" className="text-espresso/20">
-              ★★★★★
-            </span>
-            <span
-              aria-hidden="true"
-              className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-deep"
-              style={{ width: `${(Number(screens.guests.rating) / 5) * 100}%` }}
-            >
-              ★★★★★
-            </span>
-          </span>
-        </h2>
-        {media.reviews[0] && (
-          <blockquote
-            data-rv=""
-            className="m-0 max-w-[26ch] font-display text-[clamp(22px,2.6vw,36px)] italic leading-[1.3] text-espresso"
-          >
-            “{media.reviews[0].quote}”
-            <cite className="mt-4 block font-body text-[11px] not-italic uppercase tracking-[0.22em] text-stone">
-              {media.reviews[0].name}, {media.reviews[0].when}
-            </cite>
-          </blockquote>
-        )}
-        <p data-rv="" className="m-0 text-[11px] uppercase tracking-[0.22em] text-stone">
-          {screens.guests.reviewsLabel}
-        </p>
-        <a
-          data-rv=""
-          href={media.googleListing}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="link-ul"
-        >
-          {screens.guests.cta}
-        </a>
+        <div className="grid justify-items-center gap-4 px-[var(--gutter)]">
+          <SplitHeading
+            as="h2"
+            id="guests-heading"
+            text={reviews.heading}
+            emphasis={reviews.headingEmphasis}
+            className="text-[length:var(--step-section)] leading-[1.06]"
+          />
+          <RiseIn delay={0.2}>
+            <p className="m-0 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
+              <span className="font-display text-[44px] leading-none text-ink">
+                <CountUp value={reviews.rating} decimals={1} />
+              </span>
+              <span
+                role="img"
+                aria-label={`Rated ${reviews.rating} out of 5`}
+                className="relative inline-block text-[19px] tracking-[0.3em]"
+              >
+                <span aria-hidden="true" className="text-ink/20">
+                  ★★★★★
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-deep"
+                  style={{ width: `${(reviews.rating / 5) * 100}%` }}
+                >
+                  ★★★★★
+                </span>
+              </span>
+              <span className="text-[11px] uppercase tracking-[0.22em] text-slate">
+                <CountUp value={reviews.count} /> reviews on Google
+              </span>
+            </p>
+          </RiseIn>
+        </div>
+
+        <ReviewMarquee reviews={reviews.quotes} />
+
+        <RiseIn delay={0.3} className="px-[var(--gutter)]">
+          <a href={reviews.listing} target="_blank" rel="noopener noreferrer" className="link-ul">
+            {reviews.cta}
+          </a>
+        </RiseIn>
       </Screen>
 
       {/* 6. Group stays. */}
-      <Screen id="groups" tone="photo" labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-porcelain">
-        <div className="absolute inset-0 overflow-hidden bg-forest" aria-hidden="true">
+      <Screen id="groups" tone="photo" labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-white">
+        <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
           <Parallax strength={12} className="absolute inset-[-7%_0]">
             <Image
               src={screens.groups.image.src}
@@ -235,7 +235,7 @@ export default function HomePage() {
         id="journal"
         tone="light"
         labelledBy="journal-heading"
-        className="content-center gap-8 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-white px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
       >
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SplitHeading
@@ -271,10 +271,10 @@ export default function HomePage() {
                   <span className="photo-caption">Read it</span>
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{entry.tag}</span>
-                <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-espresso">
+                <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-ink">
                   {entry.title}
                 </span>
-                <span className="text-[length:var(--step-body)] leading-[1.6] text-stone">{entry.lead}</span>
+                <span className="text-[length:var(--step-body)] leading-[1.6] text-slate">{entry.lead}</span>
               </Link>
             </li>
           ))}

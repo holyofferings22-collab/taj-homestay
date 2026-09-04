@@ -45,7 +45,7 @@ export function Faq() {
                 className="h-5 w-5 flex-none text-gold-deep transition-transform duration-500 ease-[cubic-bezier(.16,1,.3,1)] group-open:rotate-45"
               />
             </summary>
-            <p className="m-0 max-w-[64ch] pb-6 text-[15px] leading-[1.7] text-stone">{item.a}</p>
+            <p className="m-0 max-w-[64ch] pb-6 text-[15px] leading-[1.7] text-slate">{item.a}</p>
           </details>
         ))}
       </div>

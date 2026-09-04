@@ -13,7 +13,7 @@ const messageDesk = whatsappLink('Hello Taj Home Stay, I have a question about a
  */
 export function ContactScreen() {
   return (
-    <Screen id="contact" tone="dark" labelledBy="contact-heading" className="on-dark bg-forest text-porcelain">
+    <Screen id="contact" tone="light" labelledBy="contact-heading" className="bg-ash">
       <div className="grid grid-rows-[1fr_auto]">
         <div className="grid items-center gap-7 px-[var(--gutter)] pb-6 pt-[var(--header-clear)] lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:pb-10">
           <div className="grid gap-6">
@@ -23,18 +23,18 @@ export function ContactScreen() {
             <h2 id="contact-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
               The desk is <span className="display-italic">always</span> on.
             </h2>
-            <p data-rv="" className="m-0 text-[15px] leading-[1.7] text-sage-ink">
+            <p data-rv="" className="m-0 text-[15px] leading-[1.7] text-slate">
               <a
                 href={contact.whatsapp}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block min-h-11 font-display text-[30px] font-medium leading-tight text-porcelain"
+                className="block min-h-11 font-display text-[30px] font-medium leading-tight text-ink"
               >
                 {contact.phone.display}
               </a>
               WhatsApp is quickest, especially in Yashobhoomi event weeks.
             </p>
-            <p data-rv="" className="m-0 text-[15px] leading-[1.7] text-sage-ink">
+            <p data-rv="" className="m-0 text-[15px] leading-[1.7] text-slate">
               {contact.address.lines[0]}
               <br />
               {contact.address.lines[1]}
@@ -47,7 +47,7 @@ export function ContactScreen() {
             </div>
           </div>
 
-          <div data-rv="" className="h-[200px] overflow-hidden rounded-[6px] border border-hairline-dark bg-forest-2 lg:h-[360px]">
+          <div data-rv="" className="h-[200px] overflow-hidden rounded-[6px] border border-hairline bg-slate lg:h-[360px]">
             <MapEmbed
               title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
               src={contact.mapEmbedSrc}
@@ -56,7 +56,7 @@ export function ContactScreen() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-hairline-dark px-[var(--gutter)] py-3 text-[11px] uppercase tracking-[0.16em] text-sage-ink">
+        <div className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 border-t border-hairline px-[var(--gutter)] py-3 text-[11px] uppercase tracking-[0.16em] text-slate">
           <span className="flex items-center gap-4">
             {copyright}
             {social.facebook && (
@@ -65,7 +65,7 @@ export function ContactScreen() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Taj Home Stay on Facebook"
-                className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border border-hairline-dark transition-colors hover:border-gold-light hover:text-gold-light"
+                className="inline-flex h-11 w-11 flex-none items-center justify-center rounded-full border border-hairline transition-colors hover:border-gold hover:text-gold"
               >
                 <Facebook className="h-3.5 w-3.5" />
               </a>
@@ -75,11 +75,11 @@ export function ContactScreen() {
             {nav
               .filter((item) => item.href !== '/')
               .map((item) => (
-                <Link key={item.href} href={item.href} className="inline-flex min-h-11 items-center transition-colors hover:text-gold-light">
+                <Link key={item.href} href={item.href} className="inline-flex min-h-11 items-center transition-colors hover:text-gold-deep">
                   {item.label}
                 </Link>
               ))}
-            <Link href="/guides" className="inline-flex min-h-11 items-center transition-colors hover:text-gold-light">
+            <Link href="/guides" className="inline-flex min-h-11 items-center transition-colors hover:text-gold-deep">
               Guides
             </Link>
           </nav>

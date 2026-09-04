@@ -141,9 +141,8 @@ export const screens = {
  * confirmed — an invented check-in time is exactly the kind of detail a guest
  * turns up and holds you to.
  *
- * TODO: add a plain "check-in from X, check-out by Y" entry once those times
- * are settled. The entry below covers late arrival, which is what guests
- * flying in actually ask about, but it does not replace the standard times.
+ * Check-in and check-out times are as Google's own listing for the property
+ * showed them on 4 September 2026. Re-check if the desk changes them.
  *
  * Faq.tsx withholds any answer containing "[" from the FAQPage structured
  * data. Nothing is filtered today; the guard stays for future edits.
@@ -158,6 +157,13 @@ export const faqs = {
         'Gate 1 of the convention centre is about 500 m from the door, a few minutes on foot. ' +
         'From Gate 3 of the Yashobhoomi metro station it is roughly 550 m, about seven minutes. ' +
         'Nobody in your group needs a cab to reach the hall.',
+    },
+    {
+      q: 'What are the check-in and check-out times?',
+      a:
+        'Check-in is from 12:00 pm and check-out is by 11:00 am. Arriving outside those hours ' +
+        'is not a problem, and for groups both can be staggered. Message the desk and we will ' +
+        'fix the times for your stay.',
     },
     {
       q: 'Can I check in late, or check out late?',

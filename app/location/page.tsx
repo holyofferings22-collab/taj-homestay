@@ -42,9 +42,9 @@ export default function LocationPage() {
       {/* Distances beside the pinned map. */}
       <Screen
         id="distances"
-        tone="dark"
+        tone="light"
         labelledBy="distances-heading"
-        className="on-dark bg-forest text-porcelain max-lg:grid-rows-[auto_40vh] lg:grid-cols-[1fr_1fr]"
+        className="bg-white max-lg:grid-rows-[auto_40vh] lg:grid-cols-[1fr_1fr]"
       >
         <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
           <h2 id="distances-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
@@ -56,11 +56,11 @@ export default function LocationPage() {
               const Icon = distanceIcons[row.icon];
               return (
                 <div key={row.place}>
-                  <dt className="flex items-center gap-3 text-sage-ink">
-                    <Icon aria-hidden="true" strokeWidth={1.25} className="h-4 w-4 flex-none text-gold-light" />
+                  <dt className="flex items-center gap-3 text-slate">
+                    <Icon aria-hidden="true" strokeWidth={1.25} className="h-4 w-4 flex-none text-gold" />
                     {row.place}
                   </dt>
-                  <dd className="m-0 whitespace-nowrap font-medium text-gold-light">{row.value}</dd>
+                  <dd className="m-0 whitespace-nowrap font-medium text-gold-deep">{row.value}</dd>
                 </div>
               );
             })}
@@ -68,7 +68,7 @@ export default function LocationPage() {
         </div>
         {/* Starts below the fixed header, so the map's own place card and
             controls are never hidden under it. */}
-        <div data-rv="" className="bg-forest-2 lg:h-full lg:pt-[72px]">
+        <div data-rv="" className="bg-slate lg:h-full lg:pt-[72px]">
           <MapEmbed
             title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
             src={contact.mapEmbedSrc}
@@ -82,7 +82,7 @@ export default function LocationPage() {
         id="arriving"
         tone="light"
         labelledBy="arriving-heading"
-        className="content-center gap-8 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="arriving-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
           {location.arriving.heading}{' '}
@@ -99,7 +99,7 @@ export default function LocationPage() {
               >
                 <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold-deep" />
                 <h3 className="text-[length:var(--step-card)] font-medium leading-tight">{card.title}</h3>
-                <p className="m-0 text-[length:var(--step-body)] leading-[1.65] text-stone">{card.body}</p>
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.65] text-slate">{card.body}</p>
               </li>
             );
           })}
@@ -111,7 +111,7 @@ export default function LocationPage() {
         id="walk"
         tone="light"
         labelledBy="walk-heading"
-        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.4fr] lg:items-center"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.4fr] lg:items-center"
       >
         <div className="grid gap-5">
           <h2 id="walk-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
@@ -122,17 +122,17 @@ export default function LocationPage() {
           </p>
           <dl className="rows m-0 max-w-[420px] text-[length:var(--step-body)]" data-rv="">
             <div>
-              <dt className="text-stone">Start</dt>
-              <dd className="m-0 text-right text-espresso">{walkRoute.origin.label}</dd>
+              <dt className="text-slate">Start</dt>
+              <dd className="m-0 text-right text-ink">{walkRoute.origin.label}</dd>
             </div>
             <div>
-              <dt className="text-stone">End</dt>
-              <dd className="m-0 text-right text-espresso">{walkRoute.destination.label}</dd>
+              <dt className="text-slate">End</dt>
+              <dd className="m-0 text-right text-ink">{walkRoute.destination.label}</dd>
             </div>
             {walkRoute.facts.map((fact) => (
               <div key={fact.label}>
-                <dt className="text-stone">{fact.label}</dt>
-                <dd className="m-0 text-espresso">{fact.value}</dd>
+                <dt className="text-slate">{fact.label}</dt>
+                <dd className="m-0 text-ink">{fact.value}</dd>
               </div>
             ))}
           </dl>
@@ -142,7 +142,7 @@ export default function LocationPage() {
             </a>
           </div>
         </div>
-        <div data-rv="" className="h-[min(56vh,520px)] overflow-hidden rounded-[6px] border border-hairline bg-porcelain">
+        <div data-rv="" className="h-[min(56vh,520px)] overflow-hidden rounded-[6px] border border-hairline bg-white">
           <MapEmbed
             title={`Walking route from ${walkRoute.origin.label} to ${walkRoute.destination.label}`}
             src={walkEmbedSrc}

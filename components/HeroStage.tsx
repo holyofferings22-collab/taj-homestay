@@ -11,7 +11,7 @@ import { gsap, prefersReducedMotion, scrollTriggerDefaults } from '@/lib/gsap';
 export type Frame = { src: string; alt: string };
 
 const control =
-  'grid h-11 w-11 place-items-center rounded-full border border-porcelain/45 bg-porcelain/10 text-porcelain backdrop-blur-[2px] transition-all duration-300 hover:border-porcelain hover:bg-porcelain hover:text-espresso';
+  'grid h-11 w-11 place-items-center rounded-full border border-white/45 bg-white/10 text-white backdrop-blur-[2px] transition-all duration-300 hover:border-white hover:bg-white hover:text-ink';
 
 /**
  * The opening screen, built the way a hotel front page is built: the property
@@ -88,7 +88,7 @@ export function HeroStage({
   );
 
   return (
-    <div ref={scope} className="absolute inset-0 grid grid-rows-[1fr_auto] overflow-hidden bg-forest">
+    <div ref={scope} className="absolute inset-0 grid grid-rows-[1fr_auto] overflow-hidden bg-ash">
       {/* The photographs. */}
       <div ref={stage} className="absolute inset-[-5%_0]">
         {frames.map((frame, i) => (
@@ -148,17 +148,17 @@ export function HeroStage({
       <div className="relative z-[2] row-start-1 self-end px-[var(--gutter)] pb-[clamp(18px,3vh,34px)] pr-[max(var(--gutter),84px)] md:pr-[max(var(--gutter),210px)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <p className="m-0 flex items-center gap-[clamp(14px,2vw,28px)]">
-            <span aria-hidden="true" className="h-px w-[clamp(28px,5vw,74px)] flex-none bg-gold-light" />
-            <span className="font-display text-[clamp(26px,4.4vw,62px)] uppercase leading-[1.05] tracking-[0.02em] text-porcelain [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+            <span aria-hidden="true" className="h-px w-[clamp(28px,5vw,74px)] flex-none bg-gold" />
+            <span className="font-display text-[clamp(26px,4.4vw,62px)] uppercase leading-[1.05] tracking-[0.02em] text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
               {name}, {locality}
             </span>
           </p>
 
           <Link
             href="/gallery"
-            className="group flex flex-none items-center gap-3 rounded-[4px] bg-porcelain/95 p-1.5 pr-5 text-espresso transition-colors duration-300 hover:bg-porcelain"
+            className="group flex flex-none items-center gap-3 rounded-[4px] bg-white/95 p-1.5 pr-5 text-ink transition-colors duration-300 hover:bg-white"
           >
-            <span className="relative block h-11 w-16 overflow-hidden rounded-[3px] bg-linen">
+            <span className="relative block h-11 w-16 overflow-hidden rounded-[3px] bg-mist">
               <Image
                 src={frames[(active + 1) % frames.length].src}
                 alt=""

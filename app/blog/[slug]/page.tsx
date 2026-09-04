@@ -75,13 +75,13 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         tone="light"
         long
         labelledBy="note-heading"
-        className="content-start bg-porcelain px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
+        className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
       >
         <article className="mx-auto w-full max-w-[720px]">
           <h2 id="note-heading" className="sr-only">
             {post.title}
           </h2>
-          <p className="m-0 mb-10 text-[11px] uppercase tracking-[0.22em] text-stone">
+          <p className="m-0 mb-10 text-[11px] uppercase tracking-[0.22em] text-slate">
             <time dateTime={post.dateISO}>{post.date}</time>
           </p>
 
@@ -92,7 +92,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                   {section.heading}
                 </h3>
                 {section.paragraphs.map((text, i) => (
-                  <p key={i} className={`m-0 text-[16px] leading-[1.75] text-stone ${i > 0 ? 'mt-4' : ''}`}>
+                  <p key={i} className={`m-0 text-[16px] leading-[1.75] text-slate ${i > 0 ? 'mt-4' : ''}`}>
                     {text}
                   </p>
                 ))}
@@ -107,7 +107,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         id="more-notes"
         tone="light"
         labelledBy="more-notes-heading"
-        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="more-notes-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
           More <span className="display-italic">from the desk.</span>
@@ -128,7 +128,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 </span>
                 <span className="grid gap-1.5">
                   <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{other.tag}</span>
-                  <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-espresso">
+                  <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-ink">
                     {other.title}
                   </span>
                 </span>

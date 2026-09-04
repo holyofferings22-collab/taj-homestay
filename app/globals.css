@@ -2,32 +2,28 @@
 
 /* Design tokens. See docs/superpowers/specs/2026-09-03-luxury-ui-redesign-design.md
    and the 4 September light-palette revision recorded in it.
-   Tailwind v4 turns each --color-* into utilities (bg-porcelain, text-gold …). */
+   Tailwind v4 turns each --color-* into utilities (bg-white, text-gold …). */
 @theme {
-  /* The palette is light throughout. There is no black and no near-black
-     surface: where a screen needs weight it uses `forest`, a deep green that
-     picks up the green in the logo and the trees the balconies look over.
+  /* White, with grey where a screen needs to step back. There is no black
+     and no dark screen anywhere: the deepest surface on the site is a light
+     grey, and the darkest ink is a warm near-charcoal used only for type.
      Every pair below is measured, not estimated:
-       espresso on porcelain 11.19   stone on porcelain 6.17
-       gold-deep on porcelain 6.16   gold-deep on linen 5.55
-       espresso on gold 5.71         porcelain on forest 9.41
-       gold-light on forest 6.33     sage-ink on forest 6.76
+       ink on white 16.80      ink on mist 15.55     ink on ash 14.35
+       slate on white 6.96     slate on mist 6.44    slate on ash 5.95
+       gold-deep on white 7.03 gold-deep on ash 6.00 ink on gold 7.47
      All pass WCAG AA for body text. */
-  --color-porcelain: #faf7f2; /* the page */
-  --color-linen: #f1ebe1; /* second band */
-  --color-sage: #e4eae2; /* third band, a cool breath between warm ones */
-  --color-forest: #2f473c; /* the deep screens */
-  --color-forest-2: #38523f; /* raised surface on a forest screen */
+  --color-white: #ffffff; /* the page */
+  --color-mist: #f6f6f6; /* second band */
+  --color-ash: #ededed; /* third band, and the one that reads as "grey" */
+  --color-stone: #e3e3e3; /* hairline fills and photo placeholders */
 
-  --color-espresso: #3b3630; /* headings and strong text */
-  --color-stone: #635c53; /* body text */
-  --color-gold: #cbb078; /* button fills, hairlines, marks */
-  --color-gold-deep: #74591f; /* gold as text on a light ground */
-  --color-gold-light: #e2cb96; /* gold on forest */
-  --color-sage-ink: #cdd6ce; /* body text on forest */
+  --color-ink: #1f1d1b; /* headings and strong text */
+  --color-slate: #5c5955; /* body text */
+  --color-gold: #c9a961; /* button fills and marks */
+  --color-gold-deep: #6f5518; /* gold as text on a light ground */
 
-  --color-hairline: rgba(59, 54, 48, 0.16);
-  --color-hairline-dark: rgba(250, 247, 242, 0.18);
+  --color-hairline: rgba(31, 29, 27, 0.14);
+  --color-hairline-strong: rgba(31, 29, 27, 0.28);
 
   /* Each network's own mark colour, for the social and contact glyphs. Not
      ours to tune; nothing else reaches for them. */
@@ -60,7 +56,7 @@
   body {
     margin: 0;
     padding: 0;
-    background: var(--color-porcelain);
+    background: var(--color-white);
     height: 100%;
     /* The document never scrolls; the snap container does. */
     overflow: hidden;
@@ -75,7 +71,7 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 1.65;
-    color: var(--color-stone);
+    color: var(--color-slate);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -84,7 +80,7 @@
   h3 {
     font-family: var(--font-display);
     font-weight: 400;
-    color: var(--color-espresso);
+    color: var(--color-ink);
     letter-spacing: -0.005em;
     margin: 0;
   }
@@ -113,7 +109,7 @@
 
   input::placeholder,
   textarea::placeholder {
-    color: var(--color-stone);
+    color: var(--color-slate);
   }
 
   :focus-visible {
@@ -191,17 +187,15 @@
       background-color 0.3s,
       transform 0.3s;
   }
-  html[data-tone="dark"] .snap-dots a,
   html:not([data-tone="light"]):not([data-tone="dark"]) .snap-dots a {
-    border-color: var(--color-gold-light);
+    border-color: var(--color-gold);
   }
   .snap-dots a.on {
     background: var(--color-gold-deep);
     transform: scale(1.35);
   }
-  html[data-tone="dark"] .snap-dots a.on,
   html:not([data-tone="light"]):not([data-tone="dark"]) .snap-dots a.on {
-    background: var(--color-gold-light);
+    background: var(--color-gold);
   }
   @media (max-width: 860px) {
     .snap-dots {
@@ -246,9 +240,8 @@
     background: var(--color-gold);
     flex: none;
   }
-  .on-dark .eyebrow,
   .on-photo .eyebrow {
-    color: var(--color-gold-light);
+    color: var(--color-gold);
   }
   .on-photo .eyebrow {
     text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
@@ -265,23 +258,17 @@
     font-size: var(--step-lede);
     line-height: 1.65;
     max-width: 46ch;
-    color: var(--color-stone);
+    color: var(--color-slate);
     margin: 0;
     text-wrap: pretty;
-  }
-  .on-dark .lede {
-    color: var(--color-sage-ink);
   }
   .on-photo .lede {
     color: rgba(250, 247, 242, 0.88);
   }
-  .on-dark h1,
-  .on-dark h2,
-  .on-dark h3,
   .on-photo h1,
   .on-photo h2,
   .on-photo h3 {
-    color: var(--color-porcelain);
+    color: var(--color-white);
   }
 
   /* ---------- pills ---------- */
@@ -327,40 +314,40 @@
   }
   .pill-gold {
     background: var(--color-gold);
-    color: var(--color-espresso);
+    color: var(--color-ink);
   }
   .pill-gold::before {
-    background: var(--color-gold-light);
+    background: var(--color-gold);
   }
   .pill-ink {
-    background: var(--color-forest);
-    color: var(--color-porcelain);
+    background: var(--color-ink);
+    color: var(--color-white);
   }
   .pill-ink::before {
     background: var(--color-gold);
   }
   .pill-ink:hover {
-    color: var(--color-espresso);
+    color: var(--color-ink);
   }
   .pill-ghost {
     border: 1px solid rgba(250, 247, 242, 0.55);
-    color: var(--color-porcelain);
+    color: var(--color-white);
   }
   .pill-ghost::before {
-    background: var(--color-porcelain);
+    background: var(--color-white);
   }
   .pill-ghost:hover {
-    color: var(--color-espresso);
+    color: var(--color-ink);
   }
   .pill-ghost-ink {
     border: 1px solid var(--color-hairline);
-    color: var(--color-espresso);
+    color: var(--color-ink);
   }
   .pill-ghost-ink::before {
-    background: var(--color-forest);
+    background: var(--color-ash);
   }
   .pill-ghost-ink:hover {
-    color: var(--color-porcelain);
+    color: var(--color-white);
   }
 
   /* ---------- text links ---------- */
@@ -375,7 +362,7 @@
     font-weight: 600;
     position: relative;
     padding-bottom: 5px;
-    color: var(--color-espresso);
+    color: var(--color-ink);
   }
   .link-ul::after {
     content: "";
@@ -397,16 +384,15 @@
     transform: scaleX(0.35);
     transition-delay: 0s;
   }
-  .on-dark .link-ul,
   .on-photo .link-ul {
-    color: var(--color-porcelain);
+    color: var(--color-white);
   }
 
   /* ---------- photographs ---------- */
   .photo {
     position: relative;
     overflow: hidden;
-    background: var(--color-linen);
+    background: var(--color-mist);
   }
   .photo img {
     width: 100%;
@@ -436,7 +422,7 @@
     left: 16px;
     bottom: 14px;
     z-index: 1;
-    color: var(--color-porcelain);
+    color: var(--color-white);
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
@@ -469,9 +455,8 @@
     display: grid;
     border-top: 1px solid var(--color-hairline);
   }
-  .on-dark .rows,
   .on-photo .rows {
-    border-top-color: var(--color-hairline-dark);
+    border-top-color: rgba(255, 255, 255, 0.28);
   }
   .rows > * {
     display: flex;
@@ -481,9 +466,8 @@
     border-bottom: 1px solid var(--color-hairline);
     transition: padding-left 0.4s var(--ease-out);
   }
-  .on-dark .rows > *,
   .on-photo .rows > * {
-    border-bottom-color: var(--color-hairline-dark);
+    border-bottom-color: rgba(255, 255, 255, 0.28);
   }
   .rows > *:hover {
     padding-left: 10px;
@@ -504,30 +488,23 @@
     justify-content: space-between;
     gap: 16px;
     padding: 0 var(--gutter);
-    color: var(--color-porcelain);
+    color: var(--color-white);
     transition:
       background-color 0.5s var(--ease-out),
       color 0.5s var(--ease-out),
       box-shadow 0.5s;
   }
   html[data-tone="light"] .site-header {
-    background: rgba(250, 247, 242, 0.92);
-    color: var(--color-espresso);
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--color-ink);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     box-shadow: 0 1px 0 var(--color-hairline);
   }
-  html[data-tone="dark"] .site-header {
-    background: rgba(47, 71, 60, 0.88);
-    color: var(--color-porcelain);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 var(--color-hairline-dark);
-  }
   html[data-tone] .site-header.menu-open,
   .site-header.menu-open {
-    background: transparent;
-    color: var(--color-porcelain);
+    background: var(--color-white);
+    color: var(--color-ink);
     box-shadow: none;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -546,7 +523,7 @@
     transition: filter 0.5s;
   }
   /* Over a photograph the coloured mark fights the image; render it white.
-     Over the light and forest screens it keeps its own colours. */
+     Over the white and grey screens it keeps its own colours. */
   html:not([data-tone="light"]):not([data-tone="dark"]) .brand-mark,
   html[data-tone] .site-header.menu-open .brand-mark,
   .site-header.menu-open .brand-mark {
@@ -663,8 +640,8 @@
     position: fixed;
     inset: 0;
     z-index: 46;
-    background: var(--color-forest);
-    color: var(--color-porcelain);
+    background: var(--color-white);
+    color: var(--color-ink);
     display: grid;
     grid-template-rows: 1fr auto;
     padding: 96px var(--gutter) calc(28px + env(safe-area-inset-bottom));
@@ -705,7 +682,7 @@
     font-size: clamp(26px, 5vw, 38px);
     line-height: 1.15;
     padding: 5px 0;
-    border-bottom: 1px solid var(--color-hairline-dark);
+    border-bottom: 1px solid var(--color-hairline);
     opacity: 0;
     transform: translateY(14px);
     transition:
@@ -719,7 +696,7 @@
   }
   .site-menu nav a:hover,
   .site-menu nav a[aria-current="page"] {
-    color: var(--color-gold-light);
+    color: var(--color-gold);
   }
   .site-menu-foot {
     display: grid;
@@ -727,7 +704,7 @@
     padding-top: 22px;
     font-size: 13px;
     line-height: 1.6;
-    color: var(--color-sage-ink);
+    color: var(--color-slate);
   }
   .site-menu-foot p {
     margin: 0;
@@ -741,7 +718,7 @@
     bottom: calc(76px + env(safe-area-inset-bottom));
     z-index: 45;
     display: none;
-    box-shadow: 0 12px 30px rgba(47, 71, 60, 0.3);
+    box-shadow: 0 12px 30px rgba(31, 29, 27, 0.24);
   }
   @media (max-width: 860px) {
     .pill.snap-fab {
@@ -765,21 +742,21 @@
     padding: 12px 18px 12px 14px;
     border: 0;
     border-radius: 999px;
-    background: var(--color-forest);
-    color: var(--color-porcelain);
+    background: var(--color-ink);
+    color: var(--color-white);
     font-size: 12px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     font-weight: 600;
     cursor: pointer;
-    box-shadow: 0 14px 34px rgba(47, 71, 60, 0.32);
+    box-shadow: 0 14px 34px rgba(31, 29, 27, 0.26);
     transition:
       transform 0.35s var(--ease-out),
       background-color 0.35s;
   }
   .support-launcher:hover {
     transform: translateY(-2px);
-    background: var(--color-forest-2);
+    background: var(--color-slate);
   }
   .support-launcher .live-dot {
     width: 8px;
@@ -818,9 +795,9 @@
     grid-template-rows: auto 1fr auto;
     overflow: hidden;
     border-radius: 18px;
-    background: var(--color-porcelain);
-    color: var(--color-espresso);
-    box-shadow: 0 30px 70px rgba(47, 71, 60, 0.28);
+    background: var(--color-white);
+    color: var(--color-ink);
+    box-shadow: 0 26px 60px rgba(31, 29, 27, 0.22);
     transform-origin: bottom right;
     opacity: 0;
     visibility: hidden;
@@ -843,15 +820,15 @@
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background: var(--color-forest);
-    color: var(--color-porcelain);
+    background: var(--color-ink);
+    color: var(--color-white);
   }
   .support-head h2 {
     margin: 0;
     font-family: var(--font-display);
     font-size: 20px;
     font-weight: 500;
-    color: var(--color-porcelain);
+    color: var(--color-white);
     line-height: 1.1;
   }
   .support-head p {
@@ -859,7 +836,7 @@
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-sage-ink);
+    color: var(--color-slate);
     display: flex;
     align-items: center;
     gap: 7px;
@@ -878,7 +855,7 @@
     display: grid;
     place-items: center;
     border-radius: 999px;
-    border: 1px solid var(--color-hairline-dark);
+    border: 1px solid var(--color-hairline);
     background: transparent;
     color: inherit;
     cursor: pointer;
@@ -887,7 +864,7 @@
     transition: background-color 0.3s;
   }
   .support-close:hover {
-    background: rgba(250, 247, 242, 0.12);
+    background: rgba(255, 255, 255, 0.14);
   }
   .support-body {
     padding: 16px;
@@ -895,7 +872,7 @@
     display: grid;
     gap: 10px;
     align-content: start;
-    background: var(--color-linen);
+    background: var(--color-mist);
   }
   .support-msg {
     max-width: 88%;
@@ -907,14 +884,14 @@
   }
   .support-msg.from-desk {
     justify-self: start;
-    background: var(--color-porcelain);
+    background: var(--color-white);
     border-bottom-left-radius: 4px;
     box-shadow: 0 1px 2px rgba(59, 54, 48, 0.08);
   }
   .support-msg.from-guest {
     justify-self: end;
-    background: var(--color-forest);
-    color: var(--color-porcelain);
+    background: var(--color-ink);
+    color: var(--color-white);
     border-bottom-right-radius: 4px;
   }
   .support-foot {
@@ -928,8 +905,8 @@
     padding: 10px 13px;
     border-radius: 999px;
     border: 1px solid var(--color-hairline);
-    background: var(--color-porcelain);
-    color: var(--color-espresso);
+    background: var(--color-white);
+    color: var(--color-ink);
     font-size: 13px;
     cursor: pointer;
     transition:
@@ -951,9 +928,9 @@
     padding: 10px 14px;
     border-radius: 999px;
     border: 1px solid var(--color-hairline);
-    background: var(--color-porcelain);
+    background: var(--color-white);
     font-size: 16px;
-    color: var(--color-espresso);
+    color: var(--color-ink);
     outline: none;
   }
   .support-send input:focus {
@@ -979,7 +956,7 @@
     margin: 0;
     font-size: 11px;
     line-height: 1.5;
-    color: var(--color-stone);
+    color: var(--color-slate);
   }
 }
 

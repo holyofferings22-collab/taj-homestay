@@ -33,7 +33,7 @@ export default function AboutPage() {
         id="story"
         tone="light"
         labelledBy="story-heading"
-        className="content-center gap-10 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.1fr] lg:items-center"
+        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.1fr] lg:items-center"
       >
         <div className="grid max-w-[520px] gap-5">
           <h2 id="story-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
@@ -70,7 +70,7 @@ export default function AboutPage() {
         id="amenities"
         tone="light"
         labelledBy="amenities-heading"
-        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="amenities-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
           {about.amenitiesHeading.heading}{' '}
@@ -87,7 +87,7 @@ export default function AboutPage() {
               >
                 <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold-deep" />
                 <h3 className="text-[length:var(--step-card)] font-medium leading-tight">{item.title}</h3>
-                <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-stone">{item.body}</p>
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-slate">{item.body}</p>
               </li>
             );
           })}
@@ -97,9 +97,9 @@ export default function AboutPage() {
       {/* The numbers. */}
       <Screen
         id="numbers"
-        tone="dark"
+        tone="light"
         labelledBy="numbers-heading"
-        className="on-dark content-center bg-forest px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] text-porcelain"
+        className="content-center bg-ash px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="numbers-heading" className="sr-only">
           Taj Home Stay in numbers
@@ -107,8 +107,8 @@ export default function AboutPage() {
         <dl className="m-0 grid gap-x-8 gap-y-10 text-center sm:grid-cols-2 lg:grid-cols-4">
           {about.stats.map((stat) => (
             <div key={stat.label} data-rv="" className="grid gap-3">
-              <dt className="order-2 text-[11px] uppercase tracking-[0.26em] text-sage-ink">{stat.label}</dt>
-              <dd className="order-1 m-0 font-display text-[length:var(--step-stat)] leading-none text-gold-light">
+              <dt className="order-2 text-[11px] uppercase tracking-[0.26em] text-slate">{stat.label}</dt>
+              <dd className="order-1 m-0 font-display text-[length:var(--step-stat)] leading-none text-gold-deep">
                 {stat.value}
               </dd>
             </div>

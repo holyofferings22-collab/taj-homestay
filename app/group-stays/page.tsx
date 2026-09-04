@@ -43,7 +43,7 @@ export default function GroupStaysPage() {
         id="how-it-works"
         tone="light"
         labelledBy="how-heading"
-        className="content-center gap-10 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1.05fr_1fr] lg:items-center"
+        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1.05fr_1fr] lg:items-center"
       >
         <div className="grid max-w-[540px] gap-5">
           <h2 id="how-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
@@ -71,9 +71,9 @@ export default function GroupStaysPage() {
       {/* Three reasons, on hairlines. */}
       <Screen
         id="why"
-        tone="dark"
+        tone="light"
         labelledBy="why-heading"
-        className="on-dark content-center gap-8 bg-forest px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] text-porcelain"
+        className="content-center gap-8 bg-ash px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="why-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
           {groupStays.usps.heading} <span className="display-italic">{groupStays.usps.headingEmphasis}</span>
@@ -87,9 +87,9 @@ export default function GroupStaysPage() {
                 data-rv=""
                 className="grid content-start gap-3 border-t border-gold/50 py-6 transition-[padding] duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:pl-2"
               >
-                <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold-light" />
+                <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold" />
                 <h3 className="text-[length:var(--step-card)] font-medium leading-tight">{card.title}</h3>
-                <p className="m-0 text-[length:var(--step-body)] leading-[1.65] text-sage-ink">{card.body}</p>
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.65] text-slate">{card.body}</p>
               </li>
             );
           })}
@@ -101,7 +101,7 @@ export default function GroupStaysPage() {
         id="includes"
         tone="light"
         labelledBy="includes-heading"
-        className="content-center gap-10 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.05fr] lg:items-center"
+        className="content-center gap-10 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.05fr] lg:items-center"
       >
         <Link href="/gallery" data-rv="" className="photo photo-hover block h-[min(56vh,520px)] rounded-[6px] max-lg:hidden lg:order-1">
           <Image
@@ -120,7 +120,7 @@ export default function GroupStaysPage() {
           </h2>
           <ul data-rv="" className="rows m-0 list-none p-0 text-[15px] sm:grid-cols-2 sm:gap-x-8">
             {groupStays.includes.items.map((item) => (
-              <li key={item} className="text-espresso">
+              <li key={item} className="text-ink">
                 {item}
               </li>
             ))}
@@ -137,9 +137,9 @@ export default function GroupStaysPage() {
       {/* The numbers. */}
       <Screen
         id="group-numbers"
-        tone="dark"
+        tone="light"
         labelledBy="group-numbers-heading"
-        className="on-dark content-center bg-forest px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] text-porcelain"
+        className="content-center bg-ash px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="group-numbers-heading" className="sr-only">
           Group stays in numbers
@@ -147,10 +147,10 @@ export default function GroupStaysPage() {
         <dl className="m-0 grid gap-x-8 gap-y-10 text-center sm:grid-cols-2 lg:grid-cols-4">
           {groupStays.stats.map((stat) => (
             <div key={stat.label} data-rv="" className="grid gap-3">
-              <dt className="order-2 mx-auto max-w-[22ch] text-[11px] uppercase tracking-[0.26em] text-sage-ink">
+              <dt className="order-2 mx-auto max-w-[22ch] text-[11px] uppercase tracking-[0.26em] text-slate">
                 {stat.label}
               </dt>
-              <dd className="order-1 m-0 font-display text-[length:var(--step-stat)] leading-none text-gold-light">
+              <dd className="order-1 m-0 font-display text-[length:var(--step-stat)] leading-none text-gold-deep">
                 {stat.value}
               </dd>
             </div>

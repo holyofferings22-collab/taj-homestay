@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { WhatsApp } from '@/components/BrandIcons';
 import { booking } from '@/content/home';
 import { whatsappLink } from '@/content/site';
 import { reportConversion } from '@/lib/conversion';
@@ -22,29 +21,35 @@ function longDate(value: string) {
   return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
-const cellBase = 'grid gap-0.5 border-hairline py-2 sm:gap-1 sm:py-3.5';
-const label = 'text-[10px] uppercase tracking-[0.22em] text-stone';
-/* 16px minimum on phones: below that iOS Safari zooms the page when the
-   field takes focus and does not zoom back. */
+/* One line per cell, the way a hotel booking bar is set: a small label above a
+   single line of plain sans, not a stacked block of display type. The whole
+   bar comes to about 64px, so it sits along the foot of the photograph
+   without taking a slice out of it. */
+const cellBase = 'grid content-center gap-[3px] border-hairline py-2.5';
+const label = 'text-[9.5px] uppercase tracking-[0.18em] text-slate';
+/* 16px on phones: below that iOS Safari zooms the page when the field takes
+   focus and does not zoom back. */
 const field =
-  'w-full min-w-0 border-0 bg-transparent p-0 font-display text-[20px] font-medium leading-tight text-espresso outline-none [color-scheme:light]';
+  'w-full min-w-0 border-0 bg-transparent p-0 text-[15px] font-medium leading-tight text-ink outline-none [color-scheme:light]';
 
 /**
- * The booking bar pinned to the foot of the home hero. Hands the guest's
- * dates and party to WhatsApp as a pre-filled message to the desk, which is
- * the real booking channel; there is no engine behind it.
+ * The availability bar.
  *
- * Defaults are today and tomorrow, set after mount so the server and the
- * first client paint agree (the server does not know the guest's date).
- * The chat opens in a new tab; a blocked popup cannot be detected, so a
- * visible fallback link appears as well, which is also the keyboard path.
+ * Hands the guest's dates and party to WhatsApp as a pre-filled message to the
+ * desk, which is the real booking channel; there is no engine behind it.
+ *
+ * Defaults are today and tomorrow, set after mount so the server and the first
+ * client paint agree (the server does not know the guest's date). The chat
+ * opens in a new tab; a blocked popup cannot be detected, so a visible
+ * fallback link appears as well, which is also the keyboard path.
  */
 export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' } = {}) {
   const hero = variant === 'hero';
-  const cell = `${cellBase} ${hero ? 'px-5 sm:px-6' : 'px-4 sm:px-5'}`;
+  const cell = `${cellBase} ${hero ? 'px-4 md:px-5' : 'px-4 md:px-5'}`;
   /* The first cell lines up with the page gutter so the date does not start
      hard against the viewport edge. */
   const firstCell = hero ? 'md:pl-[var(--gutter)]' : '';
+
   const checkInRef = useRef<HTMLInputElement>(null);
   const checkOutRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState('');
@@ -101,10 +106,10 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
     <form
       onSubmit={onSubmit}
       aria-label="Check availability"
-      className={`relative z-[3] grid text-espresso backdrop-blur-[10px] max-md:grid-cols-2 md:grid-cols-[1.2fr_1.2fr_1fr_1fr_auto] ${
+      className={`relative z-[3] grid text-ink max-md:grid-cols-2 md:grid-cols-[1.15fr_1.15fr_1fr_1.15fr_auto] ${
         hero
-          ? 'bg-porcelain/95 shadow-[0_-10px_40px_rgba(28,34,30,0.25)]'
-          : 'mx-auto w-full max-w-[1100px] overflow-hidden rounded-[14px] bg-porcelain shadow-[0_16px_40px_rgba(47,71,60,0.16)] ring-1 ring-hairline'
+          ? 'bg-white/96 backdrop-blur-[10px]'
+          : 'mx-auto w-full max-w-[1000px] overflow-hidden rounded-[10px] bg-white shadow-[0_14px_34px_rgba(31,29,27,0.12)] ring-1 ring-hairline'
       }`}
     >
       <label className={`${cell} ${firstCell} border-r max-md:border-b`}>
@@ -131,16 +136,16 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
           ))}
         </select>
       </label>
-      <div className={hero ? 'max-md:col-span-2' : 'grid place-items-center p-2.5 max-md:col-span-2 md:p-3'}>
+
+      <div className={hero ? 'max-md:col-span-2' : 'grid place-items-center p-2 max-md:col-span-2'}>
         <button
           type="submit"
           className={
             hero
-              ? 'flex h-full w-full cursor-pointer items-center justify-center gap-2.5 border-0 bg-gold px-8 py-4 md:pr-[var(--gutter)] text-[12px] font-semibold uppercase tracking-[0.14em] text-espresso transition-colors duration-300 hover:bg-gold-light max-md:py-4'
-              : 'pill pill-ink w-full px-6 py-3.5 md:py-4'
+              ? 'flex h-full w-full cursor-pointer items-center justify-center border-0 bg-gold px-9 py-4 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white md:pr-[var(--gutter)]'
+              : 'flex w-full cursor-pointer items-center justify-center rounded-[6px] border-0 bg-gold px-8 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
           }
         >
-          <WhatsApp className="h-4 w-4" />
           Check availability
         </button>
       </div>
@@ -148,7 +153,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
       {(error || chatUrl) && (
         <p
           role={error ? 'alert' : 'status'}
-          className="m-0 border-t border-hairline px-5 py-3 text-center text-[13px] leading-[1.55] text-espresso max-md:col-span-2 md:col-span-5"
+          className="m-0 border-t border-hairline px-5 py-2.5 text-center text-[12.5px] leading-[1.5] text-slate max-md:col-span-2 md:col-span-5"
         >
           {error}
           {chatUrl && (
@@ -158,7 +163,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
                 href={chatUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline decoration-gold underline-offset-4"
+                className="text-ink underline decoration-gold underline-offset-4"
               >
                 Open the chat
               </a>

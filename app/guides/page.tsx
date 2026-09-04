@@ -27,7 +27,7 @@ export default function GuidesIndexPage() {
         id="articles"
         tone="light"
         labelledBy="articles-heading"
-        className="content-center gap-8 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >
         <h2 id="articles-heading" className="sr-only">
           All guides
@@ -48,8 +48,8 @@ export default function GuidesIndexPage() {
                 </span>
                 <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{guide.tag}</span>
                 <h3 className="text-[length:var(--step-card)] font-medium leading-[1.2]">{guide.title}</h3>
-                <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-stone">{guide.lead}</p>
-                <time dateTime={guide.dateISO} className="text-[11px] uppercase tracking-[0.18em] text-stone">
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-slate">{guide.lead}</p>
+                <time dateTime={guide.dateISO} className="text-[11px] uppercase tracking-[0.18em] text-slate">
                   {guide.date}
                 </time>
               </Link>

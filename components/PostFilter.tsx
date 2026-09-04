@@ -60,8 +60,8 @@ export function PostFilter({ posts, tags }: { posts: readonly Post[]; tags: read
       aria-pressed={tag === value}
       className={`rounded-full border px-4 py-2 text-[11px] uppercase tracking-[0.16em] transition-colors duration-300 ${
         tag === value
-          ? 'border-gold bg-gold text-espresso'
-          : 'border-hairline text-stone hover:border-gold hover:text-espresso'
+          ? 'border-gold bg-gold text-ink'
+          : 'border-hairline text-slate hover:border-gold hover:text-ink'
       }`}
     >
       {label}
@@ -91,8 +91,8 @@ export function PostFilter({ posts, tags }: { posts: readonly Post[]; tags: read
               </span>
               <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{post.tag}</span>
               <h3 className="text-[length:var(--step-card)] font-medium leading-[1.2]">{post.title}</h3>
-              <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-stone">{post.lead}</p>
-              <time dateTime={post.dateISO} className="text-[11px] uppercase tracking-[0.18em] text-stone">
+              <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-slate">{post.lead}</p>
+              <time dateTime={post.dateISO} className="text-[11px] uppercase tracking-[0.18em] text-slate">
                 {post.date}
               </time>
             </Link>
@@ -100,7 +100,7 @@ export function PostFilter({ posts, tags }: { posts: readonly Post[]; tags: read
         ))}
       </ul>
 
-      <p aria-live="polite" className="m-0 text-[11px] uppercase tracking-[0.22em] text-stone">
+      <p aria-live="polite" className="m-0 text-[11px] uppercase tracking-[0.22em] text-slate">
         {shown.length} {shown.length === 1 ? 'note' : 'notes'}
         {tag ? ` on ${tag.toLowerCase()}` : ''}
       </p>
