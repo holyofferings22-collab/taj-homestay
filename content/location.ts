@@ -1,15 +1,21 @@
 import { contact } from './site';
 
 export const location = {
-  eyebrow: 'Taj Home Stay, Dwarka',
-  heading: 'Getting here',
+  eyebrow: 'Location',
+  heading: 'Five hundred metres',
+  headingEmphasis: 'from the hall.',
   lead: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka, New Delhi 110077.',
+  heroImage: {
+    src: '/photos/IMG_9991.jpg',
+    alt: 'The view from a balcony at Taj Home Stay toward Yashobhoomi and the Dwarka Expressway',
+  },
+  distancesHeading: { heading: 'Everything you need,', headingEmphasis: 'within a walk.' },
   distances: [
     { icon: 'MapPin', place: 'Yashobhoomi (IICC) Gate 1', value: '~500 m, walkable' },
     {
       icon: 'TrainFront',
       place: 'Dwarka Sector 25 / Yashobhoomi metro, Airport Express',
-      value: 'Walking distance',
+      value: '550 m, about 7 min',
     },
     /**
      * TODO: no measured drive time to T3 yet. "Short drive" is the claim the
@@ -18,10 +24,10 @@ export const location = {
      */
     { icon: 'Plane', place: 'IGI Airport Terminal 3', value: 'Short drive' },
     { icon: 'TrainTrack', place: 'New Delhi Bijwasan railway station', value: 'Under 1 km' },
-    { icon: 'Building2', place: 'DLF Cyber City, via Dwarka Expressway', value: 'By road' },
   ],
   arriving: {
-    heading: 'Arriving',
+    heading: 'Getting here,',
+    headingEmphasis: 'however you come.',
     cards: [
       {
         icon: 'PlaneLanding',
@@ -62,11 +68,11 @@ export const location = {
 export const walkRoute = {
   heading: 'Walking from the metro',
   lead:
-    'The same walk every guest makes, fixed on the map below — from Gate 3 of the ' +
+    'The same walk every guest makes, fixed on the map below, from Gate 3 of the ' +
     'Yashobhoomi metro station to our door.',
   /** Fixed coordinates — there is no Google listing for an individual gate. */
   origin: {
-    label: 'Yashobhoomi Dwarka Sector 25 metro — Gate 3',
+    label: 'Yashobhoomi Dwarka Sector 25 metro, Gate 3',
     lat: 28.549579,
     lng: 77.0469135,
   },

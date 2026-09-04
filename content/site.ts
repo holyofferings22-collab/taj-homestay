@@ -14,7 +14,7 @@ export const brand = {
    * The property's own logo. Intrinsic pixel size is recorded here so
    * next/image can reserve the right box and never shift the header on load.
    * The artwork already reads "TAJ HOME STAY", so the lockup that renders it
-   * (`Wordmark`) sets it as the accessible name and does not repeat the name
+   * (`SiteHeader`) sets it as the accessible name and does not repeat the name
    * in text beside it.
    */
   logo: {
@@ -59,7 +59,7 @@ export const contact = {
   email: 'tajhomestaydelhi@gmail.com',
   phone,
   /** The generic click-to-chat link, used by every plain phone-number link. */
-  whatsapp: whatsappLink('Hello Taj Home Stay — I would like to check availability for my dates.'),
+  whatsapp: whatsappLink('Hello Taj Home Stay, I would like to check availability for my dates.'),
   address: {
     lines: ['KH No. 483, VPO Bharthal Village,', 'Sector 26 Dwarka, New Delhi 110077'],
     streetAddress: 'KH No. 483, VPO Bharthal Village, Sector 26 Dwarka',
@@ -122,20 +122,8 @@ export const nav = [
   { href: '/group-stays', label: 'Group Stays' },
   { href: '/location', label: 'Location' },
   { href: '/gallery', label: 'Gallery' },
+  { href: '/blog', label: 'Journal' },
   { href: '/contact', label: 'Contact' },
 ] as const;
-
-/** Footer link columns, split exactly as the original footer splits them. */
-export const footerNav = [
-  nav.slice(0, 4),
-  nav.slice(4),
-] as const;
-
-export const newsletter = {
-  heading: 'Join Our Newsletter',
-  blurb: 'Occasional notes on rates around convention dates.',
-  cta: 'Subscribe',
-  confirmation: 'Thanks — we will only write around convention dates.',
-} as const;
 
 export const copyright = '© 2026 Taj Home Stay, Dwarka. All rights reserved.';

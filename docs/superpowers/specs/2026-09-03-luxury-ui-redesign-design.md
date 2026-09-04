@@ -293,6 +293,30 @@ Lighthouse run on the home page with LCP under 2.5s on the mobile profile;
 keyboard walk-through of the six home screens; reduced motion checked in
 DevTools.
 
+## Build notes, 4 September 2026
+
+Decisions taken while building that refine the sections above:
+
+- Eyebrows on the home page are limited to the hero and the shared contact
+  screen; the rooms, location, guests and group screens open on their
+  headline. One small-caps label per three screens holds on every page.
+- The contact screen carries one pill, Message the desk. The "Send an
+  enquiry" pill was dropped: a third label for the contact intent, and the
+  footer strip already links the contact page.
+- The phone WhatsApp pill is hidden while a page's first screen is active.
+  Every hero carries its own pill, and on the home page the booking bar sits
+  exactly where the floating pill would land.
+- On phones the hero shows one pill; View rooms is desktop only. The booking
+  bar cells tighten so the whole hero fits an 844px screen.
+- A screen taller than the viewport (gallery grid, article, three stacked
+  room cards on a phone) becomes active when 60 percent of the viewport is
+  covered, not at 55 percent of itself, which it could never reach.
+- The rating and review count are read from Google's own map embed: 4.6 and
+  164 on 4 September 2026 (they were 4.5 and 116 on 9 August).
+- Text-sized gold on ivory uses `gold-deep`; hairlines and marks use `gold`.
+- The map on the location page starts below the header so Google's place
+  card is never hidden under it.
+
 ## Out of scope
 
 A booking engine, OTA links, review syndication, a CMS, dark-mode toggle.

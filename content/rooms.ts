@@ -15,18 +15,25 @@
  * tag, so browsers render them sideways.
  */
 export const rooms = {
-  eyebrow: 'Taj Home Stay, Dwarka',
-  heading: 'Rooms',
+  eyebrow: 'Rooms',
+  heading: 'Three rooms, told',
+  headingEmphasis: 'honestly.',
   lead:
     'Three categories, separated by what the room looks out onto. Rooms without an external ' +
-    'window are stated plainly on the card, so you know which one you are booking.',
+    'window say so plainly, so you know which one you are booking.',
+  /** A made bed, straight on, daylight: the archetypal room for the index. */
+  heroImage: {
+    src: '/photos/IMG_9977.jpg',
+    alt: 'A made-up king bed with a runner, framed art and a wall-mounted TV at Taj Home Stay',
+  },
   categories: [
     {
       name: 'Deluxe',
+      summary: 'Interior room, no external window. The quiet one.',
       chips: ['No external window', 'Air-conditioned', 'Attached bathroom'],
       description:
         'Our simplest room: no external window and no balcony. Everything else matches the ' +
-        'other categories — air conditioning, a TV, an attached bathroom and daily servicing.',
+        'other categories: air conditioning, a TV, an attached bathroom and daily servicing.',
       rate: '4,000',
       image: {
         src: '/photos/IMG_0013.jpg',
@@ -35,6 +42,7 @@ export const rooms = {
     },
     {
       name: 'Super Deluxe',
+      summary: 'External window and daylight. The one most single travellers take.',
       chips: ['External window', 'Air-conditioned', 'Attached bathroom'],
       description:
         'Has an external window and daylight, but no balcony. The middle option, and the one ' +
@@ -47,6 +55,7 @@ export const rooms = {
     },
     {
       name: 'Executive',
+      summary: 'Private balcony. Several face Yashobhoomi and the Expressway.',
       chips: ['Private balcony', 'External window', 'Air-conditioned'],
       description:
         'Has a private balcony as well as an external window. Several of these look out toward ' +
@@ -64,8 +73,8 @@ export const rooms = {
    * rather than leaving a guest to ask at check-out.
    */
   rateNote:
-    'Rates are per room, per night. Call the desk to confirm what is included for your dates — ' +
-    'rates move around Yashobhoomi event weeks.',
+    'Rates are per room, per night. Call the desk to confirm what is included for your dates. ' +
+    'Rates move around Yashobhoomi event weeks.',
   cta: {
     heading: 'Checking dates for a convention?',
     body:

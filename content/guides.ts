@@ -67,7 +67,7 @@ export const guides: readonly Guide[] = [
     date: '9 August 2026',
     dateISO: '2026-08-09',
     lead:
-      'The metro station is 550 m from our door — about seven minutes on foot, or a short ' +
+      'The metro station is 550 m from our door, about seven minutes on foot, or a short ' +
       'e-rickshaw ride if you would rather not walk it.',
     image: {
       src: '/photos/yashobhoomi-iicc.jpg',
@@ -78,12 +78,12 @@ export const guides: readonly Guide[] = [
         heading: 'The short version',
         paragraphs: [
           'Gate 3 of the Yashobhoomi (Dwarka Sector 25) metro station sits 550 m from our front ' +
-            'door — roughly seven minutes at an ordinary pace. That is the walk most of our ' +
+            'door, roughly seven minutes at an ordinary pace. That is the walk most of our ' +
             'guests do twice a day during an event, and it is the single reason people choose ' +
             'to stay on this side.',
           'The guest house lies almost due south of the station, about 380 m away in a straight ' +
             'line. The Dwarka Expressway runs between the two, so the walking route bends around ' +
-            'it rather than cutting straight across — which is why 380 m on a map becomes 550 m ' +
+            'it rather than cutting straight across, which is why 380 m on a map becomes 550 m ' +
             'on foot.',
         ],
       },
@@ -91,7 +91,7 @@ export const guides: readonly Guide[] = [
         heading: 'E-rickshaws, if you would rather not walk',
         paragraphs: [
           'E-rickshaws run from the station and will drop you at the hotel for a minimum fare. ' +
-            'That is the easy answer with luggage, in the heat, or after a long flight — and ' +
+            'That is the easy answer with luggage, in the heat, or after a long flight, and ' +
             'there is usually no wait for one.',
           'Tell the driver Taj Home Stay, Bharthal, Sector 26. If it is late and you cannot see ' +
             'one, call the desk and we will send a car instead.',
@@ -109,7 +109,7 @@ export const guides: readonly Guide[] = [
         heading: 'During event weeks',
         paragraphs: [
           'The walk earns its keep when a session ends. Roads around the convention centre clog ' +
-            'as a hall empties, and the cab queue grows faster than cars arrive — a five-minute ' +
+            'as a hall empties, and the cab queue grows faster than cars arrive. A five-minute ' +
             'journey turns into a long wait. Walking, or taking an e-rickshaw, is usually quicker ' +
             'than being driven.',
           'For heavy exhibition material, bad weather, or a departure before the metro starts ' +
@@ -133,12 +133,12 @@ export const guides: readonly Guide[] = [
   {
     slug: 'airport-express-to-terminal-3',
     tag: 'Transport',
-    title: 'Airport Express: Sector 25 to Terminal 3, step by step',
+    title: 'Airport Express to Terminal 3',
     date: '9 August 2026',
     dateISO: '2026-08-09',
     lead:
-      'Two stops and about eight minutes on the Airport Express, with no change of train. ' +
-      'Allow forty minutes from our door to the terminal.',
+      'Sector 25 to Terminal 3, step by step: two stops and about eight minutes on the Airport ' +
+      'Express, with no change of train. Allow forty minutes from our door to the terminal.',
     image: {
       src: '/photos/airport-express-train.jpg',
       alt: 'An Airport Express train on the elevated Orange Line in Delhi',
@@ -147,7 +147,7 @@ export const guides: readonly Guide[] = [
       {
         heading: 'At a glance',
         paragraphs: [
-          'Yashobhoomi Dwarka Sector 25 is the nearest station — underground, inside the IICC ' +
+          'Yashobhoomi Dwarka Sector 25 is the nearest station: underground, inside the IICC ' +
             'complex. From there IGI Terminal 3 is two stops towards New Delhi: about eight ' +
             'minutes of riding, for roughly ₹50.',
           'Trains run all seven days, every 10 to 15 minutes, with the first at 06:00 and the ' +
@@ -165,11 +165,11 @@ export const guides: readonly Guide[] = [
       {
         heading: 'Departing: us to Terminal 3',
         steps: [
-          'Walk to Yashobhoomi Dwarka Sector 25 — about 12 minutes, or 4 minutes by auto.',
+          'Walk to Yashobhoomi Dwarka Sector 25, about 12 minutes, or 4 minutes by auto.',
           'The station is underground, inside the IICC complex.',
           'Board the Airport Express towards New Delhi.',
           'Stay on board through Dwarka Sector 21.',
-          'Get off at IGI Airport Terminal 3 — roughly five minutes on foot to departures.',
+          'Get off at IGI Airport Terminal 3, roughly five minutes on foot to departures.',
         ],
         paragraphs: [
           'There is no change of train: Terminal 3 is the second stop. The same station also ' +
@@ -193,7 +193,7 @@ export const guides: readonly Guide[] = [
         heading: 'Outside 06:00 to 23:15',
         paragraphs: [
           'The first train is at 06:00 and the last at 23:15, so anything either side of that ' +
-            'means a car. That is the most common reason our guests ask the desk for one — an ' +
+            'means a car. That is the most common reason our guests ask the desk for one: an ' +
             'early-morning departure simply lands before the metro starts.',
           'Tell us your flight time the night before and a car is waiting at the door. Worth ' +
             'settling in the evening rather than at 3am, particularly during event weeks when ' +
@@ -242,7 +242,7 @@ export const guides: readonly Guide[] = [
         heading: 'Getting around late',
         paragraphs: [
           'The metro stops running well before the small hours, so anything after it closes means ' +
-            'a car. The travel desk arranges these at any hour — airport runs, station drops and ' +
+            'a car. The travel desk arranges these at any hour: airport runs, station drops and ' +
             'local trips. Booking the night before is always easier than finding something at 3am, ' +
             'especially during Yashobhoomi event weeks when demand spikes across the whole area.',
         ],
@@ -271,11 +271,16 @@ export const guides: readonly Guide[] = [
 ];
 
 export const guidesIndex = {
-  eyebrow: 'Taj Home Stay, Dwarka',
-  heading: 'Guides & Updates',
+  eyebrow: 'Guides',
+  heading: 'Written from the desk,',
+  headingEmphasis: 'not a brochure.',
+  heroImage: {
+    src: '/photos/dwarka-expressway-night.jpg',
+    alt: 'The Dwarka Expressway at night',
+  },
   lead:
     'Practical notes for getting here, getting to the hall, and getting a car at four in the ' +
-    'morning. Written from the desk, not from a brochure.',
+    'morning.',
 } as const;
 
 /** Lookup used by the article route. Returns undefined for an unknown slug. */

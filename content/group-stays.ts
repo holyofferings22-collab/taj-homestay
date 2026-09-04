@@ -1,12 +1,14 @@
 export const groupStays = {
-  eyebrow: 'Taj Home Stay, Dwarka',
-  heading: 'Group stays for teams and delegations',
+  eyebrow: 'Group stays',
+  heading: 'Block the floor.',
+  headingEmphasis: 'Or the building.',
   lead:
-    'Room blocks for exhibitors, corporate travel and families — about 500 m from Yashobhoomi ' +
+    'Room blocks for exhibitors, corporate travel and families, about 500 m from Yashobhoomi ' +
     '(IICC) Gate 1.',
 
   intro: {
-    heading: 'Business travel, sorted',
+    heading: 'Business travel,',
+    headingEmphasis: 'sorted.',
     paragraphs: [
       'Most groups who stay with us are working an event at Yashobhoomi. Exhibitor teams setting ' +
         'up a stand, delegations in for a three-day conference, families travelling together for ' +
@@ -17,15 +19,17 @@ export const groupStays = {
       'We are a 20-room guest house rather than a convention hotel, which cuts both ways: no ' +
         'banquet hall, but for a large enough group the whole property is effectively yours.',
     ],
-    image: { src: '/photos/IMG_9993.jpg', alt: 'A deluxe room at Taj Home Stay, Dwarka' },
+    image: { src: '/photos/IMG_0012.jpg', alt: 'A serviced room at Taj Home Stay, made up with fresh linen' },
+    heroImage: { src: '/photos/IMG_9993.jpg', alt: 'A room at Taj Home Stay with daylight from the balcony door' },
   },
 
   usps: {
-    heading: 'Our USPs',
+    heading: 'Why groups',
+    headingEmphasis: 'stay here.',
     cards: [
       {
         icon: 'MapPin',
-        title: 'Prime Location',
+        title: 'Five hundred metres from the hall',
         body:
           'Yashobhoomi (IICC) Gate 1 is about 500 m on foot, and Dwarka Sector 25 on the Airport ' +
           'Express line is walking distance. IGI Terminal 3 is a short drive, and Bijwasan ' +
@@ -34,7 +38,7 @@ export const groupStays = {
       },
       {
         icon: 'ConciergeBell',
-        title: 'Personalised Service',
+        title: 'One coordinator for the whole block',
         body:
           'One coordinator handles the whole block. The desk is staffed 24×7, so a delegation ' +
           'landing at 2am checks in without waiting, and check-outs can be staggered when ' +
@@ -43,17 +47,18 @@ export const groupStays = {
       },
       {
         icon: 'CarFront',
-        title: 'Transportation Assistance',
+        title: 'Cars at any hour',
         body:
           'Airport pickups and drops arranged on request, along with station transfers and local ' +
-          'runs through our travel desk. Share the flight numbers and cars are waiting — which ' +
+          'runs through our travel desk. Share the flight numbers and cars are waiting, which ' +
           'matters most for departures before the metro starts running.',
       },
     ],
   },
 
   includes: {
-    heading: 'What a group booking includes',
+    heading: 'What a group booking',
+    headingEmphasis: 'includes.',
     image: { src: '/photos/IMG_0013.jpg', alt: 'A standard room at Taj Home Stay, Dwarka' },
     items: [
       'Rooms held on confirmed dates',

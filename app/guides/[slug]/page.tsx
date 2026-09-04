@@ -2,16 +2,15 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Clock } from 'lucide-react';
-import { CtaBand } from '@/components/CtaBand';
-import { Reveal } from '@/components/Reveal';
+import { Screen } from '@/components/Screen';
+import { HeroScreen } from '@/components/HeroScreen';
+import { ContactScreen } from '@/components/ContactScreen';
+import { AutoplayVideo } from '@/components/AutoplayVideo';
 import { guides, getGuide } from '@/content/guides';
 
 /**
- * One guide article.
- *
- * `params` is a Promise in this version of Next — it must be awaited in both
- * the page and generateMetadata, not destructured directly.
+ * One guide article. `params` is a Promise in this version of Next and must
+ * be awaited in both the page and generateMetadata.
  */
 
 export function generateStaticParams() {
@@ -26,7 +25,6 @@ export async function generateMetadata({
   const { slug } = await params;
   const guide = getGuide(slug);
   if (!guide) return {};
-
   return {
     title: guide.title,
     description: guide.lead,
@@ -47,170 +45,123 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   const others = guides.filter((g) => g.slug !== guide.slug);
 
-  /**
-   * A square hero runs alongside the copy rather than above it — a full-bleed
-   * 1:1 would be ~1200px tall and push the article off the first screen.
-   */
-  const isSquare = guide.image.aspect === 'square';
-
-  const heroImage = (
-    <Image
-      src={guide.image.src}
-      alt={guide.image.alt}
-      fill
-      priority
-      sizes={isSquare ? '(max-width: 900px) 100vw, 420px' : '(max-width: 1240px) 100vw, 1192px'}
-      className="object-cover"
-    />
-  );
-
-  const body = (
-    <article>
-      {guide.sections.map((section) => (
-        <section key={section.heading} className="mb-11 max-w-[720px] last:mb-0">
-          <h2 className="m-0 mb-4 font-display text-[clamp(18px,2.4vw,28px)] font-normal text-ink">
-            {section.heading}
-          </h2>
-
-          {/* Media leads the section, prose explains it underneath. */}
-          {section.figure && (
-            <figure className="m-0 mb-6">
-              {/* Unoptimised: this is a route card, and Next's lossy pipeline
-                  softens small type. Served as authored so it stays legible. */}
-              <Image
-                src={section.figure.src}
-                alt={section.figure.alt}
-                width={1024}
-                height={1024}
-                unoptimized
-                className="h-auto w-full rounded-2xl border border-line"
-              />
-              {section.figure.caption && (
-                <figcaption className="m-0 mt-3 text-[13px]">{section.figure.caption}</figcaption>
-              )}
-            </figure>
-          )}
-
-          {section.video && (
-            <figure className="m-0 mb-6">
-              {/* An animation, not something to operate — so no controls.
-                  autoPlay is only honoured by browsers alongside muted. */}
-              <video
-                src={section.video.src}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                aria-label={section.video.caption}
-                className="block h-auto w-full rounded-2xl border border-line bg-stone"
-              />
-              {section.video.caption && (
-                <figcaption className="m-0 mt-3 text-[13px]">{section.video.caption}</figcaption>
-              )}
-            </figure>
-          )}
-
-          {section.paragraphs?.map((text, i) => (
-            <p key={i} className={i === 0 ? 'm-0' : 'mt-[18px]'}>
-              {text}
-            </p>
-          ))}
-
-          {section.steps && (
-            <ol className="m-0 mt-5 grid list-none gap-3.5 p-0">
-              {section.steps.map((step, i) => (
-                <li key={i} className="flex gap-3.5">
-                  <span className="mt-[3px] flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full bg-blush font-display text-[14px] text-ink">
-                    {i + 1}
-                  </span>
-                  <span className="flex-auto">{step}</span>
-                </li>
-              ))}
-            </ol>
-          )}
-        </section>
-      ))}
-    </article>
-  );
-
   return (
-    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
-      <section className="bg-sand py-[var(--rhythm-hero)]">
-        <div className="mx-auto max-w-[1240px] px-6">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-clay"
-          >
-            <span aria-hidden="true">&larr;</span> Guides &amp; Updates
-          </Link>
-          <h1 className="m-0 mt-3.5 max-w-[760px] font-display text-[clamp(25px,3.8vw,46px)] font-normal leading-[1.2] text-ink [text-wrap:pretty]">
+    <>
+      <HeroScreen
+        id="guide-intro"
+        eyebrow={guide.tag}
+        heading={guide.title}
+        lead={guide.lead}
+        image={guide.image}
+      >
+        <Link href="/guides" className="pill pill-ghost">
+          All guides
+        </Link>
+      </HeroScreen>
+
+      {/* The article: one long snap area that scrolls inside itself. */}
+      <Screen
+        id="article"
+        tone="light"
+        long
+        labelledBy="article-heading"
+        className="content-start bg-porcelain px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
+      >
+        <article className="mx-auto w-full max-w-[720px]">
+          <h2 id="article-heading" className="sr-only">
             {guide.title}
-          </h1>
-          <p className="mt-5 max-w-[560px]">{guide.lead}</p>
-          <p className="mt-6 flex items-center gap-2 text-[13px]">
-            <span className="rounded bg-white/70 px-2.5 py-[5px] text-[11px] uppercase tracking-[0.08em] text-ink">
-              {guide.tag}
-            </span>
-            <Clock aria-hidden="true" strokeWidth={1.5} className="h-[13px] w-[13px] flex-none" />
+          </h2>
+          <p data-rv="" className="m-0 mb-10 text-[11px] uppercase tracking-[0.22em] text-stone">
             <time dateTime={guide.dateISO}>{guide.date}</time>
           </p>
-        </div>
-      </section>
 
-      {isSquare ? (
-        /* Square hero: article left, image right, image sticky so it stays
-           beside the copy on a long read. Stacks image-first on narrow screens. */
-        <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">
-          <div className="flex flex-wrap items-start gap-10">
-            <div className="order-1 min-w-0 flex-[1_1_320px] min-[900px]:order-2">
-              <div className="relative aspect-square overflow-hidden rounded-2xl bg-stone min-[900px]:sticky min-[900px]:top-[100px]">
-                {heroImage}
-              </div>
-            </div>
-            <div className="order-2 min-w-0 flex-[1_1_420px] min-[900px]:order-1">{body}</div>
-          </div>
-        </Reveal>
-      ) : (
-        <>
-          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">
-            <div className="relative h-[clamp(220px,34vw,420px)] overflow-hidden rounded-2xl bg-stone">
-              {heroImage}
-            </div>
-          </Reveal>
+          {guide.sections.map((section) => (
+            <section key={section.heading} data-rv="" className="mb-12 last:mb-0">
+              <h3 className="mb-4 text-[clamp(24px,2.4vw,32px)] font-medium leading-[1.15]">{section.heading}</h3>
 
-          <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">{body}</Reveal>
-        </>
-      )}
+              {section.figure && (
+                <figure className="m-0 mb-6">
+                  {/* Unoptimised: a route card, and the lossy pipeline softens
+                      small type. Served as authored so it stays legible. */}
+                  <Image
+                    src={section.figure.src}
+                    alt={section.figure.alt}
+                    width={1024}
+                    height={1024}
+                    unoptimized
+                    className="h-auto w-full rounded-[6px] border border-hairline"
+                  />
+                  {section.figure.caption && (
+                    <figcaption className="m-0 mt-3 text-[13px] text-stone">{section.figure.caption}</figcaption>
+                  )}
+                </figure>
+              )}
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-block)]">
-        <h2 className="m-0 mb-7 font-display text-[clamp(18px,2.4vw,28px)] font-normal text-ink">
-          More guides
-        </h2>
-        <div className="grid grid-cols-1 gap-5 min-[680px]:grid-cols-2">
-          {others.map((other) => (
-            <Link
-              key={other.slug}
-              href={`/guides/${other.slug}`}
-              className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8 transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-accent"
-            >
-              <span className="inline-block rounded bg-sand px-2.5 py-[5px] text-[11px] uppercase tracking-[0.08em] text-ink">
-                {other.tag}
-              </span>
-              <h3 className="mb-0 mt-3.5 font-display text-[clamp(15px,2.4vw,19px)] font-normal leading-[1.4] text-ink">
-                {other.title}
-              </h3>
-            </Link>
+              {section.video && (
+                <figure className="m-0 mb-6">
+                  <AutoplayVideo
+                    src={section.video.src}
+                    ariaLabel={section.video.caption}
+                    className="block h-auto w-full rounded-[6px] border border-hairline bg-linen"
+                  />
+                  {section.video.caption && (
+                    <figcaption className="m-0 mt-3 text-[13px] text-stone">{section.video.caption}</figcaption>
+                  )}
+                </figure>
+              )}
+
+              {section.paragraphs?.map((text, i) => (
+                <p key={i} className={`m-0 text-[16px] leading-[1.75] text-stone ${i > 0 ? 'mt-4' : ''}`}>
+                  {text}
+                </p>
+              ))}
+
+              {section.steps && (
+                <ol className="m-0 mt-5 grid list-none gap-3.5 p-0">
+                  {section.steps.map((step, i) => (
+                    <li key={i} className="flex gap-4 text-[16px] leading-[1.7] text-stone">
+                      <span className="mt-[3px] flex h-7 w-7 flex-none items-center justify-center rounded-full border border-gold font-display text-[15px] text-espresso">
+                        {i + 1}
+                      </span>
+                      <span className="flex-auto">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </section>
           ))}
-        </div>
-      </Reveal>
+        </article>
+      </Screen>
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)] pt-[var(--rhythm-gap)]">
-        <CtaBand
-          heading="Planning a stay around an event?"
-          body="Send us your dates and we will tell you what is actually free. For anything urgent, the desk answers the phone at any hour."
-        />
-      </Reveal>
-    </div>
+      {/* The other guides. */}
+      <Screen
+        id="more-guides"
+        tone="light"
+        labelledBy="more-heading"
+        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+      >
+        <h2 id="more-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
+          More <span className="display-italic">from the desk.</span>
+        </h2>
+        <ul className="m-0 grid list-none gap-[clamp(14px,2vw,28px)] p-0 md:grid-cols-2">
+          {others.map((other) => (
+            <li key={other.slug} data-rv="">
+              <Link href={`/guides/${other.slug}`} className="grid gap-3 sm:grid-cols-[180px_1fr] sm:items-center">
+                <span className="photo photo-hover block aspect-[3/2] rounded-[6px]">
+                  <Image src={other.image.src} alt={other.image.alt} fill quality={72} sizes="(max-width: 640px) 100vw, 180px" />
+                  <span className="photo-caption">Read the guide</span>
+                </span>
+                <span className="grid gap-1.5">
+                  <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{other.tag}</span>
+                  <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-espresso">{other.title}</span>
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Screen>
+
+      <ContactScreen />
+    </>
   );
 }

@@ -1,41 +1,44 @@
 import type { Metadata } from 'next';
-import { Prata, Jost } from 'next/font/google';
+import { Cormorant_Garamond, Manrope } from 'next/font/google';
 import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { SiteFooter } from '@/components/SiteFooter';
+import { SnapShell } from '@/components/SnapShell';
+import { SupportChat } from '@/components/SupportChat';
 import { WhatsAppConversions } from '@/components/WhatsAppConversions';
 import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
 import { brand, contact } from '@/content/site';
 import './globals.css';
 
-const prata = Prata({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-prata',
+/**
+ * Cormorant Garamond carries every headline; the italic is what emphasis
+ * looks like inside one (never a second family). Manrope is body and UI.
+ * Both subset to latin and swap in, so text paints before the files land.
+ */
+const cormorant = Cormorant_Garamond({
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  /* latin-ext carries the rupee sign the rates are set in. */
+  subsets: ['latin', 'latin-ext'],
+  variable: '--font-cormorant',
   display: 'swap',
 });
 
-/**
- * 600 is here for the contact details in the header, which are set bold.
- * Without it the browser synthesises the weight by smearing the 500, which on
- * a phone number reads as a blurred 500 rather than as bold.
- */
-const jost = Jost({
-  weight: ['300', '400', '500', '600'],
+const manrope = Manrope({
+  weight: ['400', '500', '600'],
   subsets: ['latin'],
-  variable: '--font-jost',
+  variable: '--font-manrope',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   title: {
-    default: 'Taj Home Stay, Dwarka — Guest house beside Yashobhoomi',
-    template: '%s — Taj Home Stay, Dwarka',
+    default: 'Taj Home Stay, Dwarka: a quiet address beside Yashobhoomi',
+    template: '%s | Taj Home Stay, Dwarka',
   },
   description:
-    'Budget-premium guest house beside Yashobhoomi (IICC) in Sector 26 Dwarka, New Delhi.',
+    'Twenty rooms in Sector 26 Dwarka, New Delhi, five hundred metres from Yashobhoomi (IICC), a short walk from the Airport Express. A desk that answers at any hour.',
 };
 
 /** schema.org Hotel data, carried over from the original Home page head. */
@@ -44,7 +47,7 @@ const hotelJsonLd = {
   '@type': 'Hotel',
   name: 'Taj Home Stay, Dwarka',
   description:
-    'Budget-premium guest house beside Yashobhoomi (IICC) in Sector 26 Dwarka, New Delhi.',
+    'Twenty-room guest house beside Yashobhoomi (IICC) in Sector 26 Dwarka, New Delhi.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: contact.address.streetAddress,
@@ -54,10 +57,9 @@ const hotelJsonLd = {
   },
   telephone: contact.phone.dial,
   /**
-   * Root-relative on purpose: the site has no production domain configured yet,
-   * and a hardcoded guess would be worse than a relative path — consumers
-   * resolve these against the page URL. Make them absolute once the domain is
-   * known and `metadataBase` is set.
+   * Root-relative on purpose: the site has no production domain configured
+   * yet, and a hardcoded guess would be worse than a relative path. Make
+   * these absolute once the domain is known and `metadataBase` is set.
    */
   logo: brand.logo.src,
   image: brand.logo.src,
@@ -66,40 +68,28 @@ const hotelJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${prata.variable} ${jost.variable}`}>
-      {/* Browser extensions write their own attributes onto <body> before React
-          hydrates — ColorZilla adds `cz-shortcut-listen`, Grammarly and several
-          password managers do the same — and React reports the difference as a
-          hydration mismatch the app cannot fix, because the markup it shipped
-          was correct. This suppresses that report for this element only: it is
-          one level deep, so a genuine mismatch inside any component below still
-          surfaces normally. <body> sets no attributes of its own here, so there
-          is nothing real being hidden. */}
+    <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
+      {/* Browser extensions write their own attributes onto <body> before
+          React hydrates and React reports the difference as a hydration
+          mismatch the app cannot fix. Suppressed for this element only. */}
       <body suppressHydrationWarning>
         <JsonLd data={hotelJsonLd} />
         <SiteHeader />
-        <main aria-label={brand.name}>{children}</main>
-        <SiteFooter />
-        {/* Vercel Analytics. Injects its script at the end of the body and
-            renders nothing, so it stays out of the layout above it. It is
-            inert off Vercel — no endpoint to report to — which is why there
-            is no dev-only guard around it. */}
+        {/* The document does not scroll. SnapShell is the one scroll
+            container; every page renders its screens inside it, and the
+            shared contact screen at the end of each page is the footer. */}
+        <SnapShell>{children}</SnapShell>
+        {/* Live support. It is a front door onto the desk's WhatsApp, which
+            is staffed around the clock; see components/SupportChat.tsx. */}
+        <SupportChat />
+        {/* Vercel Analytics: inert off Vercel, so no dev-only guard. */}
         <Analytics />
 
-        {/* Google Ads conversion tracking. Unlike Analytics above, this one
-            does need the guard: it reports into a live ad account, so a
-            developer clicking through the site would otherwise spend the
-            property's optimisation signal on themselves.
-
-            `afterInteractive` is the next/script default and the right one
-            here — conversion tracking must never sit in front of first paint.
-            No onLoad/onReady/onError handler is used, which is what would
-            force this layout to become a client component. The inline tag
-            carries an id because next/script needs one to track it.
-
-            The inline script defines `gtag` synchronously and queues into
-            dataLayer, so a conversion fired before gtag.js has finished
-            downloading is held and sent rather than dropped. */}
+        {/* Google Ads conversion tracking. Guarded: it reports into a live ad
+            account. `afterInteractive` keeps it off the critical path. The
+            inline tag defines `gtag` synchronously and queues into dataLayer,
+            so a conversion fired before gtag.js has loaded is held, not
+            dropped. */}
         {googleAdsEnabled && (
           <>
             <Script

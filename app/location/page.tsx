@@ -1,134 +1,157 @@
 import type { Metadata } from 'next';
-import {
-  Building2,
-  CarFront,
-  Footprints,
-  MapPin,
-  Plane,
-  PlaneLanding,
-  TrainFront,
-  TrainTrack,
-} from 'lucide-react';
-import { WhatsApp } from '@/components/BrandIcons';
-import { PageHero } from '@/components/PageHero';
-import { Reveal } from '@/components/Reveal';
-import { WalkRoute } from '@/components/WalkRoute';
-import { location } from '@/content/location';
+import { Building2, CarFront, Footprints, MapPin, Plane, PlaneLanding, TrainFront, TrainTrack } from 'lucide-react';
+import { Screen } from '@/components/Screen';
+import { HeroScreen } from '@/components/HeroScreen';
+import { ContactScreen } from '@/components/ContactScreen';
+import { MapEmbed } from '@/components/MapEmbed';
+import { location, walkRoute } from '@/content/location';
+import { media } from '@/content/media';
 import { contact } from '@/content/site';
 
-const icons = {
-  MapPin,
-  TrainFront,
-  Plane,
-  TrainTrack,
-  Building2,
-  PlaneLanding,
-  Footprints,
-  CarFront,
+export const metadata: Metadata = {
+  title: 'Location and directions',
+  description: `${location.heading} ${location.headingEmphasis} ${location.lead}`,
 };
 
-export const metadata: Metadata = {
-  title: 'Getting here',
-  description: location.lead,
-};
+const distanceIcons = { MapPin, TrainFront, Plane, TrainTrack, Building2 };
+const arrivingIcons = { PlaneLanding, Footprints, CarFront };
+
+/**
+ * The walking route is locked: origin and destination are baked into the
+ * iframe URL, so a visitor can pan and zoom but not re-target either end.
+ * This is the keyless `output=embed` form, so the site still needs no Maps
+ * Platform key; the Maps URL API link hands off to the Maps app on phones.
+ */
+const from = `${walkRoute.origin.lat},${walkRoute.origin.lng}`;
+const to = encodeURIComponent(walkRoute.destination.query);
+const walkEmbedSrc = `https://maps.google.com/maps?saddr=${from}&daddr=${to}&dirflg=w&output=embed`;
+const directionsHref = `https://www.google.com/maps/dir/?api=1&origin=${from}&destination=${to}&travelmode=walking`;
 
 export default function LocationPage() {
   return (
-    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
-      <PageHero eyebrow={location.eyebrow} heading={location.heading} lead={location.lead} />
+    <>
+      <HeroScreen
+        id="location-intro"
+        eyebrow={location.eyebrow}
+        heading={location.heading}
+        headingEmphasis={location.headingEmphasis}
+        lead={location.lead}
+        image={media.walk ?? location.heroImage}
+      />
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-block)]">
-        <div className="flex flex-wrap items-stretch gap-8">
-          <div className="min-h-[300px] sm:min-h-[420px] min-w-0 flex-[1_1_420px] overflow-hidden rounded-2xl border border-line">
-            <iframe
-              title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
-              src={contact.mapEmbedSrc}
-              loading="lazy"
-              className="block h-full min-h-[300px] sm:min-h-[420px] w-full border-0"
-            />
-          </div>
-
-          <div className="min-w-0 flex-[1_1_340px]">
-            <div className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8">
-              <h2 className="m-0 mb-5 font-display text-[clamp(18px,2.8vw,24px)] font-normal text-ink">Distances</h2>
-              <div className="grid">
-                {location.distances.map((row) => {
-                  const Icon = icons[row.icon];
-                  return (
-                    /* Place and distance share a line on a wide card. On a
-                       phone that leaves the place about 200px, enough to break
-                       "Dwarka Sector 25 / Yashobhoomi metro, Airport Express"
-                       across three lines with its distance stranded alongside
-                       the first. Giving the value a full basis wraps it onto
-                       its own line, indented past the icon to line up with the
-                       place above it. */
-                    <div
-                      key={row.place}
-                      className="flex flex-wrap items-baseline gap-x-3.5 border-t border-line-soft py-3.5"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        strokeWidth={1.5}
-                        className="h-4 w-4 flex-none text-accent"
-                      />
-                      {/* flex-1 for its 0 basis, not for the grow. `flex-auto`
-                          bases the place on its own text, so once wrapping was
-                          on, a long one no longer fit the first line and went
-                          under the icon at full width while short ones stayed
-                          beside it. A 0 basis keeps every place on the icon's
-                          line and wraps the text inside its own column. */}
-                      <span className="min-w-0 flex-1 text-ink">{row.place}</span>
-                      <span className="w-full flex-none pl-[30px] text-sm sm:w-auto sm:pl-0">
-                        {row.value}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-              <a
-                href={contact.whatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-[26px] inline-flex min-h-12 items-center gap-2.5 rounded-full bg-clay px-[26px] py-[15px] text-[length:var(--step-body)] text-white transition-colors duration-[250ms] hover:bg-accent hover:text-ink"
-              >
-                <WhatsApp className="h-[17px] w-[17px]" />
-                WhatsApp {contact.phone.display}
-              </a>
-            </div>
-          </div>
+      {/* Distances beside the pinned map. */}
+      <Screen
+        id="distances"
+        tone="dark"
+        labelledBy="distances-heading"
+        className="on-dark bg-forest text-porcelain max-lg:grid-rows-[auto_40vh] lg:grid-cols-[1fr_1fr]"
+      >
+        <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
+          <h2 id="distances-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
+            {location.distancesHeading.heading}{' '}
+            <span className="display-italic">{location.distancesHeading.headingEmphasis}</span>
+          </h2>
+          <dl className="rows m-0 max-w-[560px] text-[length:var(--step-body)]" data-rv="">
+            {location.distances.map((row) => {
+              const Icon = distanceIcons[row.icon];
+              return (
+                <div key={row.place}>
+                  <dt className="flex items-center gap-3 text-sage-ink">
+                    <Icon aria-hidden="true" strokeWidth={1.25} className="h-4 w-4 flex-none text-gold-light" />
+                    {row.place}
+                  </dt>
+                  <dd className="m-0 whitespace-nowrap font-medium text-gold-light">{row.value}</dd>
+                </div>
+              );
+            })}
+          </dl>
         </div>
-      </Reveal>
+        {/* Starts below the fixed header, so the map's own place card and
+            controls are never hidden under it. */}
+        <div data-rv="" className="bg-forest-2 lg:h-full lg:pt-[72px]">
+          <MapEmbed
+            title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
+            src={contact.mapEmbedSrc}
+            className="h-full min-h-[40vh] opacity-90"
+          />
+        </div>
+      </Screen>
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-gap)]">
-        <WalkRoute />
-      </Reveal>
-
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)] pt-[var(--rhythm-gap)]">
-        <h2 className="m-0 mb-8 font-display text-[clamp(20px,3vw,34px)] font-normal text-ink">
-          {location.arriving.heading}
+      {/* Three ways in. */}
+      <Screen
+        id="arriving"
+        tone="light"
+        labelledBy="arriving-heading"
+        className="content-center gap-8 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+      >
+        <h2 id="arriving-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
+          {location.arriving.heading}{' '}
+          <span className="display-italic">{location.arriving.headingEmphasis}</span>
         </h2>
-        <div className="grid grid-cols-1 gap-5 min-[680px]:grid-cols-2 bar:grid-cols-3">
+        <ul className="m-0 grid list-none gap-x-10 p-0 lg:grid-cols-3">
           {location.arriving.cards.map((card) => {
-            const Icon = icons[card.icon];
+            const Icon = arrivingIcons[card.icon];
             return (
-              <div
+              <li
                 key={card.title}
-                className="rounded-2xl border border-line bg-white px-6 py-7 sm:px-7 sm:py-8"
+                data-rv=""
+                className="grid content-start gap-3 border-t border-gold/60 py-6 transition-[padding] duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:pl-2"
               >
-                <Icon
-                  aria-hidden="true"
-                  strokeWidth={1.5}
-                  className="mb-[18px] block h-[26px] w-[26px] text-accent"
-                />
-                <h3 className="m-0 mb-2.5 font-display text-[clamp(16px,2.6vw,20px)] font-normal text-ink">
-                  {card.title}
-                </h3>
-                <p className="m-0 text-[length:var(--step-body)]">{card.body}</p>
-              </div>
+                <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold-deep" />
+                <h3 className="text-[length:var(--step-card)] font-medium leading-tight">{card.title}</h3>
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.65] text-stone">{card.body}</p>
+              </li>
             );
           })}
+        </ul>
+      </Screen>
+
+      {/* The walk from the metro, fixed on the map. */}
+      <Screen
+        id="walk"
+        tone="light"
+        labelledBy="walk-heading"
+        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.4fr] lg:items-center"
+      >
+        <div className="grid gap-5">
+          <h2 id="walk-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
+            {walkRoute.heading}
+          </h2>
+          <p className="lede" data-rv="">
+            {walkRoute.lead}
+          </p>
+          <dl className="rows m-0 max-w-[420px] text-[length:var(--step-body)]" data-rv="">
+            <div>
+              <dt className="text-stone">Start</dt>
+              <dd className="m-0 text-right text-espresso">{walkRoute.origin.label}</dd>
+            </div>
+            <div>
+              <dt className="text-stone">End</dt>
+              <dd className="m-0 text-right text-espresso">{walkRoute.destination.label}</dd>
+            </div>
+            {walkRoute.facts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="text-stone">{fact.label}</dt>
+                <dd className="m-0 text-espresso">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+          <div data-rv="">
+            <a href={directionsHref} target="_blank" rel="noopener noreferrer" className="pill pill-ink">
+              {walkRoute.cta}
+            </a>
+          </div>
         </div>
-      </Reveal>
-    </div>
+        <div data-rv="" className="h-[min(56vh,520px)] overflow-hidden rounded-[6px] border border-hairline bg-porcelain">
+          <MapEmbed
+            title={`Walking route from ${walkRoute.origin.label} to ${walkRoute.destination.label}`}
+            src={walkEmbedSrc}
+            className="h-full"
+          />
+        </div>
+      </Screen>
+
+      <ContactScreen />
+    </>
   );
 }

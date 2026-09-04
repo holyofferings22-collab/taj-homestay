@@ -1,7 +1,15 @@
 export const about = {
-  eyebrow: 'Taj Home Stay, Dwarka',
-  heading: 'About the guest house',
-  lead: 'Twenty rooms in Bharthal Village, run by the family that lives here.',
+  eyebrow: 'About',
+  heading: 'A family address',
+  headingEmphasis: 'in Bharthal Village.',
+  lead: 'Twenty rooms in Sector 26 Dwarka, run by the family that lives here.',
+  /** Until the exterior is shot: a room the story screen does not repeat. */
+  heroImage: {
+    src: '/photos/IMG_0018.jpg',
+    alt: 'A full-length view of a room at Taj Home Stay',
+  },
+  story: { heading: 'Most guests are here', headingEmphasis: 'for a reason.' },
+  amenitiesHeading: { heading: 'What comes', headingEmphasis: 'with the room.' },
   paragraphs: [
     'Taj Home Stay, Dwarka is a 20-room guest house in Bharthal Village, Sector 26. Most of our ' +
       'guests are here for a reason: a convention at Yashobhoomi, an early flight out of T3, or a ' +
@@ -42,7 +50,7 @@ export const about = {
   },
 
   /**
-   * Rating and reviews read off the Google Business Profile on 9 August 2026;
+   * Rating and reviews as Google's map embed showed them on 4 September 2026;
    * keep in step with the same figures in home.ts.
    *
    * The fourth tile used to ask for "years operating", which nobody had to
@@ -51,8 +59,8 @@ export const about = {
    */
   stats: [
     { value: '20', label: 'Rooms' },
-    { value: '4.5', label: 'Google rating' },
-    { value: '116', label: 'Reviews' },
+    { value: '4.6', label: 'Google rating' },
+    { value: '164', label: 'Reviews' },
     { value: '24×7', label: 'Front desk' },
   ],
 } as const;

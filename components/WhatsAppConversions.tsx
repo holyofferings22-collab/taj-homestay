@@ -12,7 +12,7 @@ import { reportConversion } from '@/lib/conversion';
  * `wa.me` links across the header, the footer, the CTA band and four pages,
  * and five of the files that render them are server components — giving them
  * a handler would mean `'use client'` on all five purely to carry it. This
- * also catches the "Open the chat" fallback inside `BookingForm`, which only
+ * also catches the "Open the chat" fallback inside `BookingBar`, which only
  * exists after a submit, and any link added later. `content/site.ts` already
  * treats `whatsappLink()` as the one place a chat URL is built; this is the
  * same idea for the click.

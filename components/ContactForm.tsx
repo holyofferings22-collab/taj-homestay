@@ -1,70 +1,95 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { WhatsApp } from '@/components/BrandIcons';
 import { contactPage } from '@/content/contact';
-import { contact } from '@/content/site';
+import { whatsappLink } from '@/content/site';
+import { reportConversion } from '@/lib/conversion';
 
-const labelClass =
-  'grid gap-1.5 text-[11px] uppercase tracking-[0.12em] text-muted';
-/** 16px on phones so iOS does not zoom on focus — see BookingForm. */
+const labelClass = 'grid gap-2 text-[11px] uppercase tracking-[0.22em] text-stone';
+/* 16px on phones so iOS does not zoom on focus; see BookingBar. */
 const fieldClass =
-  'min-h-[46px] rounded-lg border border-line bg-white px-3 py-[13px] text-base text-ink outline-none sm:text-[length:var(--step-body)]';
+  'min-h-[48px] w-full rounded-[6px] border border-hairline bg-porcelain px-3.5 py-3 font-body text-base text-espresso outline-none transition-colors focus:border-gold';
 
-function formatDate(value: string) {
-  if (!value) return '';
+function isoDate(date: Date) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+function longDate(value: string) {
+  if (!value) return 'not chosen';
   const date = new Date(`${value}T00:00:00`);
   if (Number.isNaN(date.getTime())) return value;
-  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+  return date.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
 }
 
 /**
- * Enquiry form. Confirms in-page and does not deliver anywhere yet, so the
- * confirmation says so plainly and points at the phone and email instead.
+ * Enquiry form. It composes the guest's details into a WhatsApp message to
+ * the desk, which is the real booking channel; there is no inbox behind a
+ * web form here. Field names are unchanged from the previous form so nothing
+ * downstream that keyed on them breaks. The chat opens in a new tab; a
+ * blocked popup cannot be detected, so a fallback link appears as well.
  */
 export function ContactForm() {
-  const [message, setMessage] = useState('');
+  const checkInRef = useRef<HTMLInputElement>(null);
+  const checkOutRef = useRef<HTMLInputElement>(null);
+  const [chatUrl, setChatUrl] = useState('');
+
+  useEffect(() => {
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
+    if (checkInRef.current && !checkInRef.current.value) checkInRef.current.value = isoDate(today);
+    if (checkOutRef.current && !checkOutRef.current.value)
+      checkOutRef.current.value = isoDate(tomorrow);
+  }, []);
 
   function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const checkIn = formatDate(String(data.get('checkIn') ?? ''));
-    const checkOut = formatDate(String(data.get('checkOut') ?? ''));
+    const name = String(data.get('name') ?? '').trim();
+    const reach = String(data.get('contact') ?? '').trim();
+    const notes = String(data.get('notes') ?? '').trim();
 
-    setMessage(
-      `Noted: ${data.get('guests')}, ${checkIn} to ${checkOut}. This form does not send yet — ` +
-        `please email ${contact.email} or call ${contact.phone.display} and we will confirm.`,
-    );
+    const lines = [
+      'Hello Taj Home Stay, I would like to enquire about a stay.',
+      '',
+      `Check-in: ${longDate(String(data.get('checkIn') ?? ''))}`,
+      `Check-out: ${longDate(String(data.get('checkOut') ?? ''))}`,
+      `Party: ${data.get('guests')}`,
+    ];
+    if (name) lines.push(`Name: ${name}`);
+    if (reach) lines.push(`Reach me on: ${reach}`);
+    if (notes) lines.push('', notes);
+    const message = lines.join('\n');
+
+    const url = whatsappLink(message);
+    setChatUrl(url);
+    reportConversion();
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid max-w-[460px] gap-[18px]">
+    <form onSubmit={onSubmit} className="grid max-w-[520px] gap-4">
       <label className={labelClass}>
         Name
-        <input type="text" name="name" className={fieldClass} />
+        <input type="text" name="name" autoComplete="name" className={fieldClass} />
       </label>
       <label className={labelClass}>
         Phone or email
-        <input type="text" name="contact" className={fieldClass} />
+        <input type="text" name="contact" autoComplete="tel" className={fieldClass} />
       </label>
 
-      <div className="flex flex-wrap gap-[18px]">
-        <label className={`${labelClass} flex-[1_1_160px]`}>
+      <div className="grid gap-5 sm:grid-cols-2">
+        <label className={labelClass}>
           Check-in
-          <input
-            type="date"
-            name="checkIn"
-            defaultValue={contactPage.defaultCheckIn}
-            className={fieldClass}
-          />
+          <input ref={checkInRef} type="date" name="checkIn" className={fieldClass} />
         </label>
-        <label className={`${labelClass} flex-[1_1_160px]`}>
+        <label className={labelClass}>
           Check-out
-          <input
-            type="date"
-            name="checkOut"
-            defaultValue={contactPage.defaultCheckOut}
-            className={fieldClass}
-          />
+          <input ref={checkOutRef} type="date" name="checkOut" className={fieldClass} />
         </label>
       </div>
 
@@ -79,21 +104,29 @@ export function ContactForm() {
 
       <label className={labelClass}>
         Anything we should know
-        <textarea name="notes" rows={4} className={`${fieldClass} resize-y`} />
+        <textarea name="notes" rows={2} className={`${fieldClass} resize-y`} />
       </label>
 
-      <button
-        type="submit"
-        className="flex min-h-12 cursor-pointer items-center justify-center gap-2.5 rounded-full border-0 bg-clay p-4 text-[length:var(--step-body)] text-white transition-colors duration-[250ms] hover:bg-accent hover:text-ink"
-      >
-        Send enquiry <span aria-hidden="true">&rarr;</span>
-      </button>
-
-      {message && (
-        <p role="status" className="m-0 rounded-[10px] bg-sand px-4 py-3.5 text-sm text-ink">
-          {message}
-        </p>
-      )}
+      <div className="grid gap-3">
+        <button type="submit" className="pill pill-ink justify-self-start">
+          <WhatsApp className="h-4 w-4" />
+          Check availability
+        </button>
+        {chatUrl && (
+          <p role="status" className="m-0 text-[13px] leading-[1.6] text-stone">
+            Opening WhatsApp with your enquiry. Nothing happened?{' '}
+            <a
+              href={chatUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-espresso underline decoration-gold underline-offset-4"
+            >
+              Open the chat
+            </a>
+            .
+          </p>
+        )}
+      </div>
     </form>
   );
 }

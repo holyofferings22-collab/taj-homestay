@@ -1,0 +1,182 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useGSAP } from '@gsap/react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { BookingBar } from '@/components/BookingBar';
+import { gsap, prefersReducedMotion, scrollTriggerDefaults } from '@/lib/gsap';
+
+export type Frame = { src: string; alt: string };
+
+const control =
+  'grid h-11 w-11 place-items-center rounded-full border border-porcelain/45 bg-porcelain/10 text-porcelain backdrop-blur-[2px] transition-all duration-300 hover:border-porcelain hover:bg-porcelain hover:text-espresso';
+
+/**
+ * The opening screen, built the way a hotel front page is built: the property
+ * photographed at full bleed, its name set along the foot, a way into the
+ * gallery, and the availability bar pinned across the bottom edge.
+ *
+ * The frames cross-fade on a slow timer and can be stepped through with the
+ * arrows at either side. The whole stage drifts against the scroll, so the
+ * next screen slides over a photograph that is still moving.
+ *
+ * Under `prefers-reduced-motion` nothing advances on its own, nothing drifts
+ * and nothing parallaxes; the arrows still work by hand.
+ */
+export function HeroStage({
+  frames,
+  name,
+  locality,
+  seconds = 6,
+}: {
+  frames: readonly Frame[];
+  name: string;
+  locality: string;
+  seconds?: number;
+}) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const scope = useRef<HTMLDivElement>(null);
+  const stage = useRef<HTMLDivElement>(null);
+
+  const step = (dir: number) => setActive((i) => (i + dir + frames.length) % frames.length);
+
+  /* Autoplay, restarted whenever the frame changes so a click gives the new
+     frame its full turn rather than the remainder of the old one. */
+  useEffect(() => {
+    if (paused || frames.length < 2 || prefersReducedMotion()) return;
+    const timer = window.setTimeout(
+      () => setActive((i) => (i + 1) % frames.length),
+      Math.max(2500, seconds * 1000),
+    );
+    return () => window.clearTimeout(timer);
+  }, [active, paused, frames.length, seconds]);
+
+  /* Pause while the tab is in the background: an unseen cross-fade is only
+     battery. */
+  useEffect(() => {
+    const onVisibility = () => setPaused(document.visibilityState !== 'visible');
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
+
+  useGSAP(
+    () => {
+      const el = stage.current;
+      const trigger = scope.current;
+      if (!el || !trigger || prefersReducedMotion()) return;
+      gsap.fromTo(
+        el,
+        { yPercent: 0 },
+        {
+          yPercent: -10,
+          ease: 'none',
+          scrollTrigger: {
+            ...scrollTriggerDefaults(),
+            trigger,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        },
+      );
+    },
+    { dependencies: [] },
+  );
+
+  return (
+    <div ref={scope} className="absolute inset-0 grid grid-rows-[1fr_auto] overflow-hidden bg-forest">
+      {/* The photographs. */}
+      <div ref={stage} className="absolute inset-[-5%_0]">
+        {frames.map((frame, i) => (
+          <div
+            key={frame.src}
+            className="absolute inset-0 transition-opacity duration-[1400ms] ease-[cubic-bezier(.16,1,.3,1)]"
+            style={{ opacity: i === active ? 1 : 0 }}
+            aria-hidden={i !== active}
+          >
+            <Image
+              src={frame.src}
+              alt={i === 0 ? frame.alt : ''}
+              fill
+              preload={i === 0}
+              fetchPriority={i === 0 ? 'high' : 'auto'}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              quality={72}
+              sizes="100vw"
+              className={`object-cover ${i === active ? 'kenburns' : ''}`}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Shade at the top so the header's type holds, and along the foot so
+          the name and the bar do. Nothing across the middle. */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,34,30,0.45)_0%,rgba(28,34,30,0)_24%,rgba(28,34,30,0)_52%,rgba(28,34,30,0.72)_100%)]"
+      />
+
+      {/* Step through the frames. */}
+      {frames.length > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={() => step(-1)}
+            aria-label="Previous photograph"
+            className={`${control} absolute left-[clamp(12px,2vw,28px)] top-1/2 z-[3] -translate-y-1/2`}
+          >
+            <ChevronLeft aria-hidden="true" strokeWidth={1.5} className="h-5 w-5" />
+          </button>
+          <button
+            type="button"
+            onClick={() => step(1)}
+            aria-label="Next photograph"
+            className={`${control} absolute right-[clamp(12px,2vw,28px)] top-1/2 z-[3] -translate-y-1/2`}
+          >
+            <ChevronRight aria-hidden="true" strokeWidth={1.5} className="h-5 w-5" />
+          </button>
+        </>
+      )}
+
+      {/* The name, and the way into the gallery. */}
+      {/* The right padding keeps the gallery button clear of the live-support
+          launcher, which sits in the same corner above the bar. */}
+      <div className="relative z-[2] row-start-1 self-end px-[var(--gutter)] pb-[clamp(18px,3vh,34px)] pr-[max(var(--gutter),84px)] md:pr-[max(var(--gutter),210px)]">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <p className="m-0 flex items-center gap-[clamp(14px,2vw,28px)]">
+            <span aria-hidden="true" className="h-px w-[clamp(28px,5vw,74px)] flex-none bg-gold-light" />
+            <span className="font-display text-[clamp(26px,4.4vw,62px)] uppercase leading-[1.05] tracking-[0.02em] text-porcelain [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+              {name}, {locality}
+            </span>
+          </p>
+
+          <Link
+            href="/gallery"
+            className="group flex flex-none items-center gap-3 rounded-[4px] bg-porcelain/95 p-1.5 pr-5 text-espresso transition-colors duration-300 hover:bg-porcelain"
+          >
+            <span className="relative block h-11 w-16 overflow-hidden rounded-[3px] bg-linen">
+              <Image
+                src={frames[(active + 1) % frames.length].src}
+                alt=""
+                fill
+                quality={60}
+                sizes="64px"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-110"
+              />
+            </span>
+            <span className="text-[12px] font-semibold uppercase tracking-[0.16em]">Gallery</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Availability, across the foot of the photograph. */}
+      <div className="relative z-[3] row-start-2">
+        <BookingBar variant="hero" />
+      </div>
+    </div>
+  );
+}

@@ -1,79 +1,122 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Image from 'next/image';
-import { PageHero, StatBand } from '@/components/PageHero';
-import { Reveal } from '@/components/Reveal';
+import Link from 'next/link';
+import { Banknote, CarFront, ConciergeBell, Utensils, Wifi, Zap } from 'lucide-react';
+import { Screen } from '@/components/Screen';
+import { HeroScreen } from '@/components/HeroScreen';
+import { ContactScreen } from '@/components/ContactScreen';
 import { about } from '@/content/about';
+import { amenities } from '@/content/home';
+import { media } from '@/content/media';
 
 export const metadata: Metadata = {
   title: 'About the guest house',
   description: about.lead,
 };
 
+const icons = { ConciergeBell, Wifi, CarFront, Utensils, Zap, Banknote };
+
 export default function AboutPage() {
   return (
-    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
-      <PageHero eyebrow={about.eyebrow} heading={about.heading} lead={about.lead} />
+    <>
+      <HeroScreen
+        id="about-intro"
+        eyebrow={about.eyebrow}
+        heading={about.heading}
+        headingEmphasis={about.headingEmphasis}
+        lead={about.lead}
+        image={media.exterior ?? about.heroImage}
+      />
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pt-[var(--rhythm-block)]">
-        <div className="flex flex-wrap items-start gap-11">
-          <div className="min-w-0 max-w-[440px] flex-[1_1_320px]">
-            {about.paragraphs.map((text, i) => (
-              <p key={i} className={i === 0 ? 'm-0' : 'mt-[18px]'}>
-                {text}
-              </p>
-            ))}
-
-            <div className="mt-[30px] flex flex-wrap gap-3">
-              <Link
-                href="/rooms"
-                className="inline-flex min-h-12 items-center gap-2.5 rounded-full bg-clay px-7 py-[15px] text-[length:var(--step-body)] text-white transition-colors duration-[250ms] hover:bg-accent hover:text-ink"
-              >
-                See Our Rooms <span aria-hidden="true">&rarr;</span>
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex min-h-12 items-center gap-2.5 rounded-full border border-line px-6 py-[15px] text-[length:var(--step-body)] text-ink hover:border-accent"
-              >
-                Contact <span aria-hidden="true" className="text-clay">&rarr;</span>
-              </Link>
-            </div>
-          </div>
-
-          <div className="grid min-w-0 flex-[1_1_380px] gap-[22px]">
-            <div className="relative h-[240px] overflow-hidden sm:h-[340px] rounded-2xl bg-stone">
-              <Image
-                src={about.images.lead.src}
-                alt={about.images.lead.alt}
-                fill
-                priority
-                sizes="(max-width: 1000px) 100vw, 560px"
-                className="object-cover"
-              />
-            </div>
-            <div className="flex flex-wrap gap-[22px]">
-              {about.images.supporting.map((photo) => (
-                <div
-                  key={photo.src}
-                  className="relative h-[200px] flex-[1_1_200px] overflow-hidden rounded-2xl bg-stone"
-                >
-                  <Image
-                    src={photo.src}
-                    alt={photo.alt}
-                    fill
-                    sizes="(max-width: 1000px) 50vw, 270px"
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* The story beside the three photographs. */}
+      <Screen
+        id="story"
+        tone="light"
+        labelledBy="story-heading"
+        className="content-center gap-10 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.1fr] lg:items-center"
+      >
+        <div className="grid max-w-[520px] gap-5">
+          <h2 id="story-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
+            {about.story.heading} <span className="display-italic">{about.story.headingEmphasis}</span>
+          </h2>
+          {about.paragraphs.map((text) => (
+            <p key={text.slice(0, 24)} data-rv="" className="lede">
+              {text}
+            </p>
+          ))}
         </div>
-      </Reveal>
+        <div data-rv="" className="grid grid-cols-2 gap-3 max-lg:hidden">
+          <Link href="/gallery" className="photo photo-hover col-span-2 block h-[min(38vh,360px)] rounded-[6px]">
+            <Image
+              src={about.images.lead.src}
+              alt={about.images.lead.alt}
+              fill
+              quality={72}
+              sizes="(max-width: 1024px) 100vw, 55vw"
+            />
+            <span className="photo-caption">See the gallery</span>
+          </Link>
+          {about.images.supporting.map((photo) => (
+            <Link key={photo.src} href="/gallery" className="photo photo-hover block h-[min(24vh,220px)] rounded-[6px]">
+              <Image src={photo.src} alt={photo.alt} fill quality={72} sizes="28vw" />
+              <span className="photo-caption">See the gallery</span>
+            </Link>
+          ))}
+        </div>
+      </Screen>
 
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)] pt-[var(--rhythm-block)]">
-        <StatBand stats={about.stats} breakpoint="min-[900px]:grid-cols-4" />
-      </Reveal>
-    </div>
+      {/* Amenities, six on hairlines. */}
+      <Screen
+        id="amenities"
+        tone="light"
+        labelledBy="amenities-heading"
+        className="content-center gap-8 bg-linen px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+      >
+        <h2 id="amenities-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
+          {about.amenitiesHeading.heading}{' '}
+          <span className="display-italic">{about.amenitiesHeading.headingEmphasis}</span>
+        </h2>
+        <ul className="m-0 grid list-none gap-x-10 p-0 sm:grid-cols-2 lg:grid-cols-3">
+          {amenities.map((item) => {
+            const Icon = icons[item.icon];
+            return (
+              <li
+                key={item.title}
+                data-rv=""
+                className="grid gap-2 border-t border-gold/60 py-5 transition-[padding] duration-500 ease-[cubic-bezier(.16,1,.3,1)] hover:pl-2"
+              >
+                <Icon aria-hidden="true" strokeWidth={1.25} className="h-6 w-6 text-gold-deep" />
+                <h3 className="text-[length:var(--step-card)] font-medium leading-tight">{item.title}</h3>
+                <p className="m-0 text-[length:var(--step-body)] leading-[1.6] text-stone">{item.body}</p>
+              </li>
+            );
+          })}
+        </ul>
+      </Screen>
+
+      {/* The numbers. */}
+      <Screen
+        id="numbers"
+        tone="dark"
+        labelledBy="numbers-heading"
+        className="on-dark content-center bg-forest px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] text-porcelain"
+      >
+        <h2 id="numbers-heading" className="sr-only">
+          Taj Home Stay in numbers
+        </h2>
+        <dl className="m-0 grid gap-x-8 gap-y-10 text-center sm:grid-cols-2 lg:grid-cols-4">
+          {about.stats.map((stat) => (
+            <div key={stat.label} data-rv="" className="grid gap-3">
+              <dt className="order-2 text-[11px] uppercase tracking-[0.26em] text-sage-ink">{stat.label}</dt>
+              <dd className="order-1 m-0 font-display text-[length:var(--step-stat)] leading-none text-gold-light">
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </Screen>
+
+      <ContactScreen />
+    </>
   );
 }

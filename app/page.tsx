@@ -1,248 +1,288 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Banknote, CarFront, Clock, ConciergeBell, Utensils, Wifi, Zap } from 'lucide-react';
-import { HeroSlider } from '@/components/HeroSlider';
-import { BookingForm } from '@/components/BookingForm';
-import { Reveal } from '@/components/Reveal';
-import { Faq } from '@/components/Faq';
-import { amenities, guides, hero, intro, stats } from '@/content/home';
-import { guides as guideArticles } from '@/content/guides';
-
-const icons = { ConciergeBell, Wifi, CarFront, Utensils, Zap, Banknote };
-
-/** cols3 in the original: 1 column, 2 from 680px, 3 from 1000px. */
-const cols3 = 'grid grid-cols-1 gap-5 min-[680px]:grid-cols-2 bar:grid-cols-3';
-/**
- * cols4: pairs on a phone, 4 across from 800px.
- *
- * The original started at 1 column, which put four two-word stats in a single
- * file 700px long — a whole phone screen to say four short things. They are
- * short enough to sit two-up at 375px, and reading as a block is the point of
- * a stat band.
- */
-const cols4 = 'grid grid-cols-2 gap-x-5 gap-y-8 min-[800px]:grid-cols-4 sm:gap-x-8';
-/** Amenities: two across on a phone, then `cols3`'s widths from 640px up. */
-const amenityGrid = 'grid grid-cols-2 gap-2.5 sm:gap-5 bar:grid-cols-3';
-/**
- * Guides on the home page and on `/guides`: a bordered list of thumbnail rows
- * on a phone, the photo cards above 640px. One markup, two shapes — the image
- * box goes from a 56px square to `absolute inset-0`, and the caption from a
- * flex column beside it to an overlay pinned to the bottom of the photo.
- */
-const guideList = 'grid border-t border-line sm:grid-cols-2 sm:gap-5 sm:border-0 bar:grid-cols-3';
-const guideRow =
-  'flex items-center gap-3 border-b border-line py-3 sm:relative sm:block sm:h-[340px] sm:overflow-hidden sm:rounded-2xl sm:border-0 sm:py-0';
-const guideThumb =
-  'relative h-14 w-14 flex-none overflow-hidden rounded-lg bg-stone sm:absolute sm:inset-0 sm:h-auto sm:w-auto sm:rounded-none';
-
-/**
- * Only from 640px up. Below that the hero is a 16:9 photo followed by the copy,
- * both in normal flow, so its height is whatever those come to — a floor would
- * only add dead cream under the availability block.
- */
-const heroMinHeight =
-  'sm:min-h-[max(500px,min(720px,78vh))] bar:min-h-[max(560px,min(1050px,92vh))]';
+import { Screen } from '@/components/Screen';
+import { HeroStage } from '@/components/HeroStage';
+import { RoomSwitcher } from '@/components/RoomSwitcher';
+import { ContactScreen } from '@/components/ContactScreen';
+import { Parallax } from '@/components/motion/Parallax';
+import { CountUp } from '@/components/motion/CountUp';
+import { SplitHeading, RiseIn } from '@/components/motion/SplitHeading';
+import { hero, statement, screens } from '@/content/home';
+import { rooms } from '@/content/rooms';
+import { location } from '@/content/location';
+import { media } from '@/content/media';
+import { posts } from '@/content/blog';
+import { guides } from '@/content/guides';
+import { brand } from '@/content/site';
 
 export default function HomePage() {
+  /* Two notes and a guide, flattened to one shape so the card markup does
+     not have to know which stream an entry came from. */
+  const journal = [
+    { href: `/blog/${posts[0].slug}`, ...posts[0] },
+    { href: `/guides/${guides[0].slug}`, ...guides[0] },
+    { href: `/blog/${posts[1].slug}`, ...posts[1] },
+  ];
+
   return (
-    <div className="font-body text-[15px] font-light leading-[1.62] text-muted sm:text-base sm:leading-[1.7]">
-      <section className="mx-auto p-0">
-        <div className={`relative overflow-hidden bg-stone ${heroMinHeight}`}>
-          <HeroSlider slides={[...hero.slides]} />
+    <>
+      {/* 1. The property, photographed. No words on this screen. */}
+      <Screen
+        id="welcome"
+        tone="photo"
+        revealed
+        labelledBy="welcome-heading"
+        className="on-photo overflow-hidden"
+      >
+        <h1 id="welcome-heading" className="sr-only">
+          {brand.name}, {brand.locality}
+        </h1>
+        <HeroStage frames={hero.frames} name={brand.name} locality={brand.locality} />
+      </Screen>
 
-          {/* Wash: horizontal on wide screens, vertical when the hero stacks.
-              Neither applies below 640px — there the copy sits under the photo
-              on cream, so there is nothing to wash. */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 hidden hero-wash-stacked sm:block bar:hidden"
+      {/* 2. What the place is, and the dates. */}
+      <Screen
+        id="stay"
+        tone="light"
+        labelledBy="stay-heading"
+        className="content-center gap-9 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+      >
+        <div className="grid max-w-[860px] gap-5">
+          <p className="eyebrow" data-rv="">
+            {statement.eyebrow}
+          </p>
+          <SplitHeading
+            as="h2"
+            id="stay-heading"
+            text={statement.heading}
+            emphasis={statement.headingEmphasis}
+            className="text-[length:var(--step-hero)] leading-[1.02]"
           />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 hidden hero-wash-wide bar:block"
-          />
+          <RiseIn delay={0.25}>
+            <p className="lede">{statement.body}</p>
+          </RiseIn>
+        </div>
+      </Screen>
 
-          <div
-            className={`relative flex flex-wrap items-center gap-6 px-6 pb-9 pt-6 sm:gap-9 sm:px-[clamp(24px,4vw,76px)] sm:py-12 ${heroMinHeight}`}
+      {/* 3. Rooms, as one comparison rather than three cards. */}
+      <Screen
+        id="rooms"
+        tone="light"
+        labelledBy="rooms-heading"
+        className="content-center gap-[clamp(14px,2.4vh,26px)] bg-linen px-[var(--gutter)] pb-[clamp(24px,3.5vh,44px)] pt-[var(--header-clear)]"
+      >
+        <div className="grid max-w-[760px] gap-2.5">
+          <SplitHeading
+            as="h2"
+            id="rooms-heading"
+            text={screens.rooms.heading}
+            emphasis={screens.rooms.headingEmphasis}
+            className="text-[length:var(--step-section)] leading-[1.06]"
+          />
+          <RiseIn delay={0.2}>
+            <p className="lede">{screens.rooms.lede}</p>
+          </RiseIn>
+        </div>
+        <RoomSwitcher rooms={rooms.categories} cta={screens.rooms.cta} />
+      </Screen>
+
+      {/* 4. Where it is. */}
+      <Screen
+        id="location"
+        tone="dark"
+        labelledBy="location-heading"
+        className="on-dark bg-forest text-porcelain max-lg:grid-rows-[auto_40vh] lg:grid-cols-2"
+      >
+        <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
+          <h2
+            id="location-heading"
+            data-rv=""
+            className="font-display text-[length:var(--step-stat)] leading-[0.9] text-gold-light"
           >
-            {/* Holds the copy clear of the photo while the hero is stacked and
-                overlaid, which is 640px and up only. Its height plus this
-                container's `sm:py-12` and the `sm:gap-9` after it have to land
-                the eyebrow past where `.hero-wash-stacked` goes solid, or the
-                eyebrow sets clay type on open photo. Below 640px the photo is
-                a block of its own and none of this applies. */}
-            <div
-              aria-hidden="true"
-              className="hidden flex-[1_1_100%] sm:block sm:h-[210px] bar:hidden"
-            />
-
-            <div className="min-w-0 max-w-[470px] flex-[1_1_320px]">
-              <p className="m-0 mb-3 text-[11px] uppercase tracking-[0.12em] text-clay sm:mb-[18px] sm:text-xs sm:tracking-[0.14em]">
-                {hero.eyebrow}
-              </p>
-              <h1 className="m-0 font-display text-[length:var(--step-hero)] font-normal leading-[1.22] tracking-[-0.01em] text-ink [text-wrap:pretty]">
-                {hero.heading}
-              </h1>
-              <p className="mt-3.5 max-w-[380px] sm:mt-[22px] sm:text-base">{hero.body}</p>
-
-              {/* The pair splits the row evenly on a phone rather than sitting
-                  at its natural widths, where two different-length pills
-                  stacked into a ragged left-aligned column. */}
-              <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
-                <Link
-                  href="/rooms"
-                  className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full bg-clay px-4 py-4 text-[length:var(--step-body)] text-white transition-all duration-[250ms] hover:-translate-y-0.5 hover:bg-accent hover:text-ink sm:flex-none sm:justify-start sm:px-[30px]"
-                >
-                  See Our Rooms <span aria-hidden="true">&rarr;</span>
-                </Link>
-                <Link
-                  href="/location"
-                  className="inline-flex min-h-12 flex-1 items-center justify-center gap-2.5 rounded-full border border-line bg-white/70 px-4 py-4 text-[length:var(--step-body)] text-ink transition-all duration-[250ms] hover:-translate-y-0.5 hover:border-accent sm:flex-none sm:justify-start sm:px-6"
-                >
-                  Getting Here <span aria-hidden="true" className="text-clay">&rarr;</span>
-                </Link>
+            <CountUp value={500} suffix=" m" />
+            <span className="mt-5 block font-body text-[12px] uppercase tracking-[0.26em] text-sage-ink">
+              {screens.location.bigLabel}
+            </span>
+          </h2>
+          <dl className="rows m-0 max-w-[520px] text-[length:var(--step-body)]" data-rv="">
+            {location.distances.slice(1).map((row) => (
+              <div key={row.place}>
+                <dt className="text-sage-ink">{row.place}</dt>
+                <dd className="m-0 whitespace-nowrap font-medium text-gold-light">{row.value}</dd>
               </div>
-            </div>
-
-            <BookingForm />
-          </div>
-        </div>
-
-      </section>
-
-      <Reveal className="mx-auto max-w-[1240px] px-6 py-[var(--rhythm-section)]">
-        <div
-          className={`rounded-2xl bg-sand px-5 py-9 text-center sm:px-8 sm:py-[52px] ${cols4}`}
-        >
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="m-0 font-display text-[length:var(--step-stat)] leading-none text-clay">
-                {stat.value}
-              </p>
-              <p className="mt-2.5 text-sm">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </Reveal>
-
-      <Reveal className="mx-auto max-w-[1240px] px-6 pb-[var(--rhythm-section)]">
-        <h2 className="mx-auto mb-9 max-w-[620px] text-center font-display text-[length:var(--step-section)] font-normal text-ink [text-wrap:pretty] sm:mb-12">
-          {intro.heading}
-        </h2>
-        <div className="flex flex-wrap items-center gap-10">
-          {/* Set a step above body copy: this is the one paragraph on the page
-              that explains who the place is for, and it was reading at the
-              same size as an amenity card's caption. */}
-          <div className="min-w-0 max-w-[460px] flex-[1_1_320px]">
-            <p className="m-0 text-[17px] leading-[1.65] sm:text-[19px] sm:leading-[1.7]">
-              {intro.body}
-            </p>
-            <Link
-              href="/about"
-              className="mt-6 inline-flex items-center gap-[9px] border-b border-line pb-1.5 text-[15px] sm:mt-[26px] sm:text-[17px]"
-            >
-              {intro.cta} <span aria-hidden="true" className="text-clay">&rarr;</span>
+            ))}
+          </dl>
+          <div data-rv="">
+            <Link href="/location" className="pill pill-gold">
+              {screens.location.cta}
             </Link>
           </div>
-          <div className="relative h-[240px] min-w-0 flex-[1_1_380px] overflow-hidden rounded-2xl bg-stone sm:h-[340px]">
+        </div>
+        <Link href="/location" className="photo photo-hover group block h-full overflow-hidden">
+          <Parallax strength={14} className="absolute inset-[-8%_0]">
             <Image
-              src={intro.image.src}
-              alt={intro.image.alt}
+              src={screens.location.image.src}
+              alt={screens.location.image.alt}
               fill
-              sizes="(max-width: 1000px) 100vw, 560px"
+              quality={72}
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
-          </div>
-        </div>
-      </Reveal>
+          </Parallax>
+          <span className="photo-caption">Yashobhoomi, from the walk</span>
+        </Link>
+      </Screen>
 
-      <Reveal className="bg-sand py-[var(--rhythm-section)]">
-        <div className="mx-auto max-w-[1240px] px-6">
-          <h2 className="mb-9 text-center font-display text-[length:var(--step-section)] font-normal text-ink sm:mb-12">
-            What you get
-          </h2>
-          {/* Two across on a phone. Six of these one per row ran to about
-              1,100px — a screen and a half to list the amenities. Paired, the
-              same six with the same copy come to roughly 600px, and the set
-              reads as a set rather than as six separate announcements. */}
-          <div className={amenityGrid}>
-            {amenities.map((item) => {
-              const Icon = icons[item.icon];
-              return (
-                <div
-                  key={item.title}
-                  className="rounded-xl border border-line bg-white px-3.5 py-4 transition-all duration-[250ms] hover:-translate-y-[3px] hover:border-accent sm:rounded-2xl sm:px-8 sm:py-10"
-                >
-                  <Icon
-                    aria-hidden="true"
-                    strokeWidth={1.5}
-                    className="mb-2.5 block h-5 w-5 text-accent sm:mb-[22px] sm:h-7 sm:w-7"
-                  />
-                  <h3 className="m-0 mb-1.5 font-display text-[14px] font-normal leading-[1.3] text-ink sm:mb-3 sm:text-[length:var(--step-card)] sm:leading-normal">
-                    {item.title}
-                  </h3>
-                  <p className="m-0 text-[13px] leading-[1.5] sm:text-[length:var(--step-body)] sm:leading-[1.7]">
-                    {item.body}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </Reveal>
-
-      <Reveal className="mx-auto max-w-[1240px] px-6 py-[var(--rhythm-section)]">
-        <h2 className="mb-9 text-center font-display text-[length:var(--step-section)] font-normal text-ink sm:mb-12">
-          {guides.heading}
-        </h2>
-        <div className={guideList}>
-          {guideArticles.map((guide) => (
-            <Link key={guide.slug} href={`/guides/${guide.slug}`} className={guideRow}>
-              <div className={guideThumb}>
-                <Image
-                  src={guide.image.src}
-                  alt={guide.image.alt}
-                  fill
-                  sizes="(max-width: 640px) 56px, (max-width: 1000px) 50vw, 400px"
-                  className="object-cover"
-                />
-              </div>
-              {/* The scrim only exists to hold white type off the photo, and
-                  below 640px the type is not on the photo. */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(0deg,rgba(28,26,24,0.72)_0%,rgba(28,26,24,0)_55%)] sm:block"
-              />
-              <div className="min-w-0 flex-1 sm:pointer-events-none sm:absolute sm:inset-x-5 sm:bottom-5">
-                <span className="inline-block rounded bg-sand px-2 py-[3px] text-[10px] uppercase tracking-[0.08em] text-ink sm:bg-white/90 sm:px-2.5 sm:py-[5px] sm:text-[11px]">
-                  {guide.tag}
-                </span>
-                <h3 className="mb-0.5 mt-1.5 font-display text-[13px] font-normal leading-[1.35] text-ink sm:mb-1.5 sm:mt-3 sm:text-[clamp(15px,2.4vw,19px)] sm:leading-[1.4] sm:text-white">
-                  {guide.title}
-                </h3>
-                <p className="m-0 flex items-center gap-[6px] text-[11px] text-muted sm:gap-[7px] sm:text-xs sm:text-white/90">
-                  <Clock aria-hidden="true" strokeWidth={1.5} className="h-3 w-3 flex-none sm:h-[13px] sm:w-[13px]" />
-                  <time dateTime={guide.dateISO}>{guide.date}</time>
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <p className="mt-6 text-center sm:mt-9">
-          <Link
-            href="/guides"
-            className="inline-flex items-center gap-[9px] border-b border-line pb-1.5 text-[length:var(--step-body)]"
+      {/* 5. What guests say. */}
+      <Screen
+        id="guests"
+        tone="light"
+        labelledBy="guests-heading"
+        className="content-center justify-items-center gap-7 bg-sage px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)] text-center"
+      >
+        <h2 id="guests-heading" data-rv="" className="grid justify-items-center gap-2">
+          <span className="font-display text-[length:var(--step-stat)] leading-none text-espresso">
+            <CountUp value={Number(screens.guests.rating)} decimals={1} />
+          </span>
+          <span
+            role="img"
+            aria-label={`Rated ${screens.guests.rating} out of 5`}
+            className="relative inline-block text-[20px] tracking-[0.3em]"
           >
-            {guides.cta} <span aria-hidden="true" className="text-clay">&rarr;</span>
-          </Link>
+            <span aria-hidden="true" className="text-espresso/20">
+              ★★★★★
+            </span>
+            <span
+              aria-hidden="true"
+              className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-deep"
+              style={{ width: `${(Number(screens.guests.rating) / 5) * 100}%` }}
+            >
+              ★★★★★
+            </span>
+          </span>
+        </h2>
+        {media.reviews[0] && (
+          <blockquote
+            data-rv=""
+            className="m-0 max-w-[26ch] font-display text-[clamp(22px,2.6vw,36px)] italic leading-[1.3] text-espresso"
+          >
+            “{media.reviews[0].quote}”
+            <cite className="mt-4 block font-body text-[11px] not-italic uppercase tracking-[0.22em] text-stone">
+              {media.reviews[0].name}, {media.reviews[0].when}
+            </cite>
+          </blockquote>
+        )}
+        <p data-rv="" className="m-0 text-[11px] uppercase tracking-[0.22em] text-stone">
+          {screens.guests.reviewsLabel}
         </p>
-      </Reveal>
+        <a
+          data-rv=""
+          href={media.googleListing}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="link-ul"
+        >
+          {screens.guests.cta}
+        </a>
+      </Screen>
 
-      <Reveal className="bg-sand py-[var(--rhythm-section)]">
-        <div className="mx-auto max-w-[1240px] px-6">
-          <Faq />
+      {/* 6. Group stays. */}
+      <Screen id="groups" tone="photo" labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-porcelain">
+        <div className="absolute inset-0 overflow-hidden bg-forest" aria-hidden="true">
+          <Parallax strength={12} className="absolute inset-[-7%_0]">
+            <Image
+              src={screens.groups.image.src}
+              alt=""
+              fill
+              quality={72}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </Parallax>
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,38,32,0.88)_0%,rgba(28,38,32,0.6)_50%,rgba(28,38,32,0.15)_100%)]" />
         </div>
-      </Reveal>
-    </div>
+        <div className="relative z-[2] grid max-w-[640px] gap-5 px-[var(--gutter)] py-[var(--header-clear)]">
+          <SplitHeading
+            as="h2"
+            id="groups-heading"
+            text={screens.groups.heading}
+            emphasis={screens.groups.headingEmphasis}
+            className="text-[length:var(--step-section)] leading-[1.06]"
+          />
+          <RiseIn delay={0.2}>
+            <p className="lede">{screens.groups.lede}</p>
+          </RiseIn>
+          <RiseIn delay={0.3}>
+            <ul className="m-0 grid list-none gap-2.5 p-0 text-[length:var(--step-body)]">
+              {screens.groups.points.map((point) => (
+                <li key={point} className="flex items-baseline gap-3">
+                  <span aria-hidden="true" className="h-px w-[18px] flex-none -translate-y-1 bg-gold" />
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </RiseIn>
+          <RiseIn delay={0.4}>
+            <Link href="/group-stays" className="pill pill-gold">
+              {screens.groups.cta}
+            </Link>
+          </RiseIn>
+        </div>
+      </Screen>
+
+      {/* 7. The journal: the newest writing from the desk. */}
+      <Screen
+        id="journal"
+        tone="light"
+        labelledBy="journal-heading"
+        className="content-center gap-8 bg-porcelain px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+      >
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SplitHeading
+            as="h2"
+            id="journal-heading"
+            text={screens.journal.heading}
+            emphasis={screens.journal.headingEmphasis}
+            className="text-[length:var(--step-section)] leading-[1.06]"
+          />
+          <RiseIn delay={0.2}>
+            <div className="flex flex-wrap gap-x-7 gap-y-2">
+              <Link href="/blog" className="link-ul">
+                The journal
+              </Link>
+              <Link href="/guides" className="link-ul">
+                Guides
+              </Link>
+            </div>
+          </RiseIn>
+        </div>
+        <ul className="m-0 grid list-none gap-[clamp(14px,2vw,28px)] p-0 md:grid-cols-3">
+          {journal.map((entry) => (
+            <li key={entry.slug} data-rv="">
+              <Link href={entry.href} className="grid content-start gap-3">
+                <span className="photo photo-hover block aspect-[3/2] max-h-[30vh] rounded-[6px]">
+                  <Image
+                    src={entry.image.src}
+                    alt={entry.image.alt}
+                    fill
+                    quality={72}
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                  <span className="photo-caption">Read it</span>
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.22em] text-gold-deep">{entry.tag}</span>
+                <span className="font-display text-[length:var(--step-card)] font-medium leading-[1.2] text-espresso">
+                  {entry.title}
+                </span>
+                <span className="text-[length:var(--step-body)] leading-[1.6] text-stone">{entry.lead}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Screen>
+
+      {/* 8. Contact and footer. */}
+      <ContactScreen />
+    </>
   );
 }
