@@ -20,8 +20,9 @@ const nextConfig: NextConfig = {
   images: {
     /* Photographs are served at 72: the hero source files are 3 to 4.5 MB
        JPEGs and 72 is where the AVIF stops being distinguishable from 75 at
-       full width while shaving another 10 to 15 percent. */
-    qualities: [72, 75],
+       full width while shaving another 10 to 15 percent. 60 is for the
+       64px thumbnail on the hero's gallery button, where nothing is lost. */
+    qualities: [60, 72, 75],
   },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }];

@@ -23,13 +23,17 @@ const HEADER = 72;
  * - Tone tells the header what it is over. It cannot trust the entries it is
  *   handed, because an observer only reports targets whose intersection
  *   changed, and the section already sitting under the header is often not
- *   among them. So whenever anything crosses the band below the header, it
- *   re-derives the answer from every section's box: the one that straddles
- *   the header's bottom edge wins. That is eight rectangles, and it runs only
- *   when a boundary moves, not per frame.
+ *   among them. So whenever a section edge crosses the top of the window or
+ *   the header's bottom edge, it re-derives the answer from every section's
+ *   box. The header paints white the moment a light band is under any part
+ *   of it and goes transparent only once a photograph fills the whole strip:
+ *   a white bar over the last inches of a photograph reads as intended,
+ *   white type over a light band does not. That is a handful of rectangles,
+ *   and it runs only when a boundary moves, not per frame.
  */
 export function PageShell({ children }: { children: ReactNode }) {
   const [tone, setTone] = useState('');
+  const [screen, setScreen] = useState('');
   const [activeHasBooking, setActiveHasBooking] = useState(true);
 
   useEffect(() => {
@@ -48,40 +52,46 @@ export function PageShell({ children }: { children: ReactNode }) {
     );
     sections.forEach((s) => reveal.observe(s));
 
+    const sectionAt = (y: number) =>
+      sections.find((s) => {
+        const r = s.getBoundingClientRect();
+        return r.top <= y && r.bottom > y;
+      });
     const underHeader = () => {
-      const y = HEADER + 1;
-      const hit =
-        sections.find((s) => {
-          const r = s.getBoundingClientRect();
-          return r.top <= y && r.bottom > y;
-        }) ?? sections[0];
+      const top = sectionAt(1) ?? sections[0];
+      const bottom = sectionAt(HEADER + 1) ?? top;
+      const hit = top.dataset.tone === 'light' ? top : bottom;
       setTone(hit.dataset.tone ?? 'light');
+      setScreen(hit.id);
       setActiveHasBooking(Boolean(hit.querySelector(BOOKING_CONTROL)));
     };
     underHeader();
 
-    /* The band runs from the header's bottom edge to a fifth of the way
-       down the viewport; any section edge entering or leaving it is a moment
-       the answer could have changed. */
-    const tones = new IntersectionObserver(underHeader, {
-      rootMargin: `-${HEADER}px 0px -80% 0px`,
-      threshold: [0, 1],
-    });
-    sections.forEach((s) => tones.observe(s));
+    /* Two bands, one from the top of the window and one from the header's
+       bottom edge, each reaching a fifth of the way down the viewport. A
+       section edge entering or leaving either is a moment the answer could
+       have changed. */
+    const bands = ['0px 0px -80% 0px', `-${HEADER}px 0px -80% 0px`].map(
+      (rootMargin) => new IntersectionObserver(underHeader, { rootMargin, threshold: [0, 1] }),
+    );
+    sections.forEach((s) => bands.forEach((band) => band.observe(s)));
 
     window.addEventListener('resize', underHeader);
     const stopWatchingImages = refreshOnImageLoad();
     return () => {
       reveal.disconnect();
-      tones.disconnect();
+      bands.forEach((band) => band.disconnect());
       window.removeEventListener('resize', underHeader);
       stopWatchingImages();
     };
   }, []);
 
+  /* `data-tone` paints the header; `data-screen` names the section under it,
+     which globals.css reads to keep the phone launcher off the hero's card. */
   useEffect(() => {
     document.documentElement.dataset.tone = tone || 'light';
-  }, [tone]);
+    document.documentElement.dataset.screen = screen;
+  }, [tone, screen]);
 
   return (
     <>

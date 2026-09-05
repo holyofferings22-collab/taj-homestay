@@ -145,7 +145,7 @@
     min-height: min(100dvh, 780px);
   }
 
-  /* Sections whose job is the photograph itself still want the full height. */
+  /* The home page bands and every photograph section take the full window. */
   .screen-full {
     min-height: 100dvh;
   }
@@ -637,13 +637,15 @@
   html[data-menu="open"] .support-panel {
     display: none;
   }
-  /* On a phone the hero's availability card takes the foot of the screen,
-     where the launcher lives. While a photograph section is under the
+  /* On a phone the home hero's availability card takes the foot of the
+     screen, where the launcher lives. While that section (`welcome` in
+     app/page.tsx; PageShell writes the id to `data-screen`) is under the
      header the launcher steps aside; the header's WhatsApp pill covers the
-     same intent until the page scrolls on. */
+     same intent until the page scrolls on. Other photograph sections keep
+     the launcher: nothing of theirs sits in that corner. */
   @media (max-width: 767px) {
-    html[data-tone="photo"] .support-launcher,
-    html[data-tone="photo"] .support-panel {
+    html[data-screen="welcome"] .support-launcher,
+    html[data-screen="welcome"] .support-panel {
       display: none;
     }
   }

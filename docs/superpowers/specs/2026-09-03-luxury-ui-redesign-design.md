@@ -434,3 +434,42 @@ built. This section replaces "The scroll system" above.
   strip welded to its bottom edge. On phones the support launcher steps aside
   while a photograph section is under the header, so it never lands on the
   card; the header's WhatsApp pill covers the same intent there.
+
+## Fourth revision, 5 September 2026: the bands take the window again
+
+Two more reversals from the owner, both on the home page, and one fix that
+came out of checking them.
+
+- **Every home band after the hero is a window tall again.** The `auto`
+  sizing made the bands feel small. They are `full` once more, with the
+  content centred in the height and the shared padding keeping a heading
+  clear of the header only when a band holds more than a window. The framed
+  photograph grew with them, `min(64vh, 640px)` from `lg`; the rooms
+  photograph and the journal thumbnails grew in proportion. The inner pages
+  keep `auto`: they are for reading.
+- **"Block the floor. Or the building." is back as it was.** The corridor
+  photograph carries the whole band, the offer sits on it in white, and the
+  left-to-right gradient keeps the copy legible. It is the one photograph
+  section between the hero and the footer, and the owner asked for exactly
+  this one. The review pass caught that the old gradient was tuned for the
+  desktop column only: on a phone the copy spans the width and its right
+  half sat over the bright far wall at 2 to 2.4:1. The scrim is now deeper
+  under the column from `lg` (0.9 to 0.82 across the first 56%, then
+  fading to 0.15) and runs top to bottom below `lg` (0.88 to 0.86 over the
+  copy, 0.5 at the foot). Measured against the photograph's 99th-percentile
+  luminance, white body text holds above 5:1 and the lede above 4.5:1 in
+  both layouts.
+- **The header samples both of its edges.** With a photograph band in the
+  middle of the page the old rule showed its seam: the header went
+  transparent the moment the photograph reached its bottom edge, while its
+  top 72px still covered the grey band above, and the white nav text sat on
+  light grey. Now `PageShell` reads the section at the top of the window
+  and the one under the header's bottom edge; if either is light the
+  header is white, and it goes transparent only once a photograph fills the
+  whole strip. A white bar over the last inches of a photograph looks
+  intended; white type over a light band does not. Two observer bands, one
+  from y=0 and one from y=72, trigger the recomputation.
+- **The phone launcher hides for the hero only.** The earlier rule keyed on
+  `data-tone="photo"`, which now also matched the corridor band. PageShell
+  writes the active section's id to `data-screen`, and the rule keys on
+  `welcome`, the only section with a card in the launcher's corner.

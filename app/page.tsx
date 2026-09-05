@@ -6,6 +6,7 @@ import { RoomSwitcher } from '@/components/RoomSwitcher';
 import { ContactScreen } from '@/components/ContactScreen';
 import { ReviewMarquee } from '@/components/ReviewMarquee';
 import { Framed } from '@/components/Framed';
+import { Parallax } from '@/components/motion/Parallax';
 import { CountUp } from '@/components/motion/CountUp';
 import { SplitHeading, RiseIn } from '@/components/motion/SplitHeading';
 import { hero, statement, screens } from '@/content/home';
@@ -17,11 +18,12 @@ import { guides } from '@/content/guides';
 import { brand } from '@/content/site';
 
 
-/* One padding for every content section. Tighter at the top than the old
-   full-viewport screens, so a heading sits just under the header rather than
-   a third of the way down the window. */
+/* One padding for every band of the home page. Each band takes the whole
+   window (`full`), as the screens did before the scroll was freed, and its
+   content sits centred in that height; the padding only keeps the heading
+   clear of the header when a band has more in it than a window holds. */
 const band =
-  'gap-10 px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:gap-14';
+  'content-center gap-10 px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:gap-14';
 
 export default function HomePage() {
   /* Two notes and a guide, flattened to one shape so the card markup does
@@ -56,7 +58,7 @@ export default function HomePage() {
       <Screen
         id="stay"
         tone="light"
-        auto
+        full
         labelledBy="stay-heading"
         className={`${band} bg-white lg:grid-cols-[1.05fr_1fr] lg:items-center`}
       >
@@ -98,9 +100,9 @@ export default function HomePage() {
       <Screen
         id="rooms"
         tone="light"
-        auto
+        full
         labelledBy="rooms-heading"
-        className="gap-[clamp(12px,2vh,24px)] bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
+        className="content-center gap-[clamp(14px,2.5vh,28px)] bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <div className="grid max-w-[760px] gap-2.5">
           <SplitHeading
@@ -122,7 +124,7 @@ export default function HomePage() {
       <Screen
         id="location"
         tone="light"
-        auto
+        full
         labelledBy="location-heading"
         className={`${band} bg-white lg:grid-cols-[1fr_1.05fr] lg:items-center`}
       >
@@ -161,7 +163,7 @@ export default function HomePage() {
       <Screen
         id="guests"
         tone="light"
-        auto
+        full
         labelledBy="guests-heading"
         className={`${band} bg-mist lg:grid-cols-[1fr_1.05fr] lg:items-center [--marquee-fade:var(--color-mist)]`}
       >
@@ -217,15 +219,29 @@ export default function HomePage() {
         )}
       </Screen>
 
-      {/* 6. Group stays. The corridor of doors, framed, beside the offer. */}
-      <Screen
-        id="groups"
-        tone="light"
-        auto
-        labelledBy="groups-heading"
-        className={`${band} bg-white lg:grid-cols-[1.05fr_1fr] lg:items-center`}
-      >
-        <div className="grid max-w-[640px] gap-5">
+      {/* 6. Group stays. The corridor of doors carries the whole screen, as
+          it did before the framed pass: the owner asked for this one back
+          exactly as it was. The photograph is the ground and the offer sits
+          on it in white. From `lg` the scrim runs left to right, deep under
+          the copy column and thin over the corridor, as before; below `lg`
+          the copy spans the whole width, so the scrim runs top to bottom
+          instead and stays deep wherever there is type. Both keep white
+          body text above 4.5:1 over the brightest pixel in the frame. */}
+      <Screen id="groups" tone="photo" full labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-white">
+        <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
+          <Parallax strength={12} className="absolute inset-[-7%_0]">
+            <Image
+              src={screens.groups.image.src}
+              alt=""
+              fill
+              quality={72}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </Parallax>
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,38,32,0.88)_0%,rgba(28,38,32,0.86)_82%,rgba(28,38,32,0.5)_100%)] lg:bg-[linear-gradient(90deg,rgba(28,38,32,0.9)_0%,rgba(28,38,32,0.82)_56%,rgba(28,38,32,0.15)_100%)]" />
+        </div>
+        <div className="relative z-[2] grid max-w-[640px] gap-5 px-[var(--gutter)] py-[var(--header-clear)]">
           <SplitHeading
             as="h2"
             id="groups-heading"
@@ -237,7 +253,7 @@ export default function HomePage() {
             <p className="lede">{screens.groups.lede}</p>
           </RiseIn>
           <RiseIn delay={0.3}>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[length:var(--step-body)] text-slate">
+            <ul className="m-0 grid list-none gap-2.5 p-0 text-[length:var(--step-body)]">
               {screens.groups.points.map((point) => (
                 <li key={point} className="flex items-baseline gap-3">
                   <span aria-hidden="true" className="h-px w-[18px] flex-none -translate-y-1 bg-gold" />
@@ -252,19 +268,13 @@ export default function HomePage() {
             </Link>
           </RiseIn>
         </div>
-
-        <Link href="/group-stays" className="block">
-          <Framed src={screens.groups.image.src} alt={screens.groups.image.alt}>
-            <span className="photo-caption">Block the floor</span>
-          </Framed>
-        </Link>
       </Screen>
 
       {/* 7. The journal: the newest writing from the desk. */}
       <Screen
         id="journal"
         tone="light"
-        auto
+        full
         labelledBy="journal-heading"
         className={`${band} bg-mist`}
       >
@@ -291,7 +301,7 @@ export default function HomePage() {
           {journal.map((entry) => (
             <li key={entry.slug} data-rv="">
               <Link href={entry.href} className="grid content-start gap-3">
-                <span className="photo photo-hover block aspect-[3/2] max-h-[36vh] rounded-[6px]">
+                <span className="photo photo-hover block aspect-[3/2] max-h-[40vh] rounded-[6px]">
                   <Image
                     src={entry.image.src}
                     alt={entry.image.alt}

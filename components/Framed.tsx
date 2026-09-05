@@ -9,7 +9,8 @@ import { Parallax } from '@/components/motion/Parallax';
  * follow: a rounded, inset picture beside its copy, not one bled to the edge
  * of the window. The picture still drifts a little on scroll; the frame
  * clips it. On phones it is a 4:3 block the full width of the column; from
- * `lg` it takes a fixed height so the two columns line up.
+ * `lg` it takes a fixed height so the two columns line up, sized so that the
+ * picture fills most of a viewport-tall band without crowding the header.
  */
 export function Framed({
   src,
@@ -26,7 +27,7 @@ export function Framed({
 }) {
   return (
     <div
-      className={`photo photo-hover relative aspect-[4/3] w-full overflow-hidden rounded-[6px] lg:aspect-auto lg:h-[min(56vh,560px)] ${className}`}
+      className={`photo photo-hover relative aspect-[4/3] w-full overflow-hidden rounded-[6px] lg:aspect-auto lg:h-[min(64vh,640px)] ${className}`}
     >
       <Parallax strength={10} className="absolute inset-[-6%_0]">
         <Image src={src} alt={alt} fill quality={72} sizes={sizes} className="object-cover" />

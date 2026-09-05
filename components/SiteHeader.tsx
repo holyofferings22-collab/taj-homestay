@@ -46,13 +46,15 @@ export function SiteHeader() {
           <Image
             src={brand.logo.src}
             alt=""
-            width={Math.round((34 * brand.logo.width) / brand.logo.height)}
-            height={34}
+            width={brand.logo.width}
+            height={brand.logo.height}
+            sizes="130px"
             loading="eager"
             className="brand-mark"
-            /* Inline so next/image can see the ratio is preserved: the CSS
-               class scales the height and this keeps the width following. */
-            style={{ width: 'auto' }}
+            /* The intrinsic size goes in the props and the display size in
+               the style, so next/image sees both dimensions change together
+               and knows the ratio is kept. Height first, width follows. */
+            style={{ height: 34, width: 'auto' }}
           />
           <span className="brand-name">
             {brand.name}

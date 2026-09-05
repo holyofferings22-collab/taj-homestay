@@ -7,8 +7,8 @@ export type ScreenTone = 'photo' | 'light' | 'dark';
  *
  * `tone` tells the fixed header how to paint itself while this section sits
  * under it: transparent over a photograph, white over a light ground. `full`
- * asks for the whole viewport, which only sections carried by a photograph
- * need; `auto` sizes to the content, for long reading.
+ * asks for the whole viewport: the home page bands and every photograph
+ * section; `auto` sizes to the content, for long reading on the inner pages.
  */
 export function Screen({
   id,
