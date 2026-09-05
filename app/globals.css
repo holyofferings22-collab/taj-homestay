@@ -166,6 +166,13 @@
   #page > .screen-full:first-of-type {
     min-height: 100dvh;
   }
+  /* On a phone the home hero is a stack, photograph then card, sized by
+     its content rather than the window; see components/HeroStage.tsx. */
+  @media (max-width: 767px) {
+    #page > .screen-full.hero-stack:first-of-type {
+      min-height: 0;
+    }
+  }
 
   /* Content-led sections need room to breathe, not a viewport. */
   .screen-auto {

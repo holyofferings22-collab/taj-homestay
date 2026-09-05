@@ -44,7 +44,7 @@ export default function HomePage() {
         full
         revealed
         labelledBy="welcome-heading"
-        className="on-photo"
+        className="on-photo hero-stack"
       >
         <h1 id="welcome-heading" className="sr-only">
           {brand.name}, {brand.locality}
