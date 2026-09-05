@@ -6,22 +6,27 @@ import { contact } from '@/content/site';
 import { refreshOnImageLoad } from '@/lib/gsap';
 
 const BOOKING_CONTROL = 'a[href^="https://wa.me/"], button[type="submit"]';
+/** The fixed header's height; the tone is read from whatever sits just under it. */
+const HEADER = 72;
 
 /**
  * The page shell.
  *
- * The document scrolls. That is the whole design: no scroll container, no
- * `scroll-snap-type`, no key handlers, nothing that intercepts a wheel or a
- * swipe. An earlier version made `<main>` a `100dvh` scroller with mandatory
- * snap, which forced every gesture to land on a section boundary and read as
- * the page catching rather than gliding. Sections now size to their own
+ * The document scrolls. No scroll container, no snap, no key handlers,
+ * nothing that intercepts a wheel or a swipe. Sections size to their own
  * content and the scroll runs free.
  *
- * One IntersectionObserver against the viewport still does two jobs when a
- * section crosses into view: it marks the section `.in` so its `[data-rv]`
- * children reveal, and it copies the section's `data-tone` onto `<html>` so
- * the fixed header can repaint itself for whatever it is over. Observers do
- * not run on the scroll path, so this costs nothing per frame.
+ * Two observers against the viewport, neither on the scroll path:
+ *
+ * - Reveal marks a section `.in` the first time it arrives, then releases it,
+ *   so scrolling back up never replays the page.
+ * - Tone tells the header what it is over. It cannot trust the entries it is
+ *   handed, because an observer only reports targets whose intersection
+ *   changed, and the section already sitting under the header is often not
+ *   among them. So whenever anything crosses the band below the header, it
+ *   re-derives the answer from every section's box: the one that straddles
+ *   the header's bottom edge wins. That is eight rectangles, and it runs only
+ *   when a boundary moves, not per frame.
  */
 export function PageShell({ children }: { children: ReactNode }) {
   const [tone, setTone] = useState('');
@@ -31,8 +36,6 @@ export function PageShell({ children }: { children: ReactNode }) {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('section[data-screen]'));
     if (!sections.length) return;
 
-    /* Reveal on entry, and never take it back: a section that has been read
-       stays read, so scrolling up does not replay the page. */
     const reveal = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -45,26 +48,33 @@ export function PageShell({ children }: { children: ReactNode }) {
     );
     sections.forEach((s) => reveal.observe(s));
 
-    /* The header paints for whichever section owns the band directly beneath
-       it. A narrow root margin pinned to the top of the viewport means the
-       answer is always the section under the header, not whichever section
-       happens to be largest. */
-    const header = new IntersectionObserver(
-      (entries) => {
-        const hit = entries.filter((e) => e.isIntersecting).at(-1);
-        if (!hit) return;
-        const el = hit.target as HTMLElement;
-        setTone(el.dataset.tone ?? 'light');
-        setActiveHasBooking(Boolean(el.querySelector(BOOKING_CONTROL)));
-      },
-      { rootMargin: '-72px 0px -100% 0px', threshold: 0 },
-    );
-    sections.forEach((s) => header.observe(s));
+    const underHeader = () => {
+      const y = HEADER + 1;
+      const hit =
+        sections.find((s) => {
+          const r = s.getBoundingClientRect();
+          return r.top <= y && r.bottom > y;
+        }) ?? sections[0];
+      setTone(hit.dataset.tone ?? 'light');
+      setActiveHasBooking(Boolean(hit.querySelector(BOOKING_CONTROL)));
+    };
+    underHeader();
 
+    /* The band runs from the header's bottom edge to a fifth of the way
+       down the viewport; any section edge entering or leaving it is a moment
+       the answer could have changed. */
+    const tones = new IntersectionObserver(underHeader, {
+      rootMargin: `-${HEADER}px 0px -80% 0px`,
+      threshold: [0, 1],
+    });
+    sections.forEach((s) => tones.observe(s));
+
+    window.addEventListener('resize', underHeader);
     const stopWatchingImages = refreshOnImageLoad();
     return () => {
       reveal.disconnect();
-      header.disconnect();
+      tones.disconnect();
+      window.removeEventListener('resize', underHeader);
       stopWatchingImages();
     };
   }, []);

@@ -5,7 +5,7 @@ import { HeroStage } from '@/components/HeroStage';
 import { RoomSwitcher } from '@/components/RoomSwitcher';
 import { ContactScreen } from '@/components/ContactScreen';
 import { ReviewMarquee } from '@/components/ReviewMarquee';
-import { Parallax } from '@/components/motion/Parallax';
+import { Framed } from '@/components/Framed';
 import { CountUp } from '@/components/motion/CountUp';
 import { SplitHeading, RiseIn } from '@/components/motion/SplitHeading';
 import { hero, statement, screens } from '@/content/home';
@@ -15,6 +15,13 @@ import { reviews } from '@/content/reviews';
 import { posts } from '@/content/blog';
 import { guides } from '@/content/guides';
 import { brand } from '@/content/site';
+
+
+/* One padding for every content section. Tighter at the top than the old
+   full-viewport screens, so a heading sits just under the header rather than
+   a third of the way down the window. */
+const band =
+  'gap-10 px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:gap-14';
 
 export default function HomePage() {
   /* Two notes and a guide, flattened to one shape so the card markup does
@@ -42,17 +49,18 @@ export default function HomePage() {
         <HeroStage frames={hero.frames} name={brand.name} locality={brand.locality} />
       </Screen>
 
-      {/* 2. What the place is. The hero says nothing, so this screen carries
-          the introduction: the claim on the left against the room the claim
-          is about on the right, with the three facts the rest of the site
-          stands behind along the foot. */}
+      {/* 2. What the place is. The hero says nothing, so this section
+          carries the introduction: the claim on the left, the lounge framed
+          on the right, and the three facts the rest of the site stands
+          behind along the foot. */}
       <Screen
         id="stay"
         tone="light"
+        auto
         labelledBy="stay-heading"
-        className="bg-white max-lg:grid-rows-[1fr_29vh] lg:grid-cols-[1.05fr_1fr]"
+        className={`${band} bg-white lg:grid-cols-[1.05fr_1fr] lg:items-center`}
       >
-        <div className="grid content-center gap-[clamp(18px,3vh,28px)] px-[var(--gutter)] pb-[clamp(18px,3vh,44px)] pt-[var(--header-clear)]">
+        <div className="grid gap-[clamp(18px,3vh,28px)]">
           <div className="grid max-w-[620px] gap-5">
             <p className="eyebrow" data-rv="">
               {statement.eyebrow}
@@ -83,26 +91,16 @@ export default function HomePage() {
           </RiseIn>
         </div>
 
-        <div className="photo photo-hover group relative h-full overflow-hidden">
-          <Parallax strength={12} className="absolute inset-[-7%_0]">
-            <Image
-              src={statement.image.src}
-              alt={statement.image.alt}
-              fill
-              quality={72}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </Parallax>
-        </div>
+        <Framed src={statement.image.src} alt={statement.image.alt} />
       </Screen>
 
       {/* 3. Rooms, as one comparison rather than three cards. */}
       <Screen
         id="rooms"
         tone="light"
+        auto
         labelledBy="rooms-heading"
-        className="content-center gap-[clamp(12px,2vh,24px)] bg-mist px-[var(--gutter)] pb-[clamp(20px,3vh,40px)] pt-[var(--header-clear)]"
+        className="gap-[clamp(12px,2vh,24px)] bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <div className="grid max-w-[760px] gap-2.5">
           <SplitHeading
@@ -119,19 +117,17 @@ export default function HomePage() {
         <RoomSwitcher rooms={rooms.categories} cta={screens.rooms.cta} />
       </Screen>
 
-      {/* 4. Where it is. */}
+      {/* 4. Where it is. The count and the distances, with the hall framed
+          beside them. */}
       <Screen
         id="location"
         tone="light"
+        auto
         labelledBy="location-heading"
-        className="bg-white max-lg:grid-rows-[auto_40vh] lg:grid-cols-2"
+        className={`${band} bg-white lg:grid-cols-[1fr_1.05fr] lg:items-center`}
       >
-        <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
-          <h2
-            id="location-heading"
-            data-rv=""
-            className="font-display text-[length:var(--step-stat)] leading-[0.9] text-gold"
-          >
+        <div className="grid gap-6">
+          <h2 id="location-heading" data-rv="" className="font-display text-[length:var(--step-stat)] leading-[0.9] text-ink">
             <CountUp value={500} suffix=" m" />
             <span className="mt-5 block font-body text-[12px] uppercase tracking-[0.26em] text-slate">
               {screens.location.bigLabel}
@@ -151,48 +147,27 @@ export default function HomePage() {
             </Link>
           </div>
         </div>
-        <Link href="/location" className="photo photo-hover group block h-full overflow-hidden">
-          <Parallax strength={14} className="absolute inset-[-8%_0]">
-            <Image
-              src={screens.location.image.src}
-              alt={screens.location.image.alt}
-              fill
-              quality={72}
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-            />
-          </Parallax>
-          <span className="photo-caption">Yashobhoomi, from the walk</span>
+
+        <Link href="/location" className="block">
+          <Framed src={screens.location.image.src} alt={screens.location.image.alt}>
+            <span className="photo-caption">Yashobhoomi, from the walk</span>
+          </Framed>
         </Link>
       </Screen>
 
-      {/* 5. What guests say. A photograph carries it rather than a grey
-          field: the only review content that can honestly go here is the
-          aggregate, and three centred lines of it left 74 percent of the
-          screen empty. The marquee appears under the rating the moment
+      {/* 5. What guests say. The aggregate from Google beside a framed
+          photograph; the review cards appear beneath the moment
           content/reviews.ts has real quotes in it. */}
       <Screen
         id="guests"
-        tone="photo"
-        full
+        tone="light"
+        auto
         labelledBy="guests-heading"
-        className="on-photo items-center overflow-hidden text-white [--marquee-fade:transparent]"
+        className={`${band} bg-mist lg:grid-cols-[1fr_1.05fr] lg:items-center [--marquee-fade:var(--color-mist)]`}
       >
-        <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
-          <Parallax strength={10} className="absolute inset-[-6%_0]">
-            <Image
-              src={reviews.image.src}
-              alt=""
-              fill
-              quality={72}
-              sizes="100vw"
-              className="object-cover"
-            />
-          </Parallax>
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(26,28,26,0.62)_0%,rgba(26,28,26,0.72)_100%)]" />
-        </div>
+        <Framed src={reviews.image.src} alt="" className="lg:order-1" />
 
-        <div className="relative z-[2] grid w-full justify-items-center gap-7 px-[var(--gutter)] py-[var(--header-clear)] text-center">
+        <div className="grid gap-6 lg:order-2">
           <SplitHeading
             as="h2"
             id="guests-heading"
@@ -200,62 +175,57 @@ export default function HomePage() {
             emphasis={reviews.headingEmphasis}
             className="text-[length:var(--step-section)] leading-[1.06]"
           />
-
           <RiseIn delay={0.2}>
-            <p className="m-0 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
-              <span className="font-display text-[clamp(56px,7vw,104px)] leading-none text-white">
+            <p className="m-0 flex flex-wrap items-center gap-x-5 gap-y-3">
+              <span className="font-display text-[clamp(56px,7vw,104px)] leading-none text-ink">
                 <CountUp value={reviews.rating} decimals={1} />
               </span>
-              <span className="grid gap-1.5 text-left">
+              <span className="grid gap-1.5">
                 <span
                   role="img"
                   aria-label={`Rated ${reviews.rating} out of 5`}
                   className="relative inline-block text-[20px] leading-none tracking-[0.28em]"
                 >
-                  <span aria-hidden="true" className="text-white/35">
+                  <span aria-hidden="true" className="text-ink/20">
                     ★★★★★
                   </span>
                   <span
                     aria-hidden="true"
-                    className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-bright"
+                    className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-deep"
                     style={{ width: `${(reviews.rating / 5) * 100}%` }}
                   >
                     ★★★★★
                   </span>
                 </span>
-                <span className="text-[11px] uppercase tracking-[0.22em] text-white/80">
+                <span className="text-[11px] uppercase tracking-[0.22em] text-slate">
                   <CountUp value={reviews.count} /> reviews on Google
                 </span>
               </span>
             </p>
           </RiseIn>
-
-          <ReviewMarquee reviews={reviews.quotes} />
-
           <RiseIn delay={0.3}>
-            <a href={reviews.listing} target="_blank" rel="noopener noreferrer" className="pill pill-gold">
+            <a href={reviews.listing} target="_blank" rel="noopener noreferrer" className="pill pill-ink">
               {reviews.cta}
             </a>
           </RiseIn>
         </div>
+
+        {reviews.quotes.length > 0 && (
+          <div className="lg:col-span-2">
+            <ReviewMarquee reviews={reviews.quotes} />
+          </div>
+        )}
       </Screen>
 
-      {/* 6. Group stays. */}
-      <Screen id="groups" tone="photo" full labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-white">
-        <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
-          <Parallax strength={12} className="absolute inset-[-7%_0]">
-            <Image
-              src={screens.groups.image.src}
-              alt=""
-              fill
-              quality={72}
-              sizes="100vw"
-              className="object-cover"
-            />
-          </Parallax>
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(28,38,32,0.88)_0%,rgba(28,38,32,0.6)_50%,rgba(28,38,32,0.15)_100%)]" />
-        </div>
-        <div className="relative z-[2] grid max-w-[640px] gap-5 px-[var(--gutter)] py-[var(--header-clear)]">
+      {/* 6. Group stays. The corridor of doors, framed, beside the offer. */}
+      <Screen
+        id="groups"
+        tone="light"
+        auto
+        labelledBy="groups-heading"
+        className={`${band} bg-white lg:grid-cols-[1.05fr_1fr] lg:items-center`}
+      >
+        <div className="grid max-w-[640px] gap-5">
           <SplitHeading
             as="h2"
             id="groups-heading"
@@ -267,7 +237,7 @@ export default function HomePage() {
             <p className="lede">{screens.groups.lede}</p>
           </RiseIn>
           <RiseIn delay={0.3}>
-            <ul className="m-0 grid list-none gap-2.5 p-0 text-[length:var(--step-body)]">
+            <ul className="m-0 grid list-none gap-2.5 p-0 text-[length:var(--step-body)] text-slate">
               {screens.groups.points.map((point) => (
                 <li key={point} className="flex items-baseline gap-3">
                   <span aria-hidden="true" className="h-px w-[18px] flex-none -translate-y-1 bg-gold" />
@@ -282,14 +252,21 @@ export default function HomePage() {
             </Link>
           </RiseIn>
         </div>
+
+        <Link href="/group-stays" className="block">
+          <Framed src={screens.groups.image.src} alt={screens.groups.image.alt}>
+            <span className="photo-caption">Block the floor</span>
+          </Framed>
+        </Link>
       </Screen>
 
       {/* 7. The journal: the newest writing from the desk. */}
       <Screen
         id="journal"
         tone="light"
+        auto
         labelledBy="journal-heading"
-        className="content-center gap-8 bg-white px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]"
+        className={`${band} bg-mist`}
       >
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SplitHeading

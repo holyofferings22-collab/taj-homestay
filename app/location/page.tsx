@@ -43,10 +43,11 @@ export default function LocationPage() {
       <Screen
         id="distances"
         tone="light"
+        auto
         labelledBy="distances-heading"
-        className="bg-white max-lg:grid-rows-[auto_40vh] lg:grid-cols-[1fr_1fr]"
+        className="gap-8 bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-14"
       >
-        <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)]">
+        <div className="grid gap-6">
           <h2 id="distances-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
             {location.distancesHeading.heading}{' '}
             <span className="display-italic">{location.distancesHeading.headingEmphasis}</span>
@@ -66,13 +67,11 @@ export default function LocationPage() {
             })}
           </dl>
         </div>
-        {/* Starts below the fixed header, so the map's own place card and
-            controls are never hidden under it. */}
-        <div data-rv="" className="bg-slate lg:h-full lg:pt-[72px]">
+        <div data-rv="" className="h-[46vh] overflow-hidden rounded-[6px] border border-hairline bg-ash lg:h-[min(56vh,560px)]">
           <MapEmbed
             title="Map showing Taj Home Stay, Bharthal, Sector 26 Dwarka, New Delhi"
             src={contact.mapEmbedSrc}
-            className="h-full min-h-[40vh] opacity-90"
+            className="h-full"
           />
         </div>
       </Screen>
@@ -81,8 +80,9 @@ export default function LocationPage() {
       <Screen
         id="arriving"
         tone="light"
+        auto
         labelledBy="arriving-heading"
-        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <h2 id="arriving-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
           {location.arriving.heading}{' '}
@@ -110,8 +110,9 @@ export default function LocationPage() {
       <Screen
         id="walk"
         tone="light"
+        auto
         labelledBy="walk-heading"
-        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.4fr] lg:items-center"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:grid-cols-[1fr_1.4fr] lg:items-center"
       >
         <div className="grid gap-5">
           <h2 id="walk-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">

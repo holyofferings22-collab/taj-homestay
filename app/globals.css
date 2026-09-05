@@ -61,8 +61,12 @@
     /* Anchor links and the "back to top" glide instead of jumping. Nothing
        else touches the scroll: no container, no snap, no hijacking. */
     scroll-behavior: smooth;
-    /* The fixed header would otherwise cover whatever an anchor lands on. */
-    scroll-padding-top: 88px;
+    /* Exactly the header's height: an anchored section lands with its top
+       edge flush under the header, so the section before it is fully clear
+       and the header repaints for the one that has arrived. A larger value
+       left a sliver of the previous section under the header, and with a
+       photograph there the nav painted white on white. */
+    scroll-padding-top: 72px;
   }
 
   body {
@@ -632,6 +636,16 @@
   html[data-menu="open"] .support-launcher,
   html[data-menu="open"] .support-panel {
     display: none;
+  }
+  /* On a phone the hero's availability card takes the foot of the screen,
+     where the launcher lives. While a photograph section is under the
+     header the launcher steps aside; the header's WhatsApp pill covers the
+     same intent until the page scrolls on. */
+  @media (max-width: 767px) {
+    html[data-tone="photo"] .support-launcher,
+    html[data-tone="photo"] .support-panel {
+      display: none;
+    }
   }
   .site-menu nav {
     display: grid;

@@ -75,7 +75,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         tone="light"
         auto
         labelledBy="note-heading"
-        className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
+        className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <article className="mx-auto w-full max-w-[720px]">
           <h2 id="note-heading" className="sr-only">
@@ -106,8 +106,9 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <Screen
         id="more-notes"
         tone="light"
+        auto
         labelledBy="more-notes-heading"
-        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <h2 id="more-notes-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
           More <span className="display-italic">from the desk.</span>

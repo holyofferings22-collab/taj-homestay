@@ -32,7 +32,7 @@ export default function JournalPage() {
         tone="light"
         auto
         labelledBy="notes-heading"
-        className="content-start gap-8 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-start gap-8 bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <h2 id="notes-heading" className="sr-only">
           Every note

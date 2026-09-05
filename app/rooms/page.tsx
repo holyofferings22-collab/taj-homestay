@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
+import { Framed } from '@/components/Framed';
 import { Screen } from '@/components/Screen';
 import { HeroScreen } from '@/components/HeroScreen';
 import { ContactScreen } from '@/components/ContactScreen';
@@ -38,21 +38,17 @@ export default function RoomsPage() {
             key={room.name}
             id={`room-${room.name.toLowerCase().replace(/\s+/g, '-')}`}
             tone="light"
+            auto
             labelledBy={headingId}
-            className="bg-white max-lg:grid-rows-[42vh_auto] lg:grid-cols-2"
+            className="gap-8 bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:grid-cols-2 lg:items-center lg:gap-14"
           >
-            <Link href="/gallery" className={`photo photo-hover block h-full ${photoRight ? 'lg:order-2' : ''}`}>
-              <Image
-                src={room.image.src}
-                alt={room.image.alt}
-                fill
-                quality={72}
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <span className="photo-caption">See the gallery</span>
+            <Link href="/gallery" className={`block ${photoRight ? 'lg:order-2' : ''}`}>
+              <Framed src={room.image.src} alt={room.image.alt}>
+                <span className="photo-caption">See the gallery</span>
+              </Framed>
             </Link>
 
-            <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[clamp(28px,5vh,56px)] lg:pt-[var(--header-clear)]">
+            <div className="grid content-center gap-6 px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(28px,5vh,56px)] lg:pt-[clamp(84px,10vh,104px)]">
               <h2 id={headingId} data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
                 {room.name}
               </h2>

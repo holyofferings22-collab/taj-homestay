@@ -404,3 +404,33 @@ filled by hand.** Google's signed-out listing does not expose review text to a
 script, and an invented review on a site whose gallery promises no staging and
 no stock would be the one lie on it. The marquee renders nothing while the
 array is empty; the screen still shows the rating, the count and the link.
+
+## Third revision, 5 September 2026: the scroll runs free
+
+After using the site, the owner asked for three reversals, and they are
+built. This section replaces "The scroll system" above.
+
+- **No scroll lock.** The 100dvh scroll container and `scroll-snap-type: y
+  mandatory` are gone. The document scrolls; `html` has
+  `scroll-behavior: smooth` and `scroll-padding-top` for the fixed header,
+  and that is the whole scroll system. No key handlers, no section dots.
+- **Sections are bands, not slides.** A `<Screen>` has a `min-height` floor,
+  not a lock. `full` asks for the viewport (heroes only); `auto` sizes to the
+  content. Content sections share one padding, `pt clamp(84px, 10vh, 104px)`
+  and `pb clamp(56px, 7vh, 88px)`, so a heading sits just under the header
+  rather than a third of the way down the window.
+- **Photographs are framed, not bled.** The rooms section set the pattern:
+  a rounded, inset picture beside its copy. `components/Framed.tsx` is that
+  frame, 4:3 on phones and `min(56vh, 560px)` tall from `lg`, with the
+  parallax clipped inside it. It carries the stay, location, guests and group
+  sections on the home page and every room on the rooms page. The location
+  map sits in the same frame. Only the heroes are full bleed.
+- **The header is transparent over the hero and solid white from the first
+  scroll.** `PageShell` re-derives the section under the header's bottom edge
+  from every section's box whenever any edge crosses the band beneath the
+  header, rather than trusting an observer's changed entries, which missed
+  the section already sitting there and left white type on a white ground.
+- **The availability bar is a card** floated clear of the hero's foot, not a
+  strip welded to its bottom edge. On phones the support launcher steps aside
+  while a photograph section is under the header, so it never lands on the
+  card; the header's WhatsApp pill covers the same intent there.

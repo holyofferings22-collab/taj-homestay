@@ -41,8 +41,8 @@ export const posts: readonly Post[] = [
     lead:
       'What the days look like when the hall is full and you are staying five hundred metres from it.',
     image: {
-      src: '/photos/yashobhoomi-iicc.jpg',
-      alt: 'Yashobhoomi, the India International Convention Centre, seen from the walk',
+      src: '/photos/2026/room-window-view.jpg',
+      alt: 'The outlook over Dwarka from a room at Taj Home Stay',
     },
     sections: [
       {

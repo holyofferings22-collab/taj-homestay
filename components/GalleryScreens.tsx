@@ -88,7 +88,7 @@ export function GalleryScreens({ sections }: { sections: readonly GallerySection
           tone="light"
           auto
           labelledBy={`${section.id}-heading`}
-          className={`content-start gap-7 px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] ${
+          className={`content-start gap-7 px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] ${
             s % 2 === 0 ? 'bg-white' : 'bg-mist'
           }`}
         >

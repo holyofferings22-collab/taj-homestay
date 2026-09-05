@@ -32,8 +32,9 @@ export default function AboutPage() {
       <Screen
         id="story"
         tone="light"
+        auto
         labelledBy="story-heading"
-        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1fr_1.1fr] lg:items-center"
+        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:grid-cols-[1fr_1.1fr] lg:items-center"
       >
         <div className="grid max-w-[520px] gap-5">
           <h2 id="story-heading" data-rv="" className="text-[length:var(--step-section)] leading-[1.06]">
@@ -69,8 +70,9 @@ export default function AboutPage() {
       <Screen
         id="amenities"
         tone="light"
+        auto
         labelledBy="amenities-heading"
-        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <h2 id="amenities-heading" data-rv="" className="max-w-[760px] text-[length:var(--step-section)] leading-[1.06]">
           {about.amenitiesHeading.heading}{' '}
@@ -98,8 +100,9 @@ export default function AboutPage() {
       <Screen
         id="numbers"
         tone="light"
+        auto
         labelledBy="numbers-heading"
-        className="content-center bg-ash px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center bg-ash px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <h2 id="numbers-heading" className="sr-only">
           Taj Home Stay in numbers

@@ -39,7 +39,7 @@ export default function ContactPage() {
         tone="light"
         auto
         labelledBy="enquiry-heading"
-        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-16"
+        className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)] lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-16"
       >
         <div className="grid gap-6">
           <div className="grid gap-3">
@@ -118,7 +118,7 @@ export default function ContactPage() {
         tone="light"
         auto
         labelledBy="faq-heading"
-        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
+        className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <Faq />
       </Screen>
