@@ -555,3 +555,5 @@ phone launcher and the phone booking pill. The top shade the corridor
 band had carried for the transparent header is gone again, so the band
 is as the owner first had it. The hero keeps its `dvh` height through a
 `:first-of-type` rule, since the sentinel now precedes it in the page.
+The white is opaque, with no blur behind it: the owner could see the
+page through the earlier 94% white, and asked that nothing show through.

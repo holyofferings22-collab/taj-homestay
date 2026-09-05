@@ -487,11 +487,11 @@
       color 0.5s var(--ease-out),
       box-shadow 0.5s;
   }
+  /* Solid white, no blur: the owner asked that nothing show through it
+     once the page has moved. */
   html[data-tone="light"] .site-header {
-    background: rgba(255, 255, 255, 0.94);
+    background: var(--color-white);
     color: var(--color-ink);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
     box-shadow: 0 1px 0 var(--color-hairline);
   }
   html[data-tone] .site-header.menu-open,
