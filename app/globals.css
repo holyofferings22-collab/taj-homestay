@@ -265,6 +265,9 @@
   }
 
   /* ---------- pills ---------- */
+  /* Square, at the owner's request: the corners are as sharp as the
+     booking bar's. The class keeps its name; every call to action on the
+     site shares it. */
   .pill {
     display: inline-flex;
     align-items: center;
@@ -272,7 +275,7 @@
     gap: 10px;
     padding: 13px 22px;
     min-height: 44px;
-    border-radius: 999px;
+    border-radius: 0;
     font-size: 12px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -605,7 +608,8 @@
     align-content: center;
     background: transparent;
     border: 1px solid currentColor;
-    border-radius: 999px;
+    /* Square, to sit beside the square WhatsApp button on phones. */
+    border-radius: 0;
     color: inherit;
     cursor: pointer;
     opacity: 0.9;

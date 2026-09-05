@@ -142,7 +142,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
           className={
             hero
               ? 'flex h-full w-full cursor-pointer items-center justify-center border-0 bg-gold px-9 py-4 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
-              : 'flex w-full cursor-pointer items-center justify-center rounded-[6px] border-0 bg-gold px-8 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
+              : 'flex w-full cursor-pointer items-center justify-center border-0 bg-gold px-8 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
           }
         >
           Check availability
