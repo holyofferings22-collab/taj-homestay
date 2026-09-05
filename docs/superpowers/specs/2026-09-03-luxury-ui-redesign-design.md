@@ -540,3 +540,18 @@ three to a window, with arrows to page through the rest.
   hero keeps `dvh`, for the card anchored to its foot. And the reviews
   strip is now sized from the gutter rather than `100vw`, so it cannot
   overrun the page by half a scrollbar on desktops that reserve one.
+
+## Sixth revision, 5 September 2026: the header is solid once the page moves
+
+The owner asked that a moving page never carry a see-through header. The
+header is transparent only while the page sits at the very top, over a
+hero photograph, and solid white from the first scroll, wherever the page
+has got to, the corridor photograph included. `PageShell` pins a 24px
+sentinel to the top of the page and watches it with an
+IntersectionObserver: while any of it is in view the page has not
+scrolled. That replaces the two-edge sampling of the fifth revision for
+the header's colour; the section-under-header derivation stays, for the
+phone launcher and the phone booking pill. The top shade the corridor
+band had carried for the transparent header is gone again, so the band
+is as the owner first had it. The hero keeps its `dvh` height through a
+`:first-of-type` rule, since the sentinel now precedes it in the page.

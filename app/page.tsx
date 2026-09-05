@@ -270,11 +270,6 @@ export default function HomePage() {
             />
           </Parallax>
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,38,32,0.88)_0%,rgba(28,38,32,0.86)_82%,rgba(28,38,32,0.5)_100%)] lg:bg-[linear-gradient(90deg,rgba(28,38,32,0.9)_0%,rgba(28,38,32,0.82)_56%,rgba(28,38,32,0.15)_100%)]" />
-          {/* The header goes transparent over this band, and its right-hand
-              links sit over the thin end of the scrim and the corridor's
-              bright ceiling. The same top shade the hero carries keeps the
-              header's white type above 4.5:1 there. */}
-          <div className="absolute inset-x-0 top-0 h-[150px] bg-[linear-gradient(180deg,rgba(28,38,32,0.7)_0%,rgba(28,38,32,0)_100%)]" />
         </div>
         <div className="relative z-[2] grid max-w-[640px] gap-5 px-[var(--gutter)] py-[var(--header-clear)]">
           <SplitHeading

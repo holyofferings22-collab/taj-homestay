@@ -1,14 +1,16 @@
 'use client';
 
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
 import { WhatsApp } from '@/components/BrandIcons';
 import { contact } from '@/content/site';
 import { refreshOnImageLoad } from '@/lib/gsap';
 
 const BOOKING_CONTROL = 'a[href^="https://wa.me/"], button[type="submit"]';
-/** The fixed header's height; the tone is read from whatever sits just under it. */
+/** The fixed header's height; the section under it is read just below that. */
 const HEADER = 72;
+/** How far the page may move before the header stops being transparent. */
+const AT_TOP = 24;
 
 /**
  * The page shell.
@@ -17,35 +19,36 @@ const HEADER = 72;
  * nothing that intercepts a wheel or a swipe. Sections size to their own
  * content and the scroll runs free.
  *
- * Two observers against the viewport, neither on the scroll path:
+ * Three observers against the viewport, none on the scroll path:
  *
  * - Reveal marks a section `.in` the first time it arrives, then releases it,
  *   so scrolling back up never replays the page.
- * - Tone tells the header what it is over. It cannot trust the entries it is
+ * - Tone tells the header what to be. It is transparent only while the page
+ *   sits at the very top, over a hero photograph, and solid white from the
+ *   first scroll, wherever the page has got to, photographs included: the
+ *   owner asked that a moving page never carry a see-through header. A
+ *   sentinel pinned to the top of the page reports whether it is still in
+ *   view; that is the whole test.
+ * - Under-header names the section beneath the header, for the phone
+ *   launcher and the phone booking pill. It cannot trust the entries it is
  *   handed, because an observer only reports targets whose intersection
- *   changed, and the section already sitting under the header is often not
- *   among them. So whenever a section edge crosses the top of the window or
- *   the header's bottom edge, it re-derives the answer from every section's
- *   box. The header paints white the moment a light band is under any part
- *   of it and goes transparent only once a photograph fills the whole strip:
- *   a white bar over the last inches of a photograph reads as intended,
- *   white type over a light band does not. That is a handful of rectangles,
- *   and it runs only when a boundary moves, not per frame.
+ *   changed, so whenever a section edge crosses the band below the header
+ *   it re-derives the answer from every section's box.
  *
  * The shell lives in the layout, so it does not remount when the route
- * changes; both observers are rebuilt on every pathname instead. Without
- * that, a page reached through a link kept its sections unrevealed and the
- * header painted for the page before.
+ * changes; everything is rebuilt on every pathname instead.
  */
 export function PageShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const sentinel = useRef<HTMLDivElement>(null);
   const [tone, setTone] = useState('');
   const [screen, setScreen] = useState('');
   const [activeHasBooking, setActiveHasBooking] = useState(true);
 
   useEffect(() => {
     const sections = Array.from(document.querySelectorAll<HTMLElement>('section[data-screen]'));
-    if (!sections.length) return;
+    const top = sentinel.current;
+    if (!sections.length || !top) return;
 
     const reveal = new IntersectionObserver(
       (entries) => {
@@ -59,35 +62,40 @@ export function PageShell({ children }: { children: ReactNode }) {
     );
     sections.forEach((s) => reveal.observe(s));
 
-    const sectionAt = (y: number) =>
-      sections.find((s) => {
-        const r = s.getBoundingClientRect();
-        return r.top <= y && r.bottom > y;
-      });
+    /* Transparent only over the first section, and only while the page has
+       not moved. Any other tone, and any scroll at all, paints it white. */
+    const atTop = new IntersectionObserver(([entry]) => {
+      setTone(entry.isIntersecting ? (sections[0].dataset.tone ?? 'light') : 'light');
+    });
+    atTop.observe(top);
+
     const underHeader = () => {
-      const top = sectionAt(1) ?? sections[0];
-      const bottom = sectionAt(HEADER + 1) ?? top;
-      const hit = top.dataset.tone === 'light' ? top : bottom;
-      setTone(hit.dataset.tone ?? 'light');
+      const y = HEADER + 1;
+      const hit =
+        sections.find((s) => {
+          const r = s.getBoundingClientRect();
+          return r.top <= y && r.bottom > y;
+        }) ?? sections[0];
       setScreen(hit.id);
       setActiveHasBooking(Boolean(hit.querySelector(BOOKING_CONTROL)));
     };
     underHeader();
 
-    /* Two bands, one from the top of the window and one from the header's
-       bottom edge, each reaching a fifth of the way down the viewport. A
-       section edge entering or leaving either is a moment the answer could
-       have changed. */
-    const bands = ['0px 0px -80% 0px', `-${HEADER}px 0px -80% 0px`].map(
-      (rootMargin) => new IntersectionObserver(underHeader, { rootMargin, threshold: [0, 1] }),
-    );
-    sections.forEach((s) => bands.forEach((band) => band.observe(s)));
+    /* The band runs from the header's bottom edge to a fifth of the way
+       down the viewport; any section edge entering or leaving it is a moment
+       the answer could have changed. */
+    const under = new IntersectionObserver(underHeader, {
+      rootMargin: `-${HEADER}px 0px -80% 0px`,
+      threshold: [0, 1],
+    });
+    sections.forEach((s) => under.observe(s));
 
     window.addEventListener('resize', underHeader);
     const stopWatchingImages = refreshOnImageLoad();
     return () => {
       reveal.disconnect();
-      bands.forEach((band) => band.disconnect());
+      atTop.disconnect();
+      under.disconnect();
       window.removeEventListener('resize', underHeader);
       stopWatchingImages();
     };
@@ -102,7 +110,17 @@ export function PageShell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <main id="page">{children}</main>
+      <main id="page" className="relative">
+        {/* The top-of-page sentinel: while any of it is in view, the page
+            has not scrolled. Out of flow, so the hero keeps its height. */}
+        <div
+          ref={sentinel}
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0"
+          style={{ height: AT_TOP }}
+        />
+        {children}
+      </main>
 
       {/* The booking action that is never off screen on a phone. A plain
           wa.me anchor, so the site-wide conversion listener sees it. It hides

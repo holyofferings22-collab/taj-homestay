@@ -163,7 +163,7 @@
     min-height: 100vh;
     min-height: 100lvh;
   }
-  #page > .screen-full:first-child {
+  #page > .screen-full:first-of-type {
     min-height: 100dvh;
   }
 
