@@ -14,9 +14,9 @@ export const about = {
     'Taj Home Stay, Dwarka is a 20-room guest house in Bharthal Village, Sector 26. Most of our ' +
       'guests are here for a reason: a convention at Yashobhoomi, an early flight out of T3, or a ' +
       'night between trains at Bijwasan.',
-    'Rooms are clean and serviced daily, the front desk is staffed around the clock, and breakfast ' +
-      'comes out of our own kitchen. There is backup power, a lift to every floor, and a desk that ' +
-      'will arrange a car at four in the morning if that is when you need one.',
+    'Rooms are clean and serviced daily and the front desk is staffed around the clock. There is ' +
+      'backup power, a lift to every floor, and a desk that will arrange a car at four in the ' +
+      'morning if that is when you need one.',
     'No pool, no spa, no lobby music. What we offer is a sorted place to sleep a short walk from ' +
       'where you need to be, at a price that makes sense for a two-night trip.',
   ],
@@ -30,7 +30,8 @@ export const about = {
    *
    * All three come from the September 2026 shoot and show the parts of the
    * house the story talks about: a room, the desk that answers at any hour,
-   * and the table breakfast comes out to.
+   * and the lounge. There is no kitchen and no breakfast at the house, so
+   * the dining-table photographs stay in the gallery and nowhere else.
    */
   images: {
     lead: {
@@ -43,8 +44,8 @@ export const about = {
         alt: 'The front desk at Taj Home Stay, with the lift beyond',
       },
       {
-        src: '/photos/2026/dining.jpg',
-        alt: 'A laid dining table at Taj Home Stay',
+        src: '/photos/2026/lounge-seating.jpg',
+        alt: 'Armchairs and a low table in the lounge',
       },
     ],
   },

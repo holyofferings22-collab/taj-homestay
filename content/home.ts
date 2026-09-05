@@ -41,7 +41,7 @@ export const statement = {
   facts: [
     { value: 'Twenty', label: 'rooms, serviced daily' },
     { value: '24×7', label: 'front desk, no cut-off' },
-    { value: 'Our own', label: 'kitchen, breakfast cooked here' },
+    { value: 'A lift', label: 'to every floor, and backup power' },
   ],
   image: {
     src: '/photos/2026/lounge.jpg',
@@ -78,11 +78,11 @@ export const amenities = [
       'the metro has not started running.',
   },
   {
-    icon: 'Utensils',
-    title: 'In-house kitchen and breakfast',
+    icon: 'BedDouble',
+    title: 'Rooms serviced daily',
     body:
-      'Breakfast is cooked here, vegetarian and non-vegetarian. Simple meals through the day ' +
-      'if you would rather not go out.',
+      'Every room is cleaned and serviced daily, and every one is air-conditioned with an ' +
+      'attached bathroom and a TV.',
   },
   {
     icon: 'Zap',
@@ -113,7 +113,8 @@ export const screens = {
    * the source noted, so the row introduces nothing new to stand behind:
    * the distances come from content/location.ts, the rates and what a room
    * includes from content/rooms.ts, the group terms from content/home.ts
-   * `groups`, and the lift, power and kitchen from `amenities` above.
+   * `groups`, and the lift, power and desk from `amenities` above. There is
+   * no kitchen and no breakfast at the house; nothing here may say otherwise.
    * The photographs are the property's own, from the September 2026 shoot,
    * with the alt text the gallery already carries for each.
    */
@@ -142,8 +143,8 @@ export const screens = {
         href: '/location#arriving',
         cta: 'Getting here',
         image: {
-          src: '/photos/2026/front-desk-wide.jpg',
-          alt: 'The reception desk and lounge entrance',
+          src: '/photos/2026/lounge-entrance.jpg',
+          alt: 'Lounge seating beside the entrance',
         },
       },
       {
@@ -161,8 +162,8 @@ export const screens = {
       {
         title: 'Room blocks for teams and delegations',
         detail:
-          'One coordinator, one bill, one rate held across the block, and breakfast timed to ' +
-          'your sessions.',
+          'One coordinator, one bill, one rate held across the block, and check-ins staggered ' +
+          'around flights.',
         href: '/group-stays',
         cta: 'Group stays',
         image: { src: '/photos/2026/corridor.jpg', alt: 'A corridor of guest-room doors' },
@@ -175,13 +176,16 @@ export const screens = {
         image: { src: '/photos/2026/lift.jpg', alt: 'The lift on a guest-room floor' },
       },
       {
-        title: 'Breakfast from our own kitchen',
+        title: 'A desk that answers at any hour',
         detail:
-          'Cooked here, vegetarian and non-vegetarian. Simple meals through the day if you ' +
-          'would rather stay in.',
+          'Someone is at the desk at 3am. Late arrivals, early checkouts and cab bookings are ' +
+          'handled whenever your flight or session lands.',
         href: '/about',
         cta: 'About the house',
-        image: { src: '/photos/2026/dining-table.jpg', alt: 'A dining table set for two' },
+        image: {
+          src: '/photos/2026/front-desk-wide.jpg',
+          alt: 'The reception desk and lounge entrance',
+        },
       },
     ],
   },
@@ -225,7 +229,7 @@ export const screens = {
     points: [
       'Rooms held on confirmed dates',
       'Staggered check-in and check-out around flights',
-      'Breakfast timed to your sessions',
+      'Currency exchange for overseas exhibitors',
       'Cars to Terminal 3 at any hour',
     ],
     cta: 'Send us your dates',
@@ -288,8 +292,8 @@ export const faqs = {
     {
       q: 'Do you serve breakfast?',
       a:
-        'Breakfast comes out of our own kitchen, vegetarian and non-vegetarian, and simple meals ' +
-        'are available through the day on request. Call the desk to confirm what your rate includes.',
+        'No. There is no kitchen at the house and breakfast is not served. The desk can point ' +
+        'you to places to eat nearby.',
     },
     {
       q: 'Can you hold a block of rooms for a group?',

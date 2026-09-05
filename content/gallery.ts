@@ -6,7 +6,9 @@
  * by the sold category: the shoot was not organised category by category, and
  * a balcony filed under "Deluxe" (a room sold as having no window) would
  * promise the wrong room. The house comes first because the lounge, the desk
- * and the dining room are the parts a guest cannot see anywhere else.
+ * and the dining tables are the parts a guest cannot see anywhere else. (The
+ * tables are photographed as they are; there is no kitchen and no breakfast
+ * at the house, and no caption says otherwise.)
  */
 export const gallery = {
   eyebrow: 'Gallery',

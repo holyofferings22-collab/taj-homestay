@@ -216,51 +216,6 @@ export const posts: readonly Post[] = [
     ],
   },
   {
-    slug: 'breakfast-comes-out-of-our-kitchen',
-    tag: 'The house',
-    title: 'Breakfast comes out of our own kitchen',
-    date: '4 September 2026',
-    dateISO: '2026-09-04',
-    lead: 'No buffet, no lobby music, no pool. A kitchen, and a family who cook in it.',
-    image: {
-      src: '/photos/2026/dining.jpg',
-      alt: 'A laid dining table at Taj Home Stay',
-    },
-    sections: [
-      {
-        heading: 'What we are',
-        paragraphs: [
-          'Taj Home Stay is a twenty room guest house in Bharthal Village, Sector 26, run by ' +
-            'the family who live here. That is the whole description.',
-          'There is no pool, no spa and no lobby music. What there is: a clean room serviced ' +
-            'daily, a desk that answers at any hour, backup power, a lift to every floor, and ' +
-            'a kitchen.',
-        ],
-      },
-      {
-        heading: 'The kitchen',
-        paragraphs: [
-          'Breakfast is cooked here rather than bought in, vegetarian and non-vegetarian. ' +
-            'Simple meals are available through the day on request, which matters more than it ' +
-            'sounds when you have finished at the hall late and would rather not go out again.',
-          'For groups, breakfast timings move to fit your schedule rather than ours. Ask the ' +
-            'desk to confirm what your rate includes for your dates.',
-        ],
-      },
-      {
-        heading: 'What a family-run house gets you',
-        paragraphs: [
-          'The person at the desk can make a decision. A staggered check-out, a car at four in ' +
-            'the morning, a currency exchange for an exhibitor arriving from abroad: these are ' +
-            'conversations, not tickets.',
-          'It also means we would rather undersell the place than oversell it. Everything on ' +
-            'this site is a photograph of a real room and a claim we can stand behind at the ' +
-            'front door.',
-        ],
-      },
-    ],
-  },
-  {
     slug: 'holding-a-block-of-rooms',
     tag: 'Groups',
     title: 'Holding a block of rooms, and what we need from you',
@@ -287,8 +242,7 @@ export const posts: readonly Post[] = [
           'One coordinator handles the whole booking, so there is one person to call rather ' +
             'than a switchboard. One consolidated bill at the end. A rate that holds across the ' +
             'block rather than moving room by room.',
-          'Check-ins and check-outs can be staggered when flights are spread across the day, ' +
-            'and breakfast timings move to fit the schedule.',
+          'Check-ins and check-outs can be staggered when flights are spread across the day.',
         ],
       },
       {

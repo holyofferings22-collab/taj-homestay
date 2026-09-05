@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Banknote, CarFront, ConciergeBell, Utensils, Wifi, Zap } from 'lucide-react';
+import { Banknote, BedDouble, CarFront, ConciergeBell, Wifi, Zap } from 'lucide-react';
 import { Screen } from '@/components/Screen';
 import { HeroScreen } from '@/components/HeroScreen';
 import { ContactScreen } from '@/components/ContactScreen';
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: about.lead,
 };
 
-const icons = { ConciergeBell, Wifi, CarFront, Utensils, Zap, Banknote };
+const icons = { ConciergeBell, Wifi, CarFront, BedDouble, Zap, Banknote };
 
 export default function AboutPage() {
   return (

@@ -68,7 +68,7 @@ export const rooms = {
     },
   ],
   /**
-   * TODO: confirm whether these rates include GST, and what breakfast adds.
+   * TODO: confirm whether these rates include GST.
    * Rate disputes start here — once you know, say it outright in this line
    * rather than leaving a guest to ask at check-out.
    */

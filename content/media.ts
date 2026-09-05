@@ -41,11 +41,6 @@ export const media = {
     src: '/photos/2026/corridor-long.jpg',
     alt: 'A guest-room corridor running the length of the floor',
   } as Still | null,
-  /** The dining tables. Breakfast itself is still unphotographed. */
-  breakfast: {
-    src: '/photos/2026/dining.jpg',
-    alt: 'A laid dining table at Taj Home Stay',
-  } as Still | null,
   /** The walk toward Yashobhoomi Gate 1. The shoot was all indoors. */
   walk: null as Still | null,
 

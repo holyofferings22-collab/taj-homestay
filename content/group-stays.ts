@@ -42,8 +42,7 @@ export const groupStays = {
         body:
           'One coordinator handles the whole block. The desk is staffed 24×7, so a delegation ' +
           'landing at 2am checks in without waiting, and check-outs can be staggered when ' +
-          'flights are spread across the day. Breakfast timings move to fit your schedule, not ' +
-          'ours.',
+          'flights are spread across the day.',
       },
       {
         icon: 'CarFront',
@@ -59,16 +58,16 @@ export const groupStays = {
   includes: {
     heading: 'What a group booking',
     headingEmphasis: 'includes.',
-    image: { src: '/photos/2026/dining.jpg', alt: 'A laid dining table at Taj Home Stay' },
+    image: { src: '/photos/2026/lounge-seating.jpg', alt: 'Armchairs and a low table in the lounge' },
     items: [
       'Rooms held on confirmed dates',
       'One contact, one consolidated bill',
-      'Veg and non-veg breakfast from our kitchen',
+      'Rooms serviced daily',
       'Free high-speed Wi-Fi throughout',
       'Power backup and a lift to every floor',
       'Currency exchange for overseas exhibitors',
       'Staggered check-in and check-out',
-      'Simple meals through the day on request',
+      'Cars to Terminal 3 at any hour',
     ],
   },
 

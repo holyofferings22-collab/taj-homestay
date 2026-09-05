@@ -557,3 +557,18 @@ is as the owner first had it. The hero keeps its `dvh` height through a
 `:first-of-type` rule, since the sentinel now precedes it in the page.
 The white is opaque, with no blur behind it: the owner could see the
 page through the earlier 94% white, and asked that nothing show through.
+
+## Facts corrected, 5 September 2026: no kitchen, no breakfast
+
+The owner said the house has no in-house kitchen and serves no breakfast.
+The claim had been made in nine places: the introduction's third fact, the
+about page's copy and one of its photographs, an amenity on the about page,
+a highlight card, a group-stays inclusion and two lines of its copy, the
+FAQ, a guide, a journal post built entirely on it, and the group-stays
+journal post. All are gone: the post is deleted, the fact is now the lift
+and backup power, the amenity is daily servicing, the highlight card is the
+24×7 desk, the FAQ answers "No" plainly and points to the desk for places
+nearby, and the dining-table photographs now appear only in the gallery,
+captioned as what they show. A grep for breakfast, kitchen, meal, cooked
+and vegetarian across content, components and app finds only the FAQ's
+"No" and the comments that record this.

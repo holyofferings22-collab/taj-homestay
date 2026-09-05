@@ -234,8 +234,6 @@ export const guides: readonly Guide[] = [
             'and there is no bell to ring or night manager to wake.',
           'Backup power covers the whole building and the lift serves every floor, so a late ' +
             'arrival with luggage is not left carrying it upstairs in the dark.',
-          'Simple meals can be arranged through the day on request. Tell the desk before the ' +
-            'evening ends rather than at midnight, and something can usually be sorted out.',
         ],
       },
       {
