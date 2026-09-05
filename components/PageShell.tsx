@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
+import { usePathname } from 'next/navigation';
 import { WhatsApp } from '@/components/BrandIcons';
 import { contact } from '@/content/site';
 import { refreshOnImageLoad } from '@/lib/gsap';
@@ -30,8 +31,14 @@ const HEADER = 72;
  *   a white bar over the last inches of a photograph reads as intended,
  *   white type over a light band does not. That is a handful of rectangles,
  *   and it runs only when a boundary moves, not per frame.
+ *
+ * The shell lives in the layout, so it does not remount when the route
+ * changes; both observers are rebuilt on every pathname instead. Without
+ * that, a page reached through a link kept its sections unrevealed and the
+ * header painted for the page before.
  */
 export function PageShell({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const [tone, setTone] = useState('');
   const [screen, setScreen] = useState('');
   const [activeHasBooking, setActiveHasBooking] = useState(true);
@@ -84,7 +91,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       window.removeEventListener('resize', underHeader);
       stopWatchingImages();
     };
-  }, []);
+  }, [pathname]);
 
   /* `data-tone` paints the header; `data-screen` names the section under it,
      which globals.css reads to keep the phone launcher off the hero's card. */

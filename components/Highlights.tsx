@@ -19,88 +19,130 @@ export type Highlight = {
 const COPIES = [0, 1, 2] as const;
 const REAL = 1;
 
+/* Fresh geometry each time: every card's start in scroll coordinates, the
+   left padding (also the scroll padding, so a card is aligned when
+   scrollLeft is its start less that), one card's step and one set. */
+function measure(el: HTMLUListElement, count: number) {
+  const cards = Array.from(el.querySelectorAll<HTMLLIElement>(':scope > li'));
+  const origin = el.getBoundingClientRect().left - el.scrollLeft;
+  const starts = cards.map((card) => card.getBoundingClientRect().left - origin);
+  const pad = parseFloat(getComputedStyle(el).paddingLeft) || 0;
+  return { cards, starts, pad, step: starts[1] - starts[0], set: starts[count] - starts[0] };
+}
+
+/** The card whose start is nearest the aligned edge. */
+function nearest(starts: number[], edge: number) {
+  let best = 0;
+  starts.forEach((start, i) => {
+    if (Math.abs(start - edge) < Math.abs(starts[best] - edge)) best = i;
+  });
+  return best;
+}
+
 /**
  * The highlights row: framed photographs with a caption under each, three
  * to a window from `lg`, one and a bit on a phone so the next card shows.
  *
- * It loops. The cards are laid out three times over and the track starts
- * on the middle copy, so there is always a full set to scroll into on
- * either side. Whenever the scroll comes to rest outside the middle
- * stretch, the track is moved by exactly one set's width, instantly, onto
- * the identical card in the copy alongside; nothing on screen changes, and
- * the next swipe or arrow has room again. Only the middle copy is in the
- * accessibility tree and the tab order; the other two are scenery.
+ * It loops. The cards are laid out three times over and the track keeps
+ * the card at its aligned edge inside the middle copy, so there is always
+ * a full set to scroll into on either side. Whenever the scroll comes to
+ * rest with that card outside the middle copy, the track is moved by
+ * exactly one set's width, instantly, onto the identical card in the copy
+ * alongside; nothing on screen changes, and the next swipe or arrow has
+ * room again. The arrows do the same move before they scroll, so they
+ * never reach the track's real ends either. Only the middle copy is in
+ * the accessibility tree and the tab order; the other two are scenery.
  *
  * It is a native scroll-snap track, so a swipe or a trackpad works with no
- * script at all; the arrows only scroll to the neighbouring card.
+ * script at all; each gesture stops at the next card (`snap-always`), and
+ * the arrows only scroll to the neighbouring card.
  */
 export function Highlights({ items }: { items: readonly Highlight[] }) {
   const track = useRef<HTMLUListElement>(null);
+  /** The card an arrow is scrolling toward, while that scroll is in flight. */
+  const pending = useRef<number | null>(null);
+  /** When an arrow last moved the track a whole set, instantly. */
+  const jumped = useRef(0);
   const count = items.length;
 
   useEffect(() => {
     const el = track.current;
     if (!el || count === 0) return;
 
-    /* Fresh geometry each time: where every card starts in the track's
-       scroll coordinates, and the width of one whole set. */
-    const setWidth = () => {
-      const cards = el.querySelectorAll<HTMLLIElement>(':scope > li');
-      return cards[count].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
-    };
-
-    /* Start on the middle copy. The first copy is identical, so the jump
-       from the server-rendered position is invisible. */
-    el.scrollTo({ left: setWidth(), behavior: 'instant' });
-
-    /* Back onto the middle stretch once the scroll has settled. Never while
-       a card in the track has focus: moving the view from under a focused
-       link would strand it off screen. */
+    /* Back onto the middle copy once the scroll has settled: below the
+       copy's first card, or past its last, move one set. Not from under a
+       focused card that is on screen; a focused card the visitor has
+       scrolled away from is not stranded by moving the view one set. */
     const recentre = () => {
-      if (el.contains(document.activeElement)) return;
-      const set = setWidth();
+      /* An arrow's instant one-set move raises its own scrollend a frame
+         later, before the smooth scroll it precedes has begun; acting on
+         that would move the track straight back. */
+      if (performance.now() - jumped.current < 120) return;
+      const { cards, set, step } = measure(el, count);
       if (!set) return;
-      if (el.scrollLeft < set * 0.25) el.scrollBy({ left: set, behavior: 'instant' });
-      else if (el.scrollLeft > set * 1.75) el.scrollBy({ left: -set, behavior: 'instant' });
+      pending.current = null;
+      const focused = cards.find((card) => card.contains(document.activeElement));
+      if (focused) {
+        const box = el.getBoundingClientRect();
+        const r = focused.getBoundingClientRect();
+        if (r.right > box.left && r.left < box.right) return;
+      }
+      if (el.scrollLeft < set - step / 2) el.scrollBy({ left: set, behavior: 'instant' });
+      else if (el.scrollLeft > 2 * set - step / 2) el.scrollBy({ left: -set, behavior: 'instant' });
     };
+
+    /* On mount this puts the track on the middle copy from wherever it is,
+       so a swipe made before the script arrived is kept, not overridden. */
+    recentre();
 
     /* `scrollend` where the browser has it; otherwise a scroll that has
-       been quiet for a moment. */
+       been quiet for a moment. And the moment focus leaves the track, in
+       case a move was held back while a card had it. */
     let quiet: number | undefined;
     const onScroll = () => {
       window.clearTimeout(quiet);
       quiet = window.setTimeout(recentre, 160);
     };
+    const onFocusOut = (event: FocusEvent) => {
+      if (!el.contains(event.relatedTarget as Node | null)) recentre();
+    };
     const hasScrollEnd = 'onscrollend' in window;
     if (hasScrollEnd) el.addEventListener('scrollend', recentre);
     else el.addEventListener('scroll', onScroll, { passive: true });
+    el.addEventListener('focusout', onFocusOut);
     const sized = new ResizeObserver(recentre);
     sized.observe(el);
     return () => {
       window.clearTimeout(quiet);
       if (hasScrollEnd) el.removeEventListener('scrollend', recentre);
       else el.removeEventListener('scroll', onScroll);
+      el.removeEventListener('focusout', onFocusOut);
       sized.disconnect();
     };
   }, [count]);
 
-  /* To the neighbouring card: find the card nearest the track's aligned
-     edge, then scroll so its neighbour sits there. */
+  /* To the neighbouring card. A second press while the first is still
+     scrolling counts from the card being scrolled to, not from wherever
+     the track happens to be, so quick presses do not lose a step. A target
+     outside the middle copy is reached by first moving the track one set,
+     instantly, onto the identical picture, so the arrows never run into
+     the track's ends. */
   const page = (direction: 1 | -1) => {
     const el = track.current;
     if (!el) return;
-    const cards = Array.from(el.querySelectorAll<HTMLLIElement>(':scope > li'));
-    const origin = el.getBoundingClientRect().left - el.scrollLeft;
-    const starts = cards.map((card) => card.getBoundingClientRect().left - origin);
-    /* The padding is also the scroll padding, so a card is aligned when
-       scrollLeft is its start less that. */
-    const pad = parseFloat(getComputedStyle(el).paddingLeft) || 0;
-    const here = el.scrollLeft + pad;
-    let nearest = 0;
-    starts.forEach((start, i) => {
-      if (Math.abs(start - here) < Math.abs(starts[nearest] - here)) nearest = i;
-    });
-    const target = Math.min(cards.length - 1, Math.max(0, nearest + direction));
+    const { starts, pad, set } = measure(el, count);
+    const from = pending.current ?? nearest(starts, el.scrollLeft + pad);
+    let target = from + direction;
+    if (target >= 2 * count) {
+      jumped.current = performance.now();
+      el.scrollBy({ left: -set, behavior: 'instant' });
+      target -= count;
+    } else if (target < count) {
+      jumped.current = performance.now();
+      el.scrollBy({ left: set, behavior: 'instant' });
+      target += count;
+    }
+    pending.current = target;
     el.scrollTo({ left: starts[target] - pad, behavior: prefersReducedMotion() ? 'instant' : 'smooth' });
   };
 
@@ -116,17 +158,27 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
       <ul
         ref={track}
         role="list"
-        className="m-0 flex list-none gap-[var(--hl-gap)] overflow-x-auto p-0 [--hl-gap:clamp(14px,2vw,28px)] [scrollbar-width:none] snap-x snap-mandatory -mx-[var(--gutter)] px-[var(--gutter)] scroll-px-[var(--gutter)] lg:mx-0 lg:px-0 lg:scroll-px-0 [&::-webkit-scrollbar]:hidden"
+        /* The scrollport clips ink at its padding edge, so the track keeps
+           8px of padding (pulled back by the same margin, so nothing moves)
+           for the cards' focus rings to paint in; the horizontal scroll
+           padding matches, so a card still snaps to its own edge. The cross
+           axis is hidden outright: cards rise 26px before their reveal, and
+           an auto cross axis would let that catch a wheel or a finger. */
+        className="m-0 -my-2 flex list-none gap-[var(--hl-gap)] overflow-x-auto overflow-y-hidden py-2 [--hl-gap:clamp(14px,2vw,28px)] [scrollbar-width:none] snap-x snap-mandatory -mx-[var(--gutter)] px-[var(--gutter)] scroll-px-[var(--gutter)] lg:-mx-2 lg:px-2 lg:scroll-px-2 [&::-webkit-scrollbar]:hidden"
       >
         {COPIES.map((copy) =>
-          items.map((item) => {
+          items.map((item, index) => {
             const real = copy === REAL;
             return (
               <li
                 key={`${copy}-${item.title}`}
                 data-rv=""
                 aria-hidden={real ? undefined : true}
-                className="w-[82%] flex-none snap-start sm:w-[calc((100%-var(--hl-gap))/2)] lg:w-[calc((100%-2*var(--hl-gap))/3)]"
+                /* The reveal's stagger is written against DOM order, which
+                   would hand it to the first, hidden copy; the copy on
+                   screen takes it by index instead. */
+                style={{ transitionDelay: real ? `${index * 0.08}s` : '0s' }}
+                className="w-[82%] flex-none snap-start snap-always sm:w-[calc((100%-var(--hl-gap))/2)] lg:w-[calc((100%-2*var(--hl-gap))/3)]"
               >
                 <Link href={item.href} tabIndex={real ? undefined : -1} className="grid gap-4">
                   <span className="photo photo-hover block aspect-[4/3] rounded-[6px]">
@@ -153,10 +205,12 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
       </ul>
 
       {/* Side arrows from `lg`, centred in the gutters on the photographs'
-          midline. Below `lg` the pair sit under the track instead, at the
-          left, clear of the fixed pills that own the right-hand corner; a
-          swipe does the same job. Neither end is an end, so neither arrow
-          ever disables. */}
+          midline, or as near to centred as the gutter allows: below 1200px
+          it is narrower than the arrow, so the shift is capped to keep the
+          arrow 6px inside the window rather than widening the page. Below
+          `lg` the pair sit under the track instead, at the left, clear of
+          the fixed pills that own the right-hand corner; a swipe does the
+          same job. Neither end is an end, so neither arrow ever disables. */}
       <div className="mt-6 flex justify-start gap-3 lg:hidden">
         <button type="button" aria-label="Previous highlights" onClick={() => page(-1)} className={arrow}>
           <ChevronLeft aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
@@ -170,7 +224,7 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
           type="button"
           aria-label="Previous highlights"
           onClick={() => page(-1)}
-          className={`${arrow} pointer-events-auto -translate-x-[calc(50%+var(--gutter)/2)]`}
+          className={`${arrow} pointer-events-auto -translate-x-[min(calc(50%+var(--gutter)/2),calc(var(--gutter)-6px))]`}
         >
           <ChevronLeft aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
         </button>
@@ -178,7 +232,7 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
           type="button"
           aria-label="Next highlights"
           onClick={() => page(1)}
-          className={`${arrow} pointer-events-auto translate-x-[calc(50%+var(--gutter)/2)]`}
+          className={`${arrow} pointer-events-auto translate-x-[min(calc(50%+var(--gutter)/2),calc(var(--gutter)-6px))]`}
         >
           <ChevronRight aria-hidden="true" className="h-5 w-5" strokeWidth={1.5} />
         </button>

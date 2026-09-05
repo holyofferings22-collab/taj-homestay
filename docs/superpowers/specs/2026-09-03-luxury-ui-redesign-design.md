@@ -494,11 +494,24 @@ three to a window, with arrows to page through the rest.
   exactly one set's width, instantly, onto the identical card in the copy
   alongside; nothing on screen changes, and the next swipe or arrow has
   room again. `scrollend` marks rest where the browser has it, a quiet
-  160ms otherwise, and the move waits while a card in the track has focus
-  so a keyboard user is never left focused on something off screen. Only
-  the middle copy is in the accessibility tree and the tab order; the
-  other two are scenery, `aria-hidden` with empty alt. Neither arrow ever
-  disables. The wrapper carries `min-w-0`: a grid item's minimum width is
+  160ms otherwise, and the move waits while a focused card is on screen
+  so a keyboard user is never left focused on something off screen (it
+  runs the moment focus leaves the track instead). The card at the
+  aligned edge always rests inside the middle copy, so what a screen
+  reader's touch finds under the first card is real. Each gesture stops
+  at the next card (`scroll-snap-stop: always`), so a fling can never run
+  to the track's real end. The arrows count from the card they are
+  already scrolling to, so quick presses keep count, and they make the
+  one-set move themselves before aiming outside the middle copy. Only the
+  middle copy is in the accessibility tree and the tab order; the other
+  two are scenery, `aria-hidden` with empty alt, and the reveal's stagger
+  is handed to the copy on screen by index rather than by DOM order.
+  Neither arrow ever disables.
+- **The shell rebuilds per route.** `PageShell` lives in the layout and
+  did not remount on navigation, so a page reached through a link kept
+  every section after its hero unrevealed and the header painted for the
+  page before: the owner saw "nothing" on the inner pages. Both observers
+  are now keyed on the pathname. The wrapper carries `min-w-0`: a grid item's minimum width is
   otherwise its min-content, which for a no-wrap flex track is the sum of
   every card's min-content, and the track widened the whole page on a
   phone until that was set.
