@@ -158,21 +158,34 @@ export function HeroStage({
         </>
       )}
 
-      {/* The name, and the way into the gallery. */}
-      {/* The right padding keeps the gallery button clear of the live-support
-          launcher, which sits in the same corner above the bar. */}
-      <div className="absolute inset-x-0 bottom-0 z-[2] px-[var(--gutter)] pb-[clamp(104px,15vh,150px)] pr-[max(var(--gutter),84px)] md:pr-[max(var(--gutter),210px)]">
-        <div className="flex flex-wrap items-end justify-between gap-6">
-          <p className="m-0 flex items-center gap-[clamp(14px,2vw,28px)]">
+      {/* The foot of the screen: the name and the way into the gallery, and
+          the availability card beneath them, in one stack anchored to the
+          bottom. The name used to be pinned at its own height while the
+          card stacked taller on a phone, and the card rose over the name;
+          in one stack the card can be any height and the name sits above
+          it. The availability card used to be welded to the bottom edge of
+          the photograph, which made the hero look like it ended in a wall;
+          floated clear of the foot it reads as sitting in front of the
+          photograph rather than being built into it. */}
+      <div className="absolute inset-x-0 bottom-[clamp(22px,5vh,54px)] z-[3] grid gap-[clamp(18px,3.5vh,40px)] px-[var(--gutter)]">
+        {/* One row, never wrapped: the name at the left, the gallery button
+            at the right on the same line, on a phone as on a desk. Below
+            `sm` the button is the thumbnail alone, so the name keeps room to
+            break into two lines beside it. From `md` the right padding keeps
+            the button clear of the live-support launcher, which sits in the
+            same corner; on a phone the launcher steps aside over the hero. */}
+        <div className="flex items-end justify-between gap-4 md:gap-6 md:pr-[max(0px,calc(210px-var(--gutter)))]">
+          <p className="m-0 flex min-w-0 items-center gap-[clamp(14px,2vw,28px)]">
             <span aria-hidden="true" className="h-px w-[clamp(28px,5vw,74px)] flex-none bg-gold" />
-            <span className="font-display text-[clamp(26px,4.4vw,62px)] uppercase leading-[1.05] tracking-[0.02em] text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
+            <span className="font-display text-[clamp(23px,4.4vw,62px)] uppercase leading-[1.05] tracking-[0.02em] text-white [text-shadow:0_2px_30px_rgba(0,0,0,0.4)]">
               {name}, {locality}
             </span>
           </p>
 
           <Link
             href="/gallery"
-            className="group flex flex-none items-center gap-3 rounded-[4px] bg-white/95 p-1.5 pr-5 text-ink transition-colors duration-300 hover:bg-white"
+            aria-label="Gallery"
+            className="group flex flex-none items-center gap-3 rounded-[4px] bg-white/95 p-1.5 text-ink transition-colors duration-300 hover:bg-white sm:pr-5"
           >
             <span className="relative block h-11 w-16 overflow-hidden rounded-[3px] bg-mist">
               <Image
@@ -184,17 +197,10 @@ export function HeroStage({
                 className="object-cover transition-transform duration-700 ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-110"
               />
             </span>
-            <span className="text-[12px] font-semibold uppercase tracking-[0.16em]">Gallery</span>
+            <span className="hidden text-[12px] font-semibold uppercase tracking-[0.16em] sm:inline">Gallery</span>
           </Link>
         </div>
-      </div>
 
-      {/* Availability. It used to be welded to the bottom edge of the
-          photograph, which made the hero look like it ended in a wall. It is
-          a card now: inset to the page gutter and floated clear of the foot,
-          so it reads as sitting in front of the photograph rather than being
-          built into it. */}
-      <div className="absolute inset-x-0 bottom-[clamp(22px,5vh,54px)] z-[3] px-[var(--gutter)]">
         <BookingBar variant="hero" />
       </div>
     </div>
