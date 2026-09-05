@@ -27,7 +27,7 @@ function measure(el: HTMLUListElement, count: number) {
   const origin = el.getBoundingClientRect().left - el.scrollLeft;
   const starts = cards.map((card) => card.getBoundingClientRect().left - origin);
   const pad = parseFloat(getComputedStyle(el).paddingLeft) || 0;
-  return { cards, starts, pad, step: starts[1] - starts[0], set: starts[count] - starts[0] };
+  return { cards, starts, pad, set: starts[count] - starts[0] };
 }
 
 /** The card whose start is nearest the aligned edge. */
@@ -54,8 +54,9 @@ function nearest(starts: number[], edge: number) {
  * the accessibility tree and the tab order; the other two are scenery.
  *
  * It is a native scroll-snap track, so a swipe or a trackpad works with no
- * script at all; each gesture stops at the next card (`snap-always`), and
- * the arrows only scroll to the neighbouring card.
+ * script at all; each gesture stops at the next card (`snap-always`), so
+ * no fling can reach the track's real ends, and the arrows only scroll to
+ * the neighbouring card.
  */
 export function Highlights({ items }: { items: readonly Highlight[] }) {
   const track = useRef<HTMLUListElement>(null);
@@ -78,7 +79,7 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
          later, before the smooth scroll it precedes has begun; acting on
          that would move the track straight back. */
       if (performance.now() - jumped.current < 120) return;
-      const { cards, set, step } = measure(el, count);
+      const { cards, starts, pad, set } = measure(el, count);
       if (!set) return;
       pending.current = null;
       const focused = cards.find((card) => card.contains(document.activeElement));
@@ -87,8 +88,13 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
         const r = focused.getBoundingClientRect();
         if (r.right > box.left && r.left < box.right) return;
       }
-      if (el.scrollLeft < set - step / 2) el.scrollBy({ left: set, behavior: 'instant' });
-      else if (el.scrollLeft > 2 * set - step / 2) el.scrollBy({ left: -set, behavior: 'instant' });
+      /* By card, to the twin's exact start, with an absolute scroll: the
+         cards stop every gesture at the next card, and Chromium holds a
+         relative scroll to that too, so a `scrollBy` of one set would hop
+         through every card on the way. */
+      const k = nearest(starts, el.scrollLeft + pad);
+      if (k < count) el.scrollTo({ left: starts[k + count] - pad, behavior: 'instant' });
+      else if (k >= 2 * count) el.scrollTo({ left: starts[k - count] - pad, behavior: 'instant' });
     };
 
     /* On mount this puts the track on the middle copy from wherever it is,
@@ -130,17 +136,14 @@ export function Highlights({ items }: { items: readonly Highlight[] }) {
   const page = (direction: 1 | -1) => {
     const el = track.current;
     if (!el) return;
-    const { starts, pad, set } = measure(el, count);
+    const { starts, pad } = measure(el, count);
     const from = pending.current ?? nearest(starts, el.scrollLeft + pad);
     let target = from + direction;
-    if (target >= 2 * count) {
+    if (target >= 2 * count || target < count) {
+      const shift = target >= 2 * count ? -count : count;
       jumped.current = performance.now();
-      el.scrollBy({ left: -set, behavior: 'instant' });
-      target -= count;
-    } else if (target < count) {
-      jumped.current = performance.now();
-      el.scrollBy({ left: set, behavior: 'instant' });
-      target += count;
+      el.scrollTo({ left: starts[from + shift] - pad, behavior: 'instant' });
+      target += shift;
     }
     pending.current = target;
     el.scrollTo({ left: starts[target] - pad, behavior: prefersReducedMotion() ? 'instant' : 'smooth' });

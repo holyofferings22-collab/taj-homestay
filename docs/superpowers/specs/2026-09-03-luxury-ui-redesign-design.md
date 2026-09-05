@@ -489,11 +489,17 @@ three to a window, with arrows to page through the rest.
 - **It loops.** The owner asked that the row never stop. The six cards are
   laid out three times over and the track starts on the middle copy, so
   there is always a full set to scroll into on either side. When the
-  scroll comes to rest outside the middle stretch (under a quarter of a
-  set from the start, or past a quarter from the end), the track moves by
-  exactly one set's width, instantly, onto the identical card in the copy
-  alongside; nothing on screen changes, and the next swipe or arrow has
-  room again. `scrollend` marks rest where the browser has it, a quiet
+  scroll comes to rest with the card at its aligned edge outside the
+  middle copy, the track moves, instantly, onto that card's twin in the
+  copy alongside; nothing on screen changes, and the next swipe or arrow
+  has room again. The move is an absolute scroll to the twin's exact
+  position, not a relative scroll of one set's width: the cards stop
+  every gesture at the next card (`scroll-snap-stop: always`), and
+  Chromium holds a relative programmatic scroll to one card as well, so a
+  `scrollBy` of one set hopped visibly through every card on the way.
+  Traced scroll event by scroll event at 375 and 1470 wide, the move is
+  now a single hop in every case: arrow forward past the sixth card,
+  arrow back past the first, and wheel in both directions. `scrollend` marks rest where the browser has it, a quiet
   160ms otherwise, and the move waits while a focused card is on screen
   so a keyboard user is never left focused on something off screen (it
   runs the moment focus leaves the track instead). The card at the
