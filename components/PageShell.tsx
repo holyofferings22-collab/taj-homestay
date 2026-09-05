@@ -134,7 +134,7 @@ export function PageShell({ children }: { children: ReactNode }) {
           className="pill pill-gold snap-fab"
         >
           <WhatsApp className="h-4 w-4" />
-          Check availability
+          Book now
         </a>
       )}
     </>

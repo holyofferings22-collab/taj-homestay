@@ -81,7 +81,7 @@ export default function RoomsPage() {
                   className="pill pill-ink"
                 >
                   <WhatsApp className="h-4 w-4" />
-                  Check availability
+                  Book now
                 </a>
               </div>
               <p data-rv="" className="m-0 max-w-[52ch] text-[13px] leading-[1.6] text-slate">

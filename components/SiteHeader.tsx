@@ -80,11 +80,11 @@ export function SiteHeader() {
             href={contact.whatsapp}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Check availability on WhatsApp"
+            aria-label="Book now on WhatsApp"
             className="pill pill-gold header-pill"
           >
             <WhatsApp className="h-4 w-4 flex-none" />
-            <span className="header-pill-label">Check availability</span>
+            <span className="header-pill-label">Book now</span>
           </a>
           <button
             type="button"
@@ -120,7 +120,7 @@ export function SiteHeader() {
         <div className="site-menu-foot">
           <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className="pill pill-gold">
             <WhatsApp className="h-4 w-4" />
-            Check availability
+            Book now
           </a>
           <p>
             {contact.phone.display}

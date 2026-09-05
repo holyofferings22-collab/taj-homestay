@@ -28,7 +28,7 @@ export default function ContactPage() {
       >
         <a href={contact.whatsapp} target="_blank" rel="noopener noreferrer" className="pill pill-gold">
           <WhatsApp className="h-4 w-4" />
-          Check availability
+          Book now
         </a>
       </HeroScreen>
 

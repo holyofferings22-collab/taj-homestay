@@ -110,7 +110,7 @@ export function ContactForm() {
       <div className="grid gap-3">
         <button type="submit" className="pill pill-ink justify-self-start">
           <WhatsApp className="h-4 w-4" />
-          Check availability
+          Book now
         </button>
         {chatUrl && (
           <p role="status" className="m-0 text-[13px] leading-[1.6] text-slate">

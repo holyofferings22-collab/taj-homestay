@@ -195,7 +195,7 @@ export const screens = {
     lede:
       'They differ only by what they look out onto. Every room is air-conditioned, serviced ' +
       'daily, with an attached bathroom and a TV.',
-    cta: 'Check availability',
+    cta: 'Book now',
   },
   location: {
     big: '500 m',

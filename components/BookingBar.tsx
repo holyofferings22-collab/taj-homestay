@@ -104,7 +104,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
   return (
     <form
       onSubmit={onSubmit}
-      aria-label="Check availability"
+      aria-label="Book now"
       className={`relative z-[3] mx-auto grid w-full text-ink max-md:grid-cols-2 md:grid-cols-[1.1fr_1.1fr_1fr_1.1fr_auto] ${
         hero
           ? 'max-w-[min(1080px,100%)] overflow-hidden rounded-[10px] bg-white shadow-[0_18px_50px_rgba(31,29,27,0.22)] ring-1 ring-hairline'
@@ -145,7 +145,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
               : 'flex w-full cursor-pointer items-center justify-center border-0 bg-gold px-8 py-3.5 text-[11.5px] font-semibold uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:bg-gold-deep hover:text-white'
           }
         >
-          Check availability
+          Book now
         </button>
       </div>
 

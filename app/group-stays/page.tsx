@@ -34,7 +34,7 @@ export default function GroupStaysPage() {
       >
         <a href={groupEnquiry} target="_blank" rel="noopener noreferrer" className="pill pill-gold">
           <WhatsApp className="h-4 w-4" />
-          Check availability
+          Book now
         </a>
       </HeroScreen>
 
@@ -131,7 +131,7 @@ export default function GroupStaysPage() {
           <div data-rv="">
             <a href={groupEnquiry} target="_blank" rel="noopener noreferrer" className="pill pill-ink">
               <WhatsApp className="h-4 w-4" />
-              Check availability
+              Book now
             </a>
           </div>
         </div>
