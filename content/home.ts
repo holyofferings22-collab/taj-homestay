@@ -105,6 +105,86 @@ export const amenities = [
  * Each entry is one full-viewport screen; the order here is the scroll order.
  */
 export const screens = {
+  /**
+   * The highlights row under the introduction, in the manner of a property
+   * page's highlight cards: a photograph, a line, and where to read more.
+   *
+   * Every line here restates a claim the site already makes elsewhere, with
+   * the source noted, so the row introduces nothing new to stand behind:
+   * the distances come from content/location.ts, the rates and what a room
+   * includes from content/rooms.ts, the group terms from content/home.ts
+   * `groups`, and the lift, power and kitchen from `amenities` above.
+   * The photographs are the property's own, from the September 2026 shoot,
+   * with the alt text the gallery already carries for each.
+   */
+  highlights: {
+    heading: 'Highlights',
+    lede:
+      'Twenty rooms, five hundred metres from Yashobhoomi. These are the things guests ask ' +
+      'about first: the walk to the hall, the way in from the airport, the rooms and their ' +
+      'rates, and how a block of them is held for a team.',
+    items: [
+      {
+        title: 'Five hundred metres from Yashobhoomi',
+        detail: 'Gate 1 of the convention centre is a short walk from the door.',
+        href: '/location',
+        cta: 'Directions and the walk',
+        image: {
+          src: '/photos/2026/room-window-view.jpg',
+          alt: 'A room with tall windows looking over Dwarka',
+        },
+      },
+      {
+        title: 'Airport Express, 550 m from the door',
+        detail:
+          'Dwarka Sector 25 metro is about seven minutes on foot. From Terminal 3, take the ' +
+          'Airport Express, or the desk arranges a car at any hour.',
+        href: '/location#arriving',
+        cta: 'Getting here',
+        image: {
+          src: '/photos/2026/front-desk-wide.jpg',
+          alt: 'The reception desk and lounge entrance',
+        },
+      },
+      {
+        title: 'Twenty rooms, from ₹4,000 a night',
+        detail:
+          'Three categories, separated only by what they look out onto. Every room is ' +
+          'air-conditioned and serviced daily, with an attached bathroom and a TV.',
+        href: '/rooms',
+        cta: 'See the rooms',
+        image: {
+          src: '/photos/2026/room-olive-wide.jpg',
+          alt: 'A wide view of a room with olive cushions',
+        },
+      },
+      {
+        title: 'Room blocks for teams and delegations',
+        detail:
+          'One coordinator, one bill, one rate held across the block, and breakfast timed to ' +
+          'your sessions.',
+        href: '/group-stays',
+        cta: 'Group stays',
+        image: { src: '/photos/2026/corridor.jpg', alt: 'A corridor of guest-room doors' },
+      },
+      {
+        title: 'A lift to every floor, and backup power',
+        detail: 'Luggage and upper-floor rooms are not a problem.',
+        href: '/about',
+        cta: 'About the house',
+        image: { src: '/photos/2026/lift.jpg', alt: 'The lift on a guest-room floor' },
+      },
+      {
+        title: 'Breakfast from our own kitchen',
+        detail:
+          'Cooked here, vegetarian and non-vegetarian. Simple meals through the day if you ' +
+          'would rather stay in.',
+        href: '/about',
+        cta: 'About the house',
+        image: { src: '/photos/2026/dining-table.jpg', alt: 'A dining table set for two' },
+      },
+    ],
+  },
   rooms: {
     heading: 'Three rooms, told',
     headingEmphasis: 'honestly.',

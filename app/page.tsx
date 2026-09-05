@@ -6,6 +6,7 @@ import { RoomSwitcher } from '@/components/RoomSwitcher';
 import { ContactScreen } from '@/components/ContactScreen';
 import { ReviewMarquee } from '@/components/ReviewMarquee';
 import { Framed } from '@/components/Framed';
+import { Highlights } from '@/components/Highlights';
 import { Parallax } from '@/components/motion/Parallax';
 import { CountUp } from '@/components/motion/CountUp';
 import { SplitHeading, RiseIn } from '@/components/motion/SplitHeading';
@@ -96,13 +97,42 @@ export default function HomePage() {
         <Framed src={statement.image.src} alt={statement.image.alt} />
       </Screen>
 
-      {/* 3. Rooms, as one comparison rather than three cards. */}
+      {/* 3. Highlights. What guests ask about first, as a row of cards in the
+          manner of a property page: the name and a line on top, then framed
+          photographs with a caption under each, three to a window, with
+          arrows to page through the rest. Every line restates a claim made
+          elsewhere on the site; see content/home.ts. */}
+      <Screen
+        id="highlights"
+        tone="light"
+        full
+        labelledBy="highlights-heading"
+        className={`${band} bg-mist`}
+      >
+        <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr] lg:items-center lg:gap-14">
+          <div className="flex items-center gap-[clamp(16px,2vw,28px)]">
+            <span aria-hidden="true" className="h-px w-[clamp(40px,6vw,88px)] flex-none bg-gold" />
+            <SplitHeading
+              as="h2"
+              id="highlights-heading"
+              text={screens.highlights.heading}
+              className="text-[length:var(--step-section)] uppercase leading-[1.06] tracking-[0.08em]"
+            />
+          </div>
+          <RiseIn delay={0.2}>
+            <p className="lede max-w-[640px] lg:justify-self-end">{screens.highlights.lede}</p>
+          </RiseIn>
+        </div>
+        <Highlights items={screens.highlights.items} />
+      </Screen>
+
+      {/* 4. Rooms, as one comparison rather than three cards. */}
       <Screen
         id="rooms"
         tone="light"
         full
         labelledBy="rooms-heading"
-        className="content-center gap-[clamp(14px,2.5vh,28px)] bg-mist px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
+        className="content-center gap-[clamp(14px,2.5vh,28px)] bg-white px-[var(--gutter)] pb-[clamp(56px,7vh,88px)] pt-[clamp(84px,10vh,104px)]"
       >
         <div className="grid max-w-[760px] gap-2.5">
           <SplitHeading
@@ -119,14 +149,14 @@ export default function HomePage() {
         <RoomSwitcher rooms={rooms.categories} cta={screens.rooms.cta} />
       </Screen>
 
-      {/* 4. Where it is. The count and the distances, with the hall framed
+      {/* 5. Where it is. The count and the distances, with the hall framed
           beside them. */}
       <Screen
         id="location"
         tone="light"
         full
         labelledBy="location-heading"
-        className={`${band} bg-white lg:grid-cols-[1fr_1.05fr] lg:items-center`}
+        className={`${band} bg-mist lg:grid-cols-[1fr_1.05fr] lg:items-center`}
       >
         <div className="grid gap-6">
           <h2 id="location-heading" data-rv="" className="font-display text-[length:var(--step-stat)] leading-[0.9] text-ink">
@@ -157,7 +187,7 @@ export default function HomePage() {
         </Link>
       </Screen>
 
-      {/* 5. What guests say. The aggregate from Google beside a framed
+      {/* 6. What guests say. The aggregate from Google beside a framed
           photograph; the review cards appear beneath the moment
           content/reviews.ts has real quotes in it. */}
       <Screen
@@ -165,7 +195,7 @@ export default function HomePage() {
         tone="light"
         full
         labelledBy="guests-heading"
-        className={`${band} bg-mist lg:grid-cols-[1fr_1.05fr] lg:items-center [--marquee-fade:var(--color-mist)]`}
+        className={`${band} bg-white lg:grid-cols-[1fr_1.05fr] lg:items-center [--marquee-fade:var(--color-white)]`}
       >
         <Framed src={reviews.image.src} alt="" className="lg:order-1" />
 
@@ -219,7 +249,7 @@ export default function HomePage() {
         )}
       </Screen>
 
-      {/* 6. Group stays. The corridor of doors carries the whole screen, as
+      {/* 7. Group stays. The corridor of doors carries the whole screen, as
           it did before the framed pass: the owner asked for this one back
           exactly as it was. The photograph is the ground and the offer sits
           on it in white. From `lg` the scrim runs left to right, deep under
@@ -240,6 +270,11 @@ export default function HomePage() {
             />
           </Parallax>
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(28,38,32,0.88)_0%,rgba(28,38,32,0.86)_82%,rgba(28,38,32,0.5)_100%)] lg:bg-[linear-gradient(90deg,rgba(28,38,32,0.9)_0%,rgba(28,38,32,0.82)_56%,rgba(28,38,32,0.15)_100%)]" />
+          {/* The header goes transparent over this band, and its right-hand
+              links sit over the thin end of the scrim and the corridor's
+              bright ceiling. The same top shade the hero carries keeps the
+              header's white type above 4.5:1 there. */}
+          <div className="absolute inset-x-0 top-0 h-[150px] bg-[linear-gradient(180deg,rgba(28,38,32,0.7)_0%,rgba(28,38,32,0)_100%)]" />
         </div>
         <div className="relative z-[2] grid max-w-[640px] gap-5 px-[var(--gutter)] py-[var(--header-clear)]">
           <SplitHeading
@@ -270,7 +305,7 @@ export default function HomePage() {
         </div>
       </Screen>
 
-      {/* 7. The journal: the newest writing from the desk. */}
+      {/* 8. The journal: the newest writing from the desk. */}
       <Screen
         id="journal"
         tone="light"
@@ -322,7 +357,7 @@ export default function HomePage() {
         </ul>
       </Screen>
 
-      {/* 8. Contact and footer. */}
+      {/* 9. Contact and footer. */}
       <ContactScreen />
     </>
   );

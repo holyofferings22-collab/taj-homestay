@@ -129,6 +129,13 @@
     outline: 2px solid var(--color-gold-deep);
     outline-offset: 3px;
   }
+  /* On a photograph the deep gold ring vanishes into the scrim (measured
+     at 1.0 to 1.4:1 beside the pills). White reads on every dark blend, and
+     the dark halo keeps it visible where the photograph is bright. */
+  .on-photo :focus-visible {
+    outline-color: var(--color-white);
+    box-shadow: 0 0 0 5px rgba(28, 38, 32, 0.9);
+  }
 }
 
 /* ============================================================
@@ -145,8 +152,18 @@
     min-height: min(100dvh, 780px);
   }
 
-  /* The home page bands and every photograph section take the full window. */
+  /* The home page bands and every photograph section take the full window.
+     `lvh` is the window with the phone's toolbar retracted, and it does not
+     change while the page scrolls; `dvh` follows the toolbar, so a band
+     sized with it grows and shrinks as the toolbar comes and goes and
+     everything below it jumps. Only the first band, the hero, uses `dvh`:
+     its availability card is anchored to its foot and must stay above the
+     toolbar. */
   .screen-full {
+    min-height: 100vh;
+    min-height: 100lvh;
+  }
+  #page > .screen-full:first-child {
     min-height: 100dvh;
   }
 

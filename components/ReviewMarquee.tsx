@@ -96,8 +96,11 @@ export function ReviewMarquee({ reviews, seconds = 46 }: { reviews: readonly Rev
 
   return (
     <div
-      className="relative w-screen max-w-[100vw] self-stretch overflow-hidden"
-      style={{ marginLeft: 'calc(50% - 50vw)' }}
+      /* Out to the window's edges: the band's horizontal padding is the
+         gutter, so pulling the strip back by that on each side spans the
+         page exactly. A `100vw` strip would include the scrollbar's width
+         on desktops that reserve one, and overrun the page by half of it. */
+      className="relative mx-[calc(-1*var(--gutter))] w-[calc(100%+2*var(--gutter))] self-stretch overflow-hidden"
       onMouseEnter={pause}
       onMouseLeave={play}
       onFocusCapture={pause}

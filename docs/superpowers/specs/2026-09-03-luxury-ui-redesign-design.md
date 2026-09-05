@@ -473,3 +473,39 @@ came out of checking them.
   `data-tone="photo"`, which now also matched the corridor band. PageShell
   writes the active section's id to `data-screen`, and the rule keys on
   `welcome`, the only section with a card in the launcher's corner.
+
+## Fifth revision, 5 September 2026: the highlights row
+
+The owner asked for a highlights section under the introduction, in the
+manner of a Taj property page: the word on the left with a rule, a line of
+copy on the right, and a row of photographs with a caption under each,
+three to a window, with arrows to page through the rest.
+
+- **`components/Highlights.tsx`** is a native scroll-snap track. A swipe
+  or a trackpad needs no script; the arrows only call `scrollBy`, one card
+  at a time, and disable themselves at either end. From `lg` the arrows sit
+  in the gutters on the photographs' midline; below `lg` they sit under the
+  track, and the track runs out to the window's edges so the next card
+  peeks in. The wrapper carries `min-w-0`: a grid item's minimum width is
+  otherwise its min-content, which for a no-wrap flex track is the sum of
+  every card's min-content, and the track widened the whole page on a
+  phone until that was set.
+- **Six cards, no new claims.** Every line in `screens.highlights`
+  restates something the site already says, with the source noted in the
+  content file: the walk to Gate 1, the metro and the Airport Express, the
+  rooms and the ₹4,000 opening rate, room blocks for teams, the lift and
+  backup power, and the kitchen. The review pass caught two lines that had
+  quietly gone further than their sources ("Terminal 3 on the same line",
+  which the Location page contradicts, and "at any hour" on the lift) and
+  both were cut back. Photographs are the property's own, with the
+  gallery's audited alt text.
+- **Grounds re-alternated.** The row sits on mist after the white
+  introduction, so rooms is white, location mist, guests white (with the
+  marquee fade to match), then the corridor, the journal on mist and the
+  contact band on ash.
+- **Two more fixes from the same review.** The bands after the hero use
+  `100lvh`, not `100dvh`: the dynamic unit follows a phone's toolbar and
+  made every band above the reader breathe as it came and went. Only the
+  hero keeps `dvh`, for the card anchored to its foot. And the reviews
+  strip is now sized from the gutter rather than `100vw`, so it cannot
+  overrun the page by half a scrollbar on desktops that reserve one.
