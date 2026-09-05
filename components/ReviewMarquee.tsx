@@ -58,6 +58,9 @@ function Card({ review }: { review: Review }) {
 /**
  * A continuous slideshow of Google reviews.
  *
+ * The edge fades read `--marquee-fade`, so a screen sets that to its own
+ * ground and the strip fades into it rather than into a grey it is not on.
+ *
  * The list is rendered twice, end to end, and the whole track is moved left by
  * exactly half its width before looping. Because the second copy is identical
  * and starts where the first ends, the seam never shows and the strip reads as
@@ -104,11 +107,11 @@ export function ReviewMarquee({ reviews, seconds = 46 }: { reviews: readonly Rev
           as continuing past the screen. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[clamp(24px,8vw,120px)] bg-[linear-gradient(90deg,var(--color-ash),transparent)]"
+        className="pointer-events-none absolute inset-y-0 left-0 z-[2] w-[clamp(24px,8vw,120px)] bg-[linear-gradient(90deg,var(--marquee-fade,var(--color-ash)),transparent)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-[clamp(24px,8vw,120px)] bg-[linear-gradient(270deg,var(--color-ash),transparent)]"
+        className="pointer-events-none absolute inset-y-0 right-0 z-[2] w-[clamp(24px,8vw,120px)] bg-[linear-gradient(270deg,var(--marquee-fade,var(--color-ash)),transparent)]"
       />
       <div ref={track} className="flex w-max gap-4 px-4">
         {reviews.map((review, i) => (

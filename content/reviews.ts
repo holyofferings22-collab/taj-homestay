@@ -34,6 +34,15 @@ export const reviews = {
   listing: 'https://maps.google.com/?cid=8648571925722001411',
   heading: 'What guests say',
   headingEmphasis: 'on Google.',
+  /**
+   * The screen is a photograph with the rating set on it. Without review text
+   * the aggregate alone is three centred lines, and on a 775px viewport that
+   * left three quarters of the screen empty.
+   */
+  image: {
+    src: '/photos/2026/room-daylight.jpg',
+    alt: '',
+  },
   cta: 'Read all 164 on Google',
   /** Waiting on the owner; see the note above. */
   quotes: [] as Review[],

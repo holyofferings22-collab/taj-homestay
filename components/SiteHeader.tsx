@@ -8,12 +8,10 @@ import { WhatsApp } from '@/components/BrandIcons';
 import { brand, contact, nav } from '@/content/site';
 
 /**
- * Fixed header. It has to be fixed rather than sticky because the document
- * does not scroll (see SnapShell); and it repaints itself for whichever
- * screen is active: transparent over a photograph, ivory over a light ground,
- * night over a dark one. The active tone arrives as `data-tone` on <html>,
- * set by SnapShell, and the CSS in globals.css does the painting, so nothing
- * here re-renders on scroll.
+ * Fixed header. It repaints itself for whatever sits under it: transparent
+ * over a photograph, white over a light ground. The tone arrives as
+ * `data-tone` on <html>, set by PageShell from an IntersectionObserver, so
+ * nothing here re-renders on scroll.
  *
  * The menu's open state remembers which route it was opened on, so a route
  * change (a menu link, or back and forward) closes it without an effect.

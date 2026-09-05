@@ -54,7 +54,7 @@ export function RoomSwitcher({ rooms, cta }: { rooms: readonly SwitchableRoom[];
   return (
     <div ref={scope} className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
       {/* The photographs, stacked. */}
-      <div className="photo relative aspect-[4/3] w-full overflow-hidden rounded-[6px] max-lg:max-h-[38vh] lg:aspect-[5/4]">
+      <div className="photo relative aspect-[4/3] max-h-[38vh] w-full overflow-hidden rounded-[6px] lg:aspect-auto lg:h-[min(52vh,520px)] lg:max-h-none">
         {rooms.map((r, i) => (
           <Image
             key={r.image.src}

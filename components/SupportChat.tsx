@@ -39,10 +39,6 @@ export function SupportChat() {
         setOpen(false);
         launcherRef.current?.focus();
       }
-      /* The snap container listens for these on the document. */
-      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(event.key)) {
-        event.stopPropagation();
-      }
     }
     document.addEventListener('keydown', onKey, true);
     return () => document.removeEventListener('keydown', onKey, true);

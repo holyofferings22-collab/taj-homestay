@@ -63,7 +63,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
       <Screen
         id="article"
         tone="light"
-        long
+        auto
         labelledBy="article-heading"
         className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
       >

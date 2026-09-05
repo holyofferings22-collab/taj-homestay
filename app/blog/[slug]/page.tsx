@@ -73,7 +73,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
       <Screen
         id="note"
         tone="light"
-        long
+        auto
         labelledBy="note-heading"
         className="content-start bg-white px-[var(--gutter)] pb-[clamp(40px,8vh,88px)] pt-[var(--header-clear)]"
       >

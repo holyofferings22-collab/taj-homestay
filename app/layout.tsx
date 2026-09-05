@@ -4,7 +4,7 @@ import Script from 'next/script';
 import { Analytics } from '@vercel/analytics/next';
 import { JsonLd } from '@/components/JsonLd';
 import { SiteHeader } from '@/components/SiteHeader';
-import { SnapShell } from '@/components/SnapShell';
+import { PageShell } from '@/components/PageShell';
 import { SupportChat } from '@/components/SupportChat';
 import { WhatsAppConversions } from '@/components/WhatsAppConversions';
 import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
@@ -75,10 +75,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body suppressHydrationWarning>
         <JsonLd data={hotelJsonLd} />
         <SiteHeader />
-        {/* The document does not scroll. SnapShell is the one scroll
-            container; every page renders its screens inside it, and the
-            shared contact screen at the end of each page is the footer. */}
-        <SnapShell>{children}</SnapShell>
+        {/* The document scrolls normally. PageShell wraps the page in
+            <main>, reveals sections as they arrive and repaints the header
+            for whatever is under it; the shared contact section at the end of
+            each page is the footer. */}
+        <PageShell>{children}</PageShell>
         {/* Live support. It is a front door onto the desk's WhatsApp, which
             is staffed around the clock; see components/SupportChat.tsx. */}
         <SupportChat />

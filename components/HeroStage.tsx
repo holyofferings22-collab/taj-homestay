@@ -96,9 +96,9 @@ export function HeroStage({
   );
 
   return (
-    <div ref={scope} className="absolute inset-0 grid grid-rows-[1fr_auto] overflow-hidden bg-ash">
+    <div ref={scope} className="absolute inset-0 bg-ash">
       {/* The photographs. */}
-      <div ref={stage} className="absolute inset-[-5%_0]">
+      <div ref={stage} className="absolute inset-[-5%_0] overflow-hidden">
         {frames.map((frame, i) => (
           <div
             key={frame.src}
@@ -161,7 +161,7 @@ export function HeroStage({
       {/* The name, and the way into the gallery. */}
       {/* The right padding keeps the gallery button clear of the live-support
           launcher, which sits in the same corner above the bar. */}
-      <div className="relative z-[2] row-start-1 self-end px-[var(--gutter)] pb-[clamp(18px,3vh,34px)] pr-[max(var(--gutter),84px)] md:pr-[max(var(--gutter),210px)]">
+      <div className="absolute inset-x-0 bottom-0 z-[2] px-[var(--gutter)] pb-[clamp(104px,15vh,150px)] pr-[max(var(--gutter),84px)] md:pr-[max(var(--gutter),210px)]">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <p className="m-0 flex items-center gap-[clamp(14px,2vw,28px)]">
             <span aria-hidden="true" className="h-px w-[clamp(28px,5vw,74px)] flex-none bg-gold" />
@@ -189,10 +189,12 @@ export function HeroStage({
         </div>
       </div>
 
-      {/* Availability, along the foot of the photograph. Inset to the page
-          gutter rather than bled to the edges, so the four fields read as one
-          control instead of spreading across the window. */}
-      <div className="relative z-[3] row-start-2 md:px-[var(--gutter)]">
+      {/* Availability. It used to be welded to the bottom edge of the
+          photograph, which made the hero look like it ended in a wall. It is
+          a card now: inset to the page gutter and floated clear of the foot,
+          so it reads as sitting in front of the photograph rather than being
+          built into it. */}
+      <div className="absolute inset-x-0 bottom-[clamp(22px,5vh,54px)] z-[3] px-[var(--gutter)]">
         <BookingBar variant="hero" />
       </div>
     </div>

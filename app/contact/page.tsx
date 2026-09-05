@@ -37,7 +37,7 @@ export default function ContactPage() {
       <Screen
         id="enquiry"
         tone="light"
-        long
+        auto
         labelledBy="enquiry-heading"
         className="content-center gap-10 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] lg:grid-cols-[1.1fr_1fr] lg:items-start lg:gap-16"
       >
@@ -116,7 +116,7 @@ export default function ContactPage() {
       <Screen
         id="faq"
         tone="light"
-        long
+        auto
         labelledBy="faq-heading"
         className="content-center gap-8 bg-mist px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >

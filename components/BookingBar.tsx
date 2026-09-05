@@ -107,7 +107,7 @@ export function BookingBar({ variant = 'panel' }: { variant?: 'panel' | 'hero' }
       aria-label="Check availability"
       className={`relative z-[3] mx-auto grid w-full text-ink max-md:grid-cols-2 md:grid-cols-[1.1fr_1.1fr_1fr_1.1fr_auto] ${
         hero
-          ? 'max-w-[min(1080px,100%)] bg-white/96 backdrop-blur-[10px] md:rounded-t-[6px]'
+          ? 'max-w-[min(1080px,100%)] overflow-hidden rounded-[10px] bg-white shadow-[0_18px_50px_rgba(31,29,27,0.22)] ring-1 ring-hairline'
           : 'max-w-[min(1000px,100%)] overflow-hidden rounded-[10px] bg-white shadow-[0_14px_34px_rgba(31,29,27,0.12)] ring-1 ring-hairline'
       }`}
     >

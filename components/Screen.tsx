@@ -3,20 +3,18 @@ import type { ReactNode } from 'react';
 export type ScreenTone = 'photo' | 'light' | 'dark';
 
 /**
- * One full-viewport screen inside the snap container (see SnapShell).
+ * One band of the page.
  *
- * `tone` tells the fixed header how to paint itself while this screen is the
- * active one: transparent over a photograph, ivory over a light ground, night
- * over a dark one. `long` is for screens whose content is taller than the
- * viewport (gallery grids, the FAQ, an article): they still snap into place
- * when they arrive, but drop `scroll-snap-stop` so a fast scroll is not held
- * on them, and the CSS spec lets a snap area larger than the viewport scroll
- * freely inside itself, so nothing is ever trapped.
+ * `tone` tells the fixed header how to paint itself while this section sits
+ * under it: transparent over a photograph, white over a light ground. `full`
+ * asks for the whole viewport, which only sections carried by a photograph
+ * need; `auto` sizes to the content, for long reading.
  */
 export function Screen({
   id,
   tone = 'light',
-  long = false,
+  full = false,
+  auto = false,
   revealed = false,
   className = '',
   labelledBy,
@@ -24,10 +22,12 @@ export function Screen({
 }: {
   id: string;
   tone?: ScreenTone;
-  long?: boolean;
+  full?: boolean;
+  /** Sized by its content, with generous padding. For long reading. */
+  auto?: boolean;
   /**
    * Render already revealed. The first screen of every page sets this so its
-   * copy is in the initial HTML rather than waiting for SnapShell to mount.
+   * copy is in the initial HTML rather than waiting for PageShell to mount.
    */
   revealed?: boolean;
   className?: string;
@@ -41,7 +41,7 @@ export function Screen({
       data-screen=""
       data-tone={tone}
       aria-labelledby={labelledBy}
-      className={`screen ${long ? 'screen-long' : ''} ${revealed ? 'in' : ''} ${className}`
+      className={`screen ${full ? 'screen-full' : ''} ${auto ? 'screen-auto' : ''} ${revealed ? 'in' : ''} ${className}`
         .replace(/\s+/g, ' ')
         .trim()}
     >

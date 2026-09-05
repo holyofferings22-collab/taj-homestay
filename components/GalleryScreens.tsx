@@ -16,10 +16,9 @@ const overlayButton =
   'absolute flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/30 bg-[rgba(20,23,29,0.55)] font-body text-xl leading-none text-white backdrop-blur-[2px] transition-colors hover:bg-[rgba(20,23,29,0.85)]';
 
 /**
- * One screen per gallery section, each a long snap area (a section of a
- * dozen photographs runs past a viewport, and the CSS spec lets a snap area
- * taller than the viewport scroll inside itself), with a single lightbox
- * whose arrow keys walk the whole gallery rather than one section.
+ * One section per gallery group, each sized by its own photographs, with a
+ * single lightbox whose arrow keys walk the whole gallery rather than
+ * stopping at a section boundary.
  */
 export function GalleryScreens({ sections }: { sections: readonly GallerySection[] }) {
   const all: Photo[] = sections.flatMap((section) => [...section.photos]);
@@ -57,19 +56,20 @@ export function GalleryScreens({ sections }: { sections: readonly GallerySection
           first.focus();
         }
       }
-      /* Keep the snap container's own key handling out of the lightbox. */
-      if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '].includes(e.key)) {
-        e.stopPropagation();
-      }
     };
-    /* Capture phase, so this runs before SnapShell's document listener. */
     document.addEventListener('keydown', onKey, true);
-    const snap = document.getElementById('snap');
-    const previous = snap?.style.overflow ?? '';
-    if (snap) snap.style.overflow = 'hidden';
+    /* Hold the page still behind the overlay, and hold its place: taking the
+       scrollbar away would otherwise shift the layout sideways. */
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    const previousPad = body.style.paddingRight;
+    const barWidth = window.innerWidth - document.documentElement.clientWidth;
+    body.style.overflow = 'hidden';
+    if (barWidth > 0) body.style.paddingRight = `${barWidth}px`;
     return () => {
       document.removeEventListener('keydown', onKey, true);
-      if (snap) snap.style.overflow = previous;
+      body.style.overflow = previousOverflow;
+      body.style.paddingRight = previousPad;
       opener?.focus();
     };
   }, [open, close, step]);
@@ -86,7 +86,7 @@ export function GalleryScreens({ sections }: { sections: readonly GallerySection
           key={section.id}
           id={section.id}
           tone="light"
-          long
+          auto
           labelledBy={`${section.id}-heading`}
           className={`content-start gap-7 px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)] ${
             s % 2 === 0 ? 'bg-white' : 'bg-mist'

@@ -30,7 +30,7 @@ export default function JournalPage() {
       <Screen
         id="notes"
         tone="light"
-        long
+        auto
         labelledBy="notes-heading"
         className="content-start gap-8 bg-white px-[var(--gutter)] pb-[clamp(28px,5vh,56px)] pt-[var(--header-clear)]"
       >

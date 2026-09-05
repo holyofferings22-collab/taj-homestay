@@ -21,6 +21,11 @@
   --color-slate: #5c5955; /* body text */
   --color-gold: #c9a961; /* button fills and marks */
   --color-gold-deep: #6f5518; /* gold as text on a light ground */
+  /* Gold that still reads as gold once a scrim is over it. Measured 3.74
+     against the brightest point of a photograph under the guests screen's
+     scrim, which clears the 3:1 bar for a large graphic; the #c9a961 gold
+     manages only 2.68 there. */
+  --color-gold-bright: #e3c98d;
 
   --color-hairline: rgba(31, 29, 27, 0.14);
   --color-hairline-strong: rgba(31, 29, 27, 0.28);
@@ -52,14 +57,18 @@
 }
 
 @layer base {
-  html,
+  html {
+    /* Anchor links and the "back to top" glide instead of jumping. Nothing
+       else touches the scroll: no container, no snap, no hijacking. */
+    scroll-behavior: smooth;
+    /* The fixed header would otherwise cover whatever an anchor lands on. */
+    scroll-padding-top: 88px;
+  }
+
   body {
     margin: 0;
     padding: 0;
     background: var(--color-white);
-    height: 100%;
-    /* The document never scrolls; the snap container does. */
-    overflow: hidden;
   }
 
   * {
@@ -122,27 +131,25 @@
    The scroll system. Sections are screens; the container snaps.
    ============================================================ */
 @layer components {
-  .snap {
-    height: 100dvh;
-    overflow-y: auto;
-    overflow-x: hidden;
-    scroll-snap-type: y mandatory;
-    scroll-behavior: smooth;
-    overscroll-behavior: contain;
-  }
-
+  /* A section is a band of the page, not a slide. `min-height` is a floor
+     that keeps a photograph generous, not a lock: a section with more in it
+     than that simply grows, and the scroll never stops anywhere it is not
+     asked to. */
   .screen {
     position: relative;
-    min-height: 100dvh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     display: grid;
+    min-height: min(100dvh, 780px);
   }
 
-  /* Taller than the viewport: snaps into place on arrival, scrolls freely
-     inside itself, and does not hold a fast scroll. */
-  .screen-long {
-    scroll-snap-stop: normal;
+  /* Sections whose job is the photograph itself still want the full height. */
+  .screen-full {
+    min-height: 100dvh;
+  }
+
+  /* Content-led sections need room to breathe, not a viewport. */
+  .screen-auto {
+    min-height: 0;
+    padding-block: clamp(64px, 9vw, 132px);
   }
 
   /* Reveal. A screen gains `.in` from SnapShell when it becomes the active
@@ -167,41 +174,6 @@
   .screen.in [data-rv]:nth-child(5) { transition-delay: 0.32s; }
   .screen.in [data-rv]:nth-child(6) { transition-delay: 0.4s; }
 
-  /* Section dots, desktop only. */
-  .snap-dots {
-    position: fixed;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 40;
-    display: grid;
-    gap: 14px;
-  }
-  .snap-dots a {
-    display: block;
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    border: 1px solid var(--color-gold-deep);
-    transition:
-      background-color 0.3s,
-      transform 0.3s;
-  }
-  html:not([data-tone="light"]):not([data-tone="dark"]) .snap-dots a {
-    border-color: var(--color-gold);
-  }
-  .snap-dots a.on {
-    background: var(--color-gold-deep);
-    transform: scale(1.35);
-  }
-  html:not([data-tone="light"]):not([data-tone="dark"]) .snap-dots a.on {
-    background: var(--color-gold);
-  }
-  @media (max-width: 860px) {
-    .snap-dots {
-      display: none;
-    }
-  }
 
   /* ---------- type helpers ---------- */
   .eyebrow {
@@ -661,27 +633,6 @@
   html[data-menu="open"] .support-panel {
     display: none;
   }
-  /* The home hero carries the availability bar along its bottom edge, so the
-     corner controls step up over it while that screen is the active one. */
-  html[data-screen="welcome"] .support-launcher {
-    bottom: calc(92px + env(safe-area-inset-bottom));
-  }
-  html[data-screen="welcome"] .support-panel {
-    bottom: calc(150px + env(safe-area-inset-bottom));
-  }
-  /* Below md the bar stacks into two rows plus its action, so the corner
-     controls have further to climb to clear it. */
-  @media (max-width: 767px) {
-    html[data-screen="welcome"] .support-launcher {
-      bottom: calc(186px + env(safe-area-inset-bottom));
-    }
-    html[data-screen="welcome"] .support-panel {
-      bottom: calc(244px + env(safe-area-inset-bottom));
-    }
-  }
-  html[data-screen="welcome"] .pill.snap-fab {
-    display: none;
-  }
   .site-menu nav {
     display: grid;
     align-content: center;
@@ -972,8 +923,7 @@
 
 /* Reduced motion: proximity snapping, no smooth scroll, no transitions. */
 @media (prefers-reduced-motion: reduce) {
-  .snap {
-    scroll-snap-type: y proximity;
+  html {
     scroll-behavior: auto;
   }
   [data-rv] {

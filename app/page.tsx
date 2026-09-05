@@ -31,9 +31,10 @@ export default function HomePage() {
       <Screen
         id="welcome"
         tone="photo"
+        full
         revealed
         labelledBy="welcome-heading"
-        className="on-photo overflow-hidden"
+        className="on-photo"
       >
         <h1 id="welcome-heading" className="sr-only">
           {brand.name}, {brand.locality}
@@ -101,7 +102,7 @@ export default function HomePage() {
         id="rooms"
         tone="light"
         labelledBy="rooms-heading"
-        className="content-center gap-[clamp(14px,2.4vh,26px)] bg-mist px-[var(--gutter)] pb-[clamp(24px,3.5vh,44px)] pt-[var(--header-clear)]"
+        className="content-center gap-[clamp(12px,2vh,24px)] bg-mist px-[var(--gutter)] pb-[clamp(20px,3vh,40px)] pt-[var(--header-clear)]"
       >
         <div className="grid max-w-[760px] gap-2.5">
           <SplitHeading
@@ -165,14 +166,33 @@ export default function HomePage() {
         </Link>
       </Screen>
 
-      {/* 5. What guests say, straight off Google. */}
+      {/* 5. What guests say. A photograph carries it rather than a grey
+          field: the only review content that can honestly go here is the
+          aggregate, and three centred lines of it left 74 percent of the
+          screen empty. The marquee appears under the rating the moment
+          content/reviews.ts has real quotes in it. */}
       <Screen
         id="guests"
-        tone="light"
+        tone="photo"
+        full
         labelledBy="guests-heading"
-        className="content-center justify-items-center gap-8 bg-ash pb-[clamp(28px,4vh,48px)] pt-[var(--header-clear)] text-center"
+        className="on-photo items-center overflow-hidden text-white [--marquee-fade:transparent]"
       >
-        <div className="grid justify-items-center gap-4 px-[var(--gutter)]">
+        <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
+          <Parallax strength={10} className="absolute inset-[-6%_0]">
+            <Image
+              src={reviews.image.src}
+              alt=""
+              fill
+              quality={72}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </Parallax>
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(26,28,26,0.62)_0%,rgba(26,28,26,0.72)_100%)]" />
+        </div>
+
+        <div className="relative z-[2] grid w-full justify-items-center gap-7 px-[var(--gutter)] py-[var(--header-clear)] text-center">
           <SplitHeading
             as="h2"
             id="guests-heading"
@@ -180,45 +200,48 @@ export default function HomePage() {
             emphasis={reviews.headingEmphasis}
             className="text-[length:var(--step-section)] leading-[1.06]"
           />
+
           <RiseIn delay={0.2}>
-            <p className="m-0 flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-              <span className="font-display text-[44px] leading-none text-ink">
+            <p className="m-0 flex flex-wrap items-center justify-center gap-x-5 gap-y-3">
+              <span className="font-display text-[clamp(56px,7vw,104px)] leading-none text-white">
                 <CountUp value={reviews.rating} decimals={1} />
               </span>
-              <span
-                role="img"
-                aria-label={`Rated ${reviews.rating} out of 5`}
-                className="relative inline-block text-[19px] tracking-[0.3em]"
-              >
-                <span aria-hidden="true" className="text-ink/20">
-                  ★★★★★
-                </span>
+              <span className="grid gap-1.5 text-left">
                 <span
-                  aria-hidden="true"
-                  className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-deep"
-                  style={{ width: `${(reviews.rating / 5) * 100}%` }}
+                  role="img"
+                  aria-label={`Rated ${reviews.rating} out of 5`}
+                  className="relative inline-block text-[20px] leading-none tracking-[0.28em]"
                 >
-                  ★★★★★
+                  <span aria-hidden="true" className="text-white/35">
+                    ★★★★★
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap text-gold-bright"
+                    style={{ width: `${(reviews.rating / 5) * 100}%` }}
+                  >
+                    ★★★★★
+                  </span>
                 </span>
-              </span>
-              <span className="text-[11px] uppercase tracking-[0.22em] text-slate">
-                <CountUp value={reviews.count} /> reviews on Google
+                <span className="text-[11px] uppercase tracking-[0.22em] text-white/80">
+                  <CountUp value={reviews.count} /> reviews on Google
+                </span>
               </span>
             </p>
           </RiseIn>
+
+          <ReviewMarquee reviews={reviews.quotes} />
+
+          <RiseIn delay={0.3}>
+            <a href={reviews.listing} target="_blank" rel="noopener noreferrer" className="pill pill-gold">
+              {reviews.cta}
+            </a>
+          </RiseIn>
         </div>
-
-        <ReviewMarquee reviews={reviews.quotes} />
-
-        <RiseIn delay={0.3} className="px-[var(--gutter)]">
-          <a href={reviews.listing} target="_blank" rel="noopener noreferrer" className="link-ul">
-            {reviews.cta}
-          </a>
-        </RiseIn>
       </Screen>
 
       {/* 6. Group stays. */}
-      <Screen id="groups" tone="photo" labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-white">
+      <Screen id="groups" tone="photo" full labelledBy="groups-heading" className="on-photo items-center overflow-hidden text-white">
         <div className="absolute inset-0 overflow-hidden bg-ash" aria-hidden="true">
           <Parallax strength={12} className="absolute inset-[-7%_0]">
             <Image
@@ -291,7 +314,7 @@ export default function HomePage() {
           {journal.map((entry) => (
             <li key={entry.slug} data-rv="">
               <Link href={entry.href} className="grid content-start gap-3">
-                <span className="photo photo-hover block aspect-[3/2] max-h-[30vh] rounded-[6px]">
+                <span className="photo photo-hover block aspect-[3/2] max-h-[36vh] rounded-[6px]">
                   <Image
                     src={entry.image.src}
                     alt={entry.image.alt}
