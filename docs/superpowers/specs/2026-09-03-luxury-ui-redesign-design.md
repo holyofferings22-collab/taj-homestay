@@ -482,11 +482,23 @@ copy on the right, and a row of photographs with a caption under each,
 three to a window, with arrows to page through the rest.
 
 - **`components/Highlights.tsx`** is a native scroll-snap track. A swipe
-  or a trackpad needs no script; the arrows only call `scrollBy`, one card
-  at a time, and disable themselves at either end. From `lg` the arrows sit
-  in the gutters on the photographs' midline; below `lg` they sit under the
-  track, and the track runs out to the window's edges so the next card
-  peeks in. The wrapper carries `min-w-0`: a grid item's minimum width is
+  or a trackpad needs no script; the arrows only scroll to the neighbouring
+  card. From `lg` the arrows sit in the gutters on the photographs'
+  midline; below `lg` they sit under the track, and the track runs out to
+  the window's edges so the next card peeks in.
+- **It loops.** The owner asked that the row never stop. The six cards are
+  laid out three times over and the track starts on the middle copy, so
+  there is always a full set to scroll into on either side. When the
+  scroll comes to rest outside the middle stretch (under a quarter of a
+  set from the start, or past a quarter from the end), the track moves by
+  exactly one set's width, instantly, onto the identical card in the copy
+  alongside; nothing on screen changes, and the next swipe or arrow has
+  room again. `scrollend` marks rest where the browser has it, a quiet
+  160ms otherwise, and the move waits while a card in the track has focus
+  so a keyboard user is never left focused on something off screen. Only
+  the middle copy is in the accessibility tree and the tab order; the
+  other two are scenery, `aria-hidden` with empty alt. Neither arrow ever
+  disables. The wrapper carries `min-w-0`: a grid item's minimum width is
   otherwise its min-content, which for a no-wrap flex track is the sum of
   every card's min-content, and the track widened the whole page on a
   phone until that was set.
