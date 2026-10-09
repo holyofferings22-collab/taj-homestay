@@ -71,6 +71,32 @@ const hotelJsonLd = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cormorant.variable} ${manrope.variable}`}>
+      {/* Meta Pixel: Meta's own snippet, unchanged apart from reading the ID
+          from lib/metaPixel.ts, written straight into <head> as Meta's install
+          guide asks so it runs before anything else and a visitor who leaves
+          early is still counted. It loads fbevents.js async, so it does not
+          hold up the page. Same production-only guard as the Google Ads tag.
+          A plain <script> rather than next/script: the App Router injects
+          even `beforeInteractive` scripts from <body>. */}
+      {metaPixelEnabled && (
+        <head>
+          <script
+            id="meta-pixel"
+            dangerouslySetInnerHTML={{
+              __html: `!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '${META_PIXEL_ID}');
+fbq('track', 'PageView');`,
+            }}
+          />
+        </head>
+      )}
       {/* Browser extensions write their own attributes onto <body> before
           React hydrates and React reports the difference as a hydration
           mismatch the app cannot fix. Suppressed for this element only. */}
@@ -109,24 +135,11 @@ gtag('config', '${GOOGLE_ADS_ID}');`}
           </>
         )}
 
-        {/* Meta Pixel: Meta's own snippet, unchanged apart from reading the
-            ID from lib/metaPixel.ts. Same guard and loading strategy as the
-            Google Ads tag above. The noscript image counts visitors with
-            JavaScript off. */}
+        {/* Meta Pixel, part two: the noscript image counts visitors with
+            JavaScript off. It stays in <body> because an <img> is not valid
+            inside <head>; the script half is in <head> above. */}
         {metaPixelEnabled && (
           <>
-            <Script id="meta-pixel" strategy="afterInteractive">
-              {`!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '${META_PIXEL_ID}');
-fbq('track', 'PageView');`}
-            </Script>
             <noscript>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
