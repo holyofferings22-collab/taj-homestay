@@ -7,6 +7,13 @@
  * kept in a comment beside the field so it is not forgotten.
  */
 
+/**
+ * Canonical origin, no trailing slash. The sitemap, robots.txt and
+ * `metadataBase` all read it from here, so the domain is typed once and a
+ * move to another host is a one-line change.
+ */
+export const siteUrl = 'https://tajhomestaydelhi.com';
+
 export const brand = {
   name: 'Taj Home Stay',
   locality: 'Dwarka',

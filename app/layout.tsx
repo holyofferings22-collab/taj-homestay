@@ -10,7 +10,7 @@ import { WhatsAppConversions } from '@/components/WhatsAppConversions';
 import { MetaPixelPageViews } from '@/components/MetaPixelPageViews';
 import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
 import { META_PIXEL_ID, metaPixelEnabled } from '@/lib/metaPixel';
-import { brand, contact } from '@/content/site';
+import { brand, contact, siteUrl } from '@/content/site';
 import './globals.css';
 
 /**
@@ -35,6 +35,13 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
+  /**
+   * Resolves every relative URL in metadata (Open Graph images, canonicals)
+   * against the real domain. Without it Next falls back to the deployment's
+   * own vercel.app hostname in production, which is not the address guests
+   * or search engines know.
+   */
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Taj Home Stay, Dwarka: a quiet address beside Yashobhoomi',
     template: '%s | Taj Home Stay, Dwarka',
@@ -58,13 +65,9 @@ const hotelJsonLd = {
     addressCountry: contact.address.country,
   },
   telephone: contact.phone.dial,
-  /**
-   * Root-relative on purpose: the site has no production domain configured
-   * yet, and a hardcoded guess would be worse than a relative path. Make
-   * these absolute once the domain is known and `metadataBase` is set.
-   */
-  logo: brand.logo.src,
-  image: brand.logo.src,
+  /** Absolute, as schema.org expects: a relative path is not a valid image URL there. */
+  logo: `${siteUrl}${brand.logo.src}`,
+  image: `${siteUrl}${brand.logo.src}`,
   currenciesAccepted: 'INR',
 };
 
