@@ -8,7 +8,7 @@ import { ContactScreen } from '@/components/ContactScreen';
 import { JsonLd } from '@/components/JsonLd';
 import { RiseIn } from '@/components/motion/SplitHeading';
 import { posts, getPost } from '@/content/blog';
-import { pageMeta, absoluteUrl, organization, breadcrumbs } from '@/lib/seo';
+import { pageMeta, absoluteUrl, organization, breadcrumbs, publishedAt } from '@/lib/seo';
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
@@ -42,7 +42,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.lead,
-    datePublished: post.dateISO,
+    datePublished: publishedAt(post.dateISO),
     image: absoluteUrl(post.image.src),
     url: absoluteUrl(path),
     mainEntityOfPage: absoluteUrl(path),

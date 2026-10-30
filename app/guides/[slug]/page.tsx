@@ -8,7 +8,7 @@ import { ContactScreen } from '@/components/ContactScreen';
 import { AutoplayVideo } from '@/components/AutoplayVideo';
 import { guides, getGuide } from '@/content/guides';
 import { JsonLd } from '@/components/JsonLd';
-import { pageMeta, absoluteUrl, organization, breadcrumbs } from '@/lib/seo';
+import { pageMeta, absoluteUrl, organization, breadcrumbs, publishedAt } from '@/lib/seo';
 
 /**
  * One guide article. `params` is a Promise in this version of Next and must
@@ -47,7 +47,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
     '@type': 'Article',
     headline: guide.title,
     description: guide.lead,
-    datePublished: guide.dateISO,
+    datePublished: publishedAt(guide.dateISO),
     image: absoluteUrl(guide.image.src),
     url: absoluteUrl(path),
     mainEntityOfPage: absoluteUrl(path),

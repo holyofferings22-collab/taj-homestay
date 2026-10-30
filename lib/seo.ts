@@ -68,3 +68,12 @@ export function breadcrumbs(trail: readonly { name: string; path: string }[]) {
     })),
   };
 }
+
+/**
+ * A content date ("2026-08-09") as the timestamp schema.org asks for. The
+ * content records the day only, so the time is midnight in India, where the
+ * desk that wrote it sits.
+ */
+export function publishedAt(dateISO: string) {
+  return `${dateISO}T00:00:00+05:30`;
+}

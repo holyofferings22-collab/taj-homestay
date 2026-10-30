@@ -80,7 +80,11 @@ const priceRange = `₹${byRate[0].rate}-₹${byRate[byRate.length - 1].rate}`;
  * around the clock), so the entity Google and the answer engines build from
  * this is the one a guest reads about. No aggregate rating on purpose:
  * Google only accepts ratings collected on the site itself, and ours live on
- * its listing, which `hasMap` points at.
+ * its listing, which `hasMap` points at. No per-room offers either: a Hotel
+ * carrying rooms with prices is judged by Google's hotel-listing feed rules
+ * (identifiers, occupancy, bed types, dated price specifications), which
+ * are for Hotel Center partners and fail here. The rates stay in
+ * `priceRange`, on the Rooms page and in /llms.txt.
  */
 const everyDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -129,18 +133,6 @@ const hotelJsonLd = {
   })),
   currenciesAccepted: 'INR',
   priceRange,
-  containsPlace: rooms.categories.map((room) => ({
-    '@type': 'HotelRoom',
-    name: `${room.name} room`,
-    description: room.description,
-    image: absoluteUrl(room.image.src),
-    offers: {
-      '@type': 'Offer',
-      price: room.rate.replace(/,/g, ''),
-      priceCurrency: 'INR',
-      url: `${siteUrl}/rooms`,
-    },
-  })),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
