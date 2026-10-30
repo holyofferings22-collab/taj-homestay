@@ -11,6 +11,7 @@ import { MetaPixelPageViews } from '@/components/MetaPixelPageViews';
 import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
 import { META_PIXEL_ID, metaPixelEnabled } from '@/lib/metaPixel';
 import { brand, contact, siteUrl } from '@/content/site';
+import { rooms } from '@/content/rooms';
 import './globals.css';
 
 /**
@@ -50,6 +51,16 @@ export const metadata: Metadata = {
     'Twenty rooms in Sector 26 Dwarka, New Delhi, five hundred metres from Yashobhoomi (IICC), a short walk from the Airport Express. A desk that answers at any hour.',
 };
 
+/**
+ * schema.org priceRange, read off the published rates so the two can never
+ * disagree. Google accepts a numeric span or a row of currency signs; the
+ * span is the honest one here, and the rates page already says per night.
+ */
+const byRate = [...rooms.categories].sort(
+  (a, b) => Number(a.rate.replace(/,/g, '')) - Number(b.rate.replace(/,/g, '')),
+);
+const priceRange = `₹${byRate[0].rate}-₹${byRate[byRate.length - 1].rate}`;
+
 /** schema.org Hotel data, carried over from the original Home page head. */
 const hotelJsonLd = {
   '@context': 'https://schema.org',
@@ -69,6 +80,7 @@ const hotelJsonLd = {
   logo: `${siteUrl}${brand.logo.src}`,
   image: `${siteUrl}${brand.logo.src}`,
   currenciesAccepted: 'INR',
+  priceRange,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
