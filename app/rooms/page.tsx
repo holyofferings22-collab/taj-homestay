@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
 import { Framed } from '@/components/Framed';
 import { Screen } from '@/components/Screen';
@@ -11,6 +12,7 @@ import { whatsappLink } from '@/content/site';
 export const metadata: Metadata = {
   title: 'Rooms',
   description: rooms.lead,
+  ...pageMeta('/rooms', rooms.heroImage),
 };
 
 /**

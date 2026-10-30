@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { CarFront, ConciergeBell, MapPin } from 'lucide-react';
@@ -13,6 +14,7 @@ import { whatsappLink } from '@/content/site';
 export const metadata: Metadata = {
   title: 'Group stays',
   description: groupStays.lead,
+  ...pageMeta('/group-stays', groupStays.intro.heroImage),
 };
 
 const icons = { MapPin, ConciergeBell, CarFront };

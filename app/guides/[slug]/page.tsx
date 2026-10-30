@@ -7,6 +7,8 @@ import { HeroScreen } from '@/components/HeroScreen';
 import { ContactScreen } from '@/components/ContactScreen';
 import { AutoplayVideo } from '@/components/AutoplayVideo';
 import { guides, getGuide } from '@/content/guides';
+import { JsonLd } from '@/components/JsonLd';
+import { pageMeta, absoluteUrl, organization, breadcrumbs } from '@/lib/seo';
 
 /**
  * One guide article. `params` is a Promise in this version of Next and must
@@ -28,13 +30,7 @@ export async function generateMetadata({
   return {
     title: guide.title,
     description: guide.lead,
-    openGraph: {
-      title: guide.title,
-      description: guide.lead,
-      type: 'article',
-      publishedTime: guide.dateISO,
-      images: [guide.image.src],
-    },
+    ...pageMeta(`/guides/${guide.slug}`, guide.image, { publishedTime: guide.dateISO }),
   };
 }
 
@@ -45,8 +41,29 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
 
   const others = guides.filter((g) => g.slug !== guide.slug);
 
+  const path = `/guides/${guide.slug}`;
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: guide.title,
+    description: guide.lead,
+    datePublished: guide.dateISO,
+    image: absoluteUrl(guide.image.src),
+    url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    author: organization,
+    publisher: organization,
+  };
+  const trail = breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name: 'Guides', path: '/guides' },
+    { name: guide.title, path },
+  ]);
+
   return (
     <>
+      <JsonLd data={articleJsonLd} />
+      <JsonLd data={trail} />
       <HeroScreen
         id="guide-intro"
         eyebrow={guide.tag}

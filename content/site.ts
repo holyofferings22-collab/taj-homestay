@@ -76,6 +76,21 @@ export const contact = {
   },
   frontDesk: 'Front desk staffed 24×7',
   /**
+   * Check-in and check-out as Google's listing for the property showed them
+   * on 4 September 2026; the FAQ in content/home.ts says the same in prose.
+   * Re-check both if the desk changes them.
+   */
+  checkIn: '12:00',
+  checkOut: '11:00',
+  /**
+   * The pin of Google's own embed below, read from its `!3d` (latitude) and
+   * `!2d` (longitude) parameters: plot KH No. 483 itself. Used only for
+   * schema.org GeoCoordinates. The map and the directions still go by
+   * feature ID and by name, for the reasons given on `mapEmbedSrc` and
+   * `mapQuery`.
+   */
+  geo: { latitude: 28.546007, longitude: 77.044092 },
+  /**
    * Google's own embed for our listing, pinned by feature ID
    * (0x390d1bda71bbf22f:0x7805e65827137003) rather than by a text search.
    *

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { Clock, Mail, MapPin } from 'lucide-react';
 import { Screen } from '@/components/Screen';
 import { HeroScreen } from '@/components/HeroScreen';
@@ -13,6 +14,7 @@ import { contact } from '@/content/site';
 export const metadata: Metadata = {
   title: 'Contact and booking',
   description: contactPage.lead,
+  ...pageMeta('/contact', contactPage.heroImage),
 };
 
 export default function ContactPage() {

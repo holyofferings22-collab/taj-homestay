@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Banknote, BedDouble, CarFront, ConciergeBell, Wifi, Zap } from 'lucide-react';
@@ -12,6 +13,7 @@ import { media } from '@/content/media';
 export const metadata: Metadata = {
   title: 'About the guest house',
   description: about.lead,
+  ...pageMeta('/about', about.heroImage),
 };
 
 const icons = { ConciergeBell, Wifi, CarFront, BedDouble, Zap, Banknote };

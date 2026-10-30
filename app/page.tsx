@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Screen } from '@/components/Screen';
@@ -17,6 +18,9 @@ import { reviews } from '@/content/reviews';
 import { posts } from '@/content/blog';
 import { guides } from '@/content/guides';
 import { brand } from '@/content/site';
+import { pageMeta } from '@/lib/seo';
+
+export const metadata: Metadata = pageMeta('/', hero.frames[0]);
 
 
 /* One padding for every band of the home page. Each band takes the whole

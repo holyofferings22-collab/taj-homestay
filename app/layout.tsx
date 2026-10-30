@@ -10,8 +10,12 @@ import { WhatsAppConversions } from '@/components/WhatsAppConversions';
 import { MetaPixelPageViews } from '@/components/MetaPixelPageViews';
 import { GOOGLE_ADS_ID, googleAdsEnabled } from '@/lib/conversion';
 import { META_PIXEL_ID, metaPixelEnabled } from '@/lib/metaPixel';
-import { brand, contact, siteUrl } from '@/content/site';
+import { brand, contact, siteUrl, social } from '@/content/site';
 import { rooms } from '@/content/rooms';
+import { amenities } from '@/content/home';
+import { media } from '@/content/media';
+import { reviews } from '@/content/reviews';
+import { absoluteUrl, siteName } from '@/lib/seo';
 import './globals.css';
 
 /**
@@ -49,6 +53,15 @@ export const metadata: Metadata = {
   },
   description:
     'Twenty rooms in Sector 26 Dwarka, New Delhi, five hundred metres from Yashobhoomi (IICC), a short walk from the Airport Express. A desk that answers at any hour.',
+  /**
+   * Index everything, and let Google show the photographs at full size in
+   * image results, Discover and AI overviews rather than as thumbnails.
+   */
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
+  },
 };
 
 /**
@@ -61,26 +74,73 @@ const byRate = [...rooms.categories].sort(
 );
 const priceRange = `₹${byRate[0].rate}-₹${byRate[byRate.length - 1].rate}`;
 
-/** schema.org Hotel data, carried over from the original Home page head. */
+/**
+ * schema.org Hotel data, on every page. Every value is read from the content
+ * files or is a fact the pages already state (twenty rooms, a desk staffed
+ * around the clock), so the entity Google and the answer engines build from
+ * this is the one a guest reads about. No aggregate rating on purpose:
+ * Google only accepts ratings collected on the site itself, and ours live on
+ * its listing, which `hasMap` points at.
+ */
+const everyDay = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
 const hotelJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Hotel',
-  name: 'Taj Home Stay, Dwarka',
+  '@id': `${siteUrl}/#hotel`,
+  name: siteName,
+  url: siteUrl,
   description:
     'Twenty-room guest house beside Yashobhoomi (IICC) in Sector 26 Dwarka, New Delhi.',
   address: {
     '@type': 'PostalAddress',
     streetAddress: contact.address.streetAddress,
     addressLocality: contact.address.locality,
+    addressRegion: 'Delhi',
     postalCode: contact.address.postalCode,
     addressCountry: contact.address.country,
   },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: contact.geo.latitude,
+    longitude: contact.geo.longitude,
+  },
+  hasMap: reviews.listing,
   telephone: contact.phone.dial,
-  /** Absolute, as schema.org expects: a relative path is not a valid image URL there. */
-  logo: `${siteUrl}${brand.logo.src}`,
-  image: `${siteUrl}${brand.logo.src}`,
+  email: contact.email,
+  sameAs: [social.facebook].filter((url): url is string => Boolean(url)),
+  logo: absoluteUrl(brand.logo.src),
+  image: [media.heroStill, media.lounge, media.frontDesk].flatMap((still) =>
+    still ? [absoluteUrl(still.src)] : [],
+  ),
+  numberOfRooms: 20,
+  checkinTime: contact.checkIn,
+  checkoutTime: contact.checkOut,
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: everyDay,
+    opens: '00:00',
+    closes: '23:59',
+  },
+  amenityFeature: amenities.map((item) => ({
+    '@type': 'LocationFeatureSpecification',
+    name: item.title,
+    value: true,
+  })),
   currenciesAccepted: 'INR',
   priceRange,
+  containsPlace: rooms.categories.map((room) => ({
+    '@type': 'HotelRoom',
+    name: `${room.name} room`,
+    description: room.description,
+    image: absoluteUrl(room.image.src),
+    offers: {
+      '@type': 'Offer',
+      price: room.rate.replace(/,/g, ''),
+      priceCurrency: 'INR',
+      url: `${siteUrl}/rooms`,
+    },
+  })),
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -8,7 +8,7 @@ import { ContactScreen } from '@/components/ContactScreen';
 import { JsonLd } from '@/components/JsonLd';
 import { RiseIn } from '@/components/motion/SplitHeading';
 import { posts, getPost } from '@/content/blog';
-import { brand } from '@/content/site';
+import { pageMeta, absoluteUrl, organization, breadcrumbs } from '@/lib/seo';
 
 export function generateStaticParams() {
   return posts.map((post) => ({ slug: post.slug }));
@@ -25,13 +25,7 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.lead,
-    openGraph: {
-      title: post.title,
-      description: post.lead,
-      type: 'article',
-      publishedTime: post.dateISO,
-      images: [post.image.src],
-    },
+    ...pageMeta(`/blog/${post.slug}`, post.image, { publishedTime: post.dateISO }),
   };
 }
 
@@ -42,20 +36,29 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
 
   const others = posts.filter((p) => p.slug !== post.slug).slice(0, 2);
 
+  const path = `/blog/${post.slug}`;
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.lead,
     datePublished: post.dateISO,
-    image: post.image.src,
-    author: { '@type': 'Organization', name: brand.name },
-    publisher: { '@type': 'Organization', name: brand.name },
+    image: absoluteUrl(post.image.src),
+    url: absoluteUrl(path),
+    mainEntityOfPage: absoluteUrl(path),
+    author: organization,
+    publisher: organization,
   };
+  const trail = breadcrumbs([
+    { name: 'Home', path: '/' },
+    { name: 'Journal', path: '/blog' },
+    { name: post.title, path },
+  ]);
 
   return (
     <>
       <JsonLd data={articleJsonLd} />
+      <JsonLd data={trail} />
 
       <HeroScreen
         id="post-intro"

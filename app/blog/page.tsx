@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
 import { Screen } from '@/components/Screen';
 import { HeroScreen } from '@/components/HeroScreen';
@@ -9,6 +10,7 @@ import { journalIndex, posts, postTags } from '@/content/blog';
 export const metadata: Metadata = {
   title: 'Journal',
   description: journalIndex.lead,
+  ...pageMeta('/blog', journalIndex.heroImage),
 };
 
 export default function JournalPage() {

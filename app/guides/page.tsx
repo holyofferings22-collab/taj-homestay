@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Screen } from '@/components/Screen';
@@ -9,6 +10,7 @@ import { guides, guidesIndex } from '@/content/guides';
 export const metadata: Metadata = {
   title: 'Guides',
   description: guidesIndex.lead,
+  ...pageMeta('/guides', guidesIndex.heroImage),
 };
 
 export default function GuidesIndexPage() {

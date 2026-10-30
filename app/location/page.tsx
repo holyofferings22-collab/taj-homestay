@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { pageMeta } from '@/lib/seo';
 import { Building2, CarFront, Footprints, MapPin, Plane, PlaneLanding, TrainFront, TrainTrack } from 'lucide-react';
 import { Screen } from '@/components/Screen';
 import { HeroScreen } from '@/components/HeroScreen';
@@ -11,6 +12,7 @@ import { contact } from '@/content/site';
 export const metadata: Metadata = {
   title: 'Location and directions',
   description: `${location.heading} ${location.headingEmphasis} ${location.lead}`,
+  ...pageMeta('/location', location.heroImage),
 };
 
 const distanceIcons = { MapPin, TrainFront, Plane, TrainTrack, Building2 };
